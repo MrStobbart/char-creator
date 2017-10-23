@@ -1,0 +1,204 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>React.js using NPM, Babel6 and Webpack</title>
+  <link rel="stylesheet" type="text/css" href="../ink-3.1.10/css/ink.min.css">
+  <link rel="stylesheet" type="text/css" href="./charSheet.css">
+  <script src="../ink-3.1.10/js/ink-all.min.js"></script>
+  <script src="../ink-3.1.10/js/autoload.min.js"></script>
+</head>
+
+  <body>
+
+    <div class="ink-grid" style="margin-top: 30px">
+      <div class="column-group gutters">
+        <div class="xlarge-20 large-20 medium-30 hide-small hide-tiny">
+          <nav class="ink-navigation ink-sticky">
+            <ul class="menu vertical grey">
+              <li><a href="#base-data" class="ink-smooth-scroll">Allgemein</a></li>
+              <li><a href="#attributes" class="ink-smooth-scroll">Attribute</a></li>
+              <li><a href="#">Grundwerte</a></li>
+              <li><a href="#">Vorteile/Nachteile</a></li>
+              <li><a href="#">Sonderfertigkeiten</a></li>
+              <li><a href="#">Kampftechniken</a></li>
+              <li><a href="#">Fertigkeiten</a></li>
+              <li><a href="#">Waffen & Rüstungen</a></li>
+              <li><a href="#">Ausrüstung</a></li>
+              <li><a href="#">Zauber/Liturgien</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="xlarge-80 large-80 medium-70 small-100 tiny-100">
+          <form id="base-data">
+            <div class="column-group gutters">
+
+              <div class="xlarge-33 large-50 medium-100 control-group">
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left" for="name">Name</label>
+                  <div class="control all-60">
+                    <input type="text" name="name" value="">
+                  </div>
+                </div>
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left" for="race">Spezies</label>
+                  <div class="control all-60">
+                    <input type="text" name="race" value="">
+                  </div>
+                </div>
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left" for="profession">Profession</label>
+                  <div class="control all-60">
+                    <input type="text" name="profession" value="">
+                  </div>
+                </div>
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left" for="eye-color">Augenfarbe</label>
+                  <div class="control all-60">
+                    <input type="text" name="eye-color" value="">
+                  </div>
+                </div>
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left" for="hair-color">Haarfarbe</label>
+                  <div class="control all-60">
+                    <input type="text" name="hair-color" value="">
+                  </div>
+                </div>
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left" for="skin-color">Hautfarbe</label>
+                  <div class="control all-60">
+                    <input type="text" name="skin-color" value="">
+                  </div>
+                </div>
+              </div>
+
+              <div class="xlarge-33 large-50 medium-100 control-group">
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left"for="gender">Geschlecht</label>
+                  <div class="control all-60">
+                    <input type="text" name="gender" value="">
+                  </div>
+                </div>
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left"for="culture">Kultur</label>
+                  <div class="control all-60">
+                    <input type="text" name="culture" value="">
+                  </div>
+                </div>
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left"for="title">Titel</label>
+                  <div class="control all-60">
+                    <input type="text" name="title" value=""> 
+                  </div>
+                </div>
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left"for="height">Größe</label>
+                  <div class="control all-60">
+                    <input type="text" name="height" value="">
+                  </div>
+                </div>
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left"for="weight">Gewicht</label>
+                  <div class="control all-60">
+                    <input type="text" name="weight" value="">
+                  </div>
+                </div>
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left"for="social-status">Sozialstatus</label>
+                  <div class="control all-60">
+                    <input type="text" name="social-status" value="">
+                  </div>
+                </div>
+              </div>
+            
+              <div class="xlarge-33 large-50 medium-100 control-group">
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left" for="adventure-points">Abenteuerpunkte</label>
+                  <div class="control all-60">
+                    <input type="text" name="adventure-points" value="">
+                  </div>
+                </div>
+              
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left" for="experience-level">Erfahrungsgrad</label>
+                  <div class="control all-60">
+                    <input type="text" name="experience-level" value="">
+                  </div>
+                </div>
+
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left" for="birthday">Geburtstag</label>
+                  <div class="control all-60">
+                    <input type="text" name="birthday" value="">
+                  </div>
+                </div>
+
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left" for="birth-place">Geburtsort</label>
+                  <div class="control all-60">
+                    <input type="text" name="birth-place" value="">
+                  </div>
+                </div>
+
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left" for="soul-animal">Seelentier</label>
+                  <div class="control all-60">
+                    <input type="text" name="soul-animal" value="">
+                  </div>
+                </div>
+
+                <div class="column-group quarter-gutters">
+                  <label class="all-40 align-left" for="faith">Glaube</label>
+                  <div class="control all-60">
+                    <input type="text" name="faith" value="">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </form>
+          <hr/>
+          <form id="attributes">
+            <div class="column-group " style="margin-left: 0em">
+              <div class="xlarge-10 large-20 medium-20 small-20 tiny-20 quarter-left-space input-box">
+                <label style="margin-left: 20px; margin-right: 20px" class="push-center" for="guts">MU</label>
+                <input type="number" name="guts" style="width: 60px">
+              </div>
+              <div class="xlarge-10 large-20 medium-20 small-20 tiny-20 quarter-left-space input-box">
+                <label style="margin-left: 20px; margin-right: 20px" class="push-center" for="intelligence">KL</label>
+                <input type="number" name="intelligence" style="width: 60px">
+              </div>
+              <div class="xlarge-10 large-20 medium-20 small-20 tiny-20 quarter-left-space input-box">
+                <label style="margin-left: 20px; margin-right: 20px" class="push-center" for="intuition">IN</label>
+                <input type="number" name="intuition" style="width: 60px">
+              </div>
+              <div class="xlarge-10 large-20 medium-20 small-20 tiny-20 quarter-left-space input-box">
+                <label style="margin-left: 20px; margin-right: 20px" class="push-center" for="charisma">CH</label>
+                <input type="number" name="charisma" style="width: 60px">
+              </div>
+              <div class="xlarge-10 large-20 medium-20 small-20 tiny-20 quarter-left-space input-box">
+                <label style="margin-left: 20px; margin-right: 20px" class="push-center" for="prestidigitation">FF</label>
+                <input type="number" name="prestidigitation" style="width: 60px">
+              </div>
+              <div class="xlarge-10 large-20 medium-20 small-20 tiny-20 quarter-left-space input-box">
+                <label style="margin-left: 20px; margin-right: 20px" class="push-center" for="agility">GE</label>
+                <input type="number" name="agility" style="width: 60px">
+              </div>
+              <div class="xlarge-10 large-20 medium-20 small-20 tiny-20 quarter-left-space input-box">
+                <label style="margin-left: 20px; margin-right: 20px" class="push-center" for="konstitution">KO</label>
+                <input type="number" name="konstitution" style="width: 60px">
+              </div>
+              <div class="xlarge-10 large-20 medium-20 small-20 tiny-20 quarter-left-space input-box">
+                <label style="margin-left: 20px; margin-right: 20px" class="push-center" for="strength">KK</label>
+                <input type="number" name="strength" style="width: 60px">
+              </div>
+            </div>
+          </form>
+          <hr/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
