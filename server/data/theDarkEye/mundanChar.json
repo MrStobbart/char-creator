@@ -1,5 +1,6 @@
-{
-  "generalInformation": {
+[
+  {
+    "name": "generalInformation",
     "title": "Allgemein",
     "fields": [
       {
@@ -55,7 +56,8 @@
       }
     ]
   },
-  "attribtes": {
+  {
+    "name": "attribtes",
     "title": "Attribute",
     "fields": [
       {
@@ -92,28 +94,36 @@
       }
     ]
   },
-  "deliveredData": {
+  {
+    "name": "deliveredData",
     "title": "Grundwerte"
   },
-  "advantages": {
+  {
+    "name": "advantages",
     "title": "Vorteile"
   },
-  "disadvantages": {
+  {
+    "name": "disadvantages",
     "title": "Nachteile"
   },
-  "specialAbilities": {
+  {
+    "name": "specialAbilities",
     "title": "Sonderfertigkeiten"
   },
-  "combatTalents":{
+  {
+    "name": "combatTalents",
     "title": "Kampftechniken"
   },
-  "talents": {
+  {
+    "name": "talents",
     "title": "Fertigkeiten"
   },
-  "weaponsAndArmor":{
+  {
+    "name": "weaponsAndArmor",
     "title": "Waffen & Rüstungen"
   },
-  "equipment":{
+  {
+    "name": "equipment",
     "title": "Ausrüstung"
   }
-}
+]
