@@ -12,8 +12,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "watchserver": "nodemon server/server.js",
-    "buildserver": "NODE_ENV=production node server/server.js",
+    "devserver": "NODE_ENV=development nodemon server/server.js",
+    "prodserver": "NODE_ENV=production node server/server.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
