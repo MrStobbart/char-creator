@@ -1,10 +1,10 @@
 import React from 'react';
-import { CharPageContentFieldset } from './CharPageContentFieldset';
+import { Fieldset } from './Fieldset';
 
 export function CharPageContent(props) {
-  const fieldsets = props.sheet.map(fieldset => <CharPageContentFieldset key={fieldset.name} fieldset={fieldset}/>);
+  const fieldsets = props.sheet.map(fieldset => <Fieldset key={fieldset.id} fieldset={fieldset}/>);
   return (
-    <div class="xlarge-80 large-80 medium-70 small-100 tiny-100">
+    <div className="xlarge-80 large-80 medium-70 small-100 tiny-100">
       <form>
         {fieldsets}
       </form>

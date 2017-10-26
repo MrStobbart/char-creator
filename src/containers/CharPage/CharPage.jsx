@@ -19,13 +19,14 @@ export class CharPage extends React.Component{
   }
 
   loadsheet() {
+    // TODO add proper url handling
     fetch('http://localhost:8080/api/thedarkeye/mundanchar')
       .then(res => res.json())
       .then(sheet => {
         console.log('sheet', sheet);
         this.setState({
-          sheetFieldsets: sheet.map(field => {
-            return { name: field.name, title: field.title }
+          sheetFieldsets: sheet.map(fieldset => {
+            return { id: fieldset.id, title: fieldset.title }
           }),
           sheet: sheet
         })

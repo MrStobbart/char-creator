@@ -1,167 +1,268 @@
 [
   {
-    "name": "generalInformation",
+    "id": "general-information",
     "title": "Allgemein",
     "fields": [
       {
+        "id": "name",
         "label": "Name"
       },
       {
+        "id": "family",
         "label": "Familie"
       },
       {
+        "id": "place-of-birth",
         "label": "Geburtsort"
       },
       {
+        "id": "birthday",
         "label": "Geburtsdatum"
       },
       {
+        "id": "age",
         "label": "Alter"
       },
       {
+        "id": "sex",
         "label": "Geschlecht"
       },
       {
+        "id": "species",
         "label": "Spezies"
       },
       {
+        "id": "size",
         "label": "Größe"
       },
       {
+        "id": "weight",
         "label": "Gewicht"
       },
       {
+        "id": "hair-color",
         "label": "Haarfarbe"
       },
       {
+        "id": "eyecolor",
         "label": "Augenfarbe"
       },
       {
+        "id": "culture",
         "label": "Kultur"
       },
       {
+        "id": "profession",
         "label": "Profession"
       },
       {
+        "id": "title",
         "label": "Titel"
       },
       {
+        "id": "social-status",
         "label": "Sozialstatus"
       },
       {
+        "id": "characteristics",
         "label": "Charakteristika"
       },
       {
+        "id": "other-information",
         "label": "Sonstiges"
       }
     ]
   },
   {
-    "name": "attribtes",
+    "id": "attribtes",
     "title": "Attribute",
     "fields": [
       {
+        "id": "courage",
         "label": "MU",
         "type": "box"
       },
       {
+        "id": "cleverness",
         "label": "KL",
         "type": "box"
       },
       {
+        "id": "intuition",
         "label": "IN",
         "type": "box"
       },
       {
+        "id": "charisma",
         "label": "CH",
         "type": "box"
       },
       {
+        "id": "dexterity",
         "label": "FF",
         "type": "box"
       },
       {
+        "id": "agility",
         "label": "GE",
         "type": "box"
       },
       {
+        "id": "constitution",
         "label": "KO",
         "type": "box"
       },
       {
+        "id": "strength",
         "label": "KK",
         "type": "box"
       }
     ]
   },
   {
-    "name": "deliveredData",
+    "id": "delivered-data",
     "title": "Grundwerte",
     "fields": [
       {
-        "label": "test"
+        "id": "life-points",
+        "label": "Lebensenergie"
+      },
+      {
+        "id": "spirit",
+        "label": "Seelenkraft"
+      },
+      {
+        "id": "toughness",
+        "label": "Zähigkeit"
+      },
+      {
+        "id": "dodge",
+        "label": "Ausweichen"
+      },
+      {
+        "id": "initiative",
+        "label": "Initiative"
+      },
+      {
+        "id": "movement",
+        "label": "Geschwindigkeit"
       }
     ]
   },
   {
-    "name": "advantages",
+    "id": "advantages",
     "title": "Vorteile",
     "fields": [
       {
+        "id": "",
         "label": "test"
       }
     ]
   },
   {
-    "name": "disadvantages",
+    "id": "disadvantages",
     "title": "Nachteile",
     "fields": [
       {
+        "id": "",
         "label": "test"
       }
     ]
   },
   {
-    "name": "specialAbilities",
+    "id": "special-abilities",
     "title": "Sonderfertigkeiten",
     "fields": [
       {
+        "id": "",
         "label": "test"
       }
     ]
   },
   {
-    "name": "combatTalents",
+    "id": "combat-talents",
     "title": "Kampftechniken",
     "fields": [
       {
-        "label": "test"
+        "id": "crossbows",
+        "label": "Armbrüste"
+      },
+      {
+        "id": "bows",
+        "label": "Bögen"
+      },
+      {
+        "id": "daggers",
+        "label": "Dolche"
+      },
+      {
+        "id": "fencing-weapons",
+        "label": "Fechtwaffen"
+      },
+      {
+        "id": "impact-weapons",
+        "label": "Hiebwaffen"
+      },
+      {
+        "id": "chain-weapons",
+        "label": "Kettenwaffen"
+      },
+      {
+        "id": "brawling",
+        "label": "Raufen"
+      },
+      {
+        "id": "shields",
+        "label": "Schilde"
+      },
+      {
+        "id": "swords",
+        "label": "Schwerter"
+      },
+      {
+        "id": "polearms",
+        "label": "Stangenwaffen"
+      },
+      {
+        "id": "thrown-weapons",
+        "label": "Wurfwaffen"
+      },
+      {
+        "id": "2h-impact-weapons",
+        "label": "Zweihandhiebwaffen"
+      },
+      {
+        "id": "2h-swords",
+        "label": "Zweihandschwerter"
       }
     ]
   },
   {
-    "name": "talents",
+    "id": "talents",
     "title": "Fertigkeiten",
     "fields": [
       {
-        "label": "test"
+        "id": "",
+        "label": ""
       }
     ]
   },
   {
-    "name": "weaponsAndArmor",
+    "id": "weapons-and-armor",
     "title": "Waffen & Rüstungen",
     "fields": [
       {
+        "id": "",
         "label": "test"
       }
     ]
   },
   {
-    "name": "equipment",
+    "id": "equipment",
     "title": "Ausrüstung",
     "fields": [
       {
+        "id": "",
         "label": "test"
       }
     ]
