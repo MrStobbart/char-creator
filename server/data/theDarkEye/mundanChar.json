@@ -1,0 +1,119 @@
+{
+  "generalInformation": {
+    "title": "Allgemein",
+    "fields": [
+      {
+        "label": "Name"
+      },
+      {
+        "label": "Familie"
+      },
+      {
+        "label": "Geburtsort"
+      },
+      {
+        "label": "Geburtsdatum"
+      },
+      {
+        "label": "Alter"
+      },
+      {
+        "label": "Geschlecht"
+      },
+      {
+        "label": "Spezies"
+      },
+      {
+        "label": "Größe"
+      },
+      {
+        "label": "Gewicht"
+      },
+      {
+        "label": "Haarfarbe"
+      },
+      {
+        "label": "Augenfarbe"
+      },
+      {
+        "label": "Kultur"
+      },
+      {
+        "label": "Profession"
+      },
+      {
+        "label": "Titel"
+      },
+      {
+        "label": "Sozialstatus"
+      },
+      {
+        "label": "Charakteristika"
+      },
+      {
+        "label": "Sonstiges"
+      }
+    ]
+  },
+  "attribtes": {
+    "title": "Attribute",
+    "fields": [
+      {
+        "label": "MU",
+        "type": "box"
+      },
+      {
+        "label": "KL",
+        "type": "box"
+      },
+      {
+        "label": "IN",
+        "type": "box"
+      },
+      {
+        "label": "CH",
+        "type": "box"
+      },
+      {
+        "label": "FF",
+        "type": "box"
+      },
+      {
+        "label": "GE",
+        "type": "box"
+      },
+      {
+        "label": "KO",
+        "type": "box"
+      },
+      {
+        "label": "KK",
+        "type": "box"
+      }
+    ]
+  },
+  "deliveredData": {
+    "title": "Grundwerte"
+  },
+  "advantages": {
+    "title": "Vorteile"
+  },
+  "disadvantages": {
+    "title": "Nachteile"
+  },
+  "specialAbilities": {
+    "title": "Sonderfertigkeiten"
+  },
+  "combatTalents":{
+    "title": "Kampftechniken"
+  },
+  "talents": {
+    "title": "Fertigkeiten"
+  },
+  "weaponsAndArmor":{
+    "title": "Waffen & Rüstungen"
+  },
+  "equipment":{
+    "title": "Ausrüstung"
+  }
+}
