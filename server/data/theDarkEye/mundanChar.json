@@ -96,34 +96,74 @@
   },
   {
     "name": "deliveredData",
-    "title": "Grundwerte"
+    "title": "Grundwerte",
+    "fields": [
+      {
+        "label": "test"
+      }
+    ]
   },
   {
     "name": "advantages",
-    "title": "Vorteile"
+    "title": "Vorteile",
+    "fields": [
+      {
+        "label": "test"
+      }
+    ]
   },
   {
     "name": "disadvantages",
-    "title": "Nachteile"
+    "title": "Nachteile",
+    "fields": [
+      {
+        "label": "test"
+      }
+    ]
   },
   {
     "name": "specialAbilities",
-    "title": "Sonderfertigkeiten"
+    "title": "Sonderfertigkeiten",
+    "fields": [
+      {
+        "label": "test"
+      }
+    ]
   },
   {
     "name": "combatTalents",
-    "title": "Kampftechniken"
+    "title": "Kampftechniken",
+    "fields": [
+      {
+        "label": "test"
+      }
+    ]
   },
   {
     "name": "talents",
-    "title": "Fertigkeiten"
+    "title": "Fertigkeiten",
+    "fields": [
+      {
+        "label": "test"
+      }
+    ]
   },
   {
     "name": "weaponsAndArmor",
-    "title": "Waffen & Rüstungen"
+    "title": "Waffen & Rüstungen",
+    "fields": [
+      {
+        "label": "test"
+      }
+    ]
   },
   {
     "name": "equipment",
-    "title": "Ausrüstung"
+    "title": "Ausrüstung",
+    "fields": [
+      {
+        "label": "test"
+      }
+    ]
   }
 ]
