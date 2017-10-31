@@ -3,7 +3,7 @@ import { CharPageNav } from '../../components/CharPageNav/CharPageNav';
 import { CharPageContent } from '../../components/CharPageContent/CharPageContent';
 
 export class CharPage extends React.Component{
-
+  
   constructor() {
     super();
     this.state = {
@@ -12,16 +12,16 @@ export class CharPage extends React.Component{
     }
     
   }
-
+  
   componentDidMount() {
     this.loadsheet();
     console.log(this.state);
   }
-
+  
   loadsheet() {
     // TODO add proper url handling
     fetch('http://localhost:8080/api/thedarkeye/mundanchar')
-      .then(res => res.json())
+    .then(res => res.json())
       .then(sheet => {
         console.log('sheet', sheet);
         this.setState({
@@ -32,11 +32,11 @@ export class CharPage extends React.Component{
         })
       })
       .catch(err => console.log(err));
-  }
-
-  render() {
-    return (
-      <div className="ink-grid">
+    }
+    
+    render() {
+      return (
+        <div className="ink-grid">
         <div className="column-group gutters">
           <CharPageNav fieldsets={this.state.sheetFieldsets} />
           <CharPageContent sheet={this.state.sheet} />
