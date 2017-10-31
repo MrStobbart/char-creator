@@ -1,0 +1,16 @@
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+input{
+  border-style: none;
+  border-bottom-style: solid;
+  border-width: 1px;
+}
+
+.text{
+  background-color: lightblue
+}
