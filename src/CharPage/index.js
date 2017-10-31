@@ -1,6 +1,6 @@
 import React from 'react';
-import { CharPageNav } from '../../components/CharPageNav/CharPageNav';
-import { CharPageContent } from '../../components/CharPageContent/CharPageContent';
+import { Navigation } from './components/Navigation';
+import { Content } from './components/Content';
 
 export class CharPage extends React.Component{
   
@@ -38,8 +38,8 @@ export class CharPage extends React.Component{
       return (
         <div className="ink-grid">
         <div className="column-group gutters">
-          <CharPageNav fieldsets={this.state.sheetFieldsets} />
-          <CharPageContent sheet={this.state.sheet} />
+          <Navigation fieldsets={this.state.sheetFieldsets} />
+          <Content sheet={this.state.sheet} />
         </div>
       </div>
     )
