@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import { CharPage } from '../CharPage';
+import { CharPageContainer } from '../CharPage';
 
 import './index.css';
 
@@ -13,8 +13,8 @@ class App extends Component {
           <Link to="/charpage">Charpage</Link>
         </header>
         <main>
-          <Route exact path="/" component="" />
-          <Route exact path="/charpage" component={CharPage} />
+          <Route exact path="/" component="" /> 
+          <Route exact path="/charpage" component={CharPageContainer} />
         </main>
       </div>
     );
