@@ -1,0 +1,545 @@
+{
+  "meta": {
+    "calculations":{
+      "attribute": {
+        "type": "static",
+        "costsPerPoint": 4
+      },
+      "edge": {
+        "type": "static",
+        "costsPerPoint": 4
+      },
+      "hinderance":{
+        "type": "static",
+        "costsPerPoint": -4
+      },
+      "skill": {
+        "type": "dynamic",
+        "if": [
+          {
+            "condition": "skill <= attribute",
+            "costsPerPoint": 2
+          },
+          {
+            "condition": "skill > attribute",
+            "costsPerPoint": 4
+          }
+        ]
+          
+      },
+      "cheapSkill":{
+        "type": "dynamic",
+        "if": [
+          {
+            "condition": "skill <= attribute",
+            "costsPerPoint": 1
+          },
+          {
+            "condition": "skill > attribute",
+            "costsPerPoint": 2
+          }
+        ]
+      }
+    }
+
+  },
+  "fields": [
+  {
+    "id": "general-information",
+    "title": "Allgemein",
+    "fields": [
+      {
+        "id": "name",
+        "label": "Name"
+      },
+      {
+        "id": "family",
+        "label": "Familie"
+      },
+      {
+        "id": "place-of-birth",
+        "label": "Geburtsort"
+      },
+      {
+        "id": "birthday",
+        "label": "Geburtsdatum"
+      },
+      {
+        "id": "age",
+        "label": "Alter"
+      },
+      {
+        "id": "sex",
+        "label": "Geschlecht"
+      },
+      {
+        "id": "species",
+        "label": "Spezies"
+      },
+      {
+        "id": "size",
+        "label": "Größe"
+      },
+      {
+        "id": "weight",
+        "label": "Gewicht"
+      },
+      {
+        "id": "hair-color",
+        "label": "Haarfarbe"
+      },
+      {
+        "id": "eyecolor",
+        "label": "Augenfarbe"
+      },
+      {
+        "id": "culture",
+        "label": "Kultur"
+      },
+      {
+        "id": "profession",
+        "label": "Profession"
+      },
+      {
+        "id": "title",
+        "label": "Titel"
+      },
+      {
+        "id": "social-status",
+        "label": "Sozialstatus"
+      },
+      {
+        "id": "characteristics",
+        "label": "Charakteristika"
+      },
+      {
+        "id": "other-information",
+        "label": "Sonstiges"
+      }
+    ]
+  },
+  {
+    "id": "attribtes",
+    "title": "Attribute",
+    "fields": [
+      {
+        "id": "smarts",
+        "label": "Intelligenz",
+        "style": "box",
+        "type": "number",
+        "values": ["W4", "W6", "W8", "W10", "W12"],
+        "calculationType": "attribute"
+      },
+      {
+        "id": "agility",
+        "label": "Geschicklichkeit",
+        "style": "box",
+        "type": "number",
+        "values": ["W4", "W6", "W8", "W10", "W12"],
+        "calculationType": "attribute"
+      },
+      {
+        "id": "spirit",
+        "label": "Willenskraft",
+        "style": "box",
+        "type": "number",
+        "values": ["W4", "W6", "W8", "W10", "W12"],
+        "calculationType": "attribute"
+      },
+      {
+        "id": "constitution",
+        "label": "Konstitution",
+        "style": "box",
+        "type": "number",
+        "values": ["W4", "W6", "W8", "W10", "W12"],
+        "calculationType": "attribute"
+      },
+      {
+        "id": "strength",
+        "label": "Stärke",
+        "style": "box",
+        "type": "number",
+        "values": ["W4", "W6", "W8", "W10", "W12"],
+        "costs": {
+          "type": "static",
+          "costsPerPoint": 4
+        }
+      }
+    ]
+  },
+  {
+    "id": "delivered-data",
+    "title": "Grundwerte",
+    "fields": [
+      {
+        "id": "parry",
+        "label": "Parade",
+        "style": "box",
+        "type": "calculated",
+        "calculation": "fighting / 2 + 2"
+      },
+      {
+        "id": "charisma",
+        "label": "Charisma",
+        "style": "box",
+        "type": "calculated",
+        "calculation": "0 - hinderances + advantages"
+      },
+      {
+        "id": "toughness",
+        "label": "Robustheit",
+        "style": "box",
+        "type": "calculated",
+        "calculation": "constitution / 2 + 2"
+      },
+      {
+        "id": "pace",
+        "label": "Geschwindigkeit",
+        "style": "box",
+        "type": "calculated",
+        "calculation": "12 - advantages + hinderances"
+      }
+    ]
+  },
+  {
+    "id": "backgroundEdges",
+    "title": "Hintergrund Talente",
+    "fields": [
+      {
+        "id": "backgroundEdge",
+        "label": "",
+        "type": "addable",
+        "calculationType": "edge"
+      }
+    ]
+  },
+  {
+    "id": "hinderance",
+    "title": "Handicaps",
+    "fields": [
+      {
+        "id": "hinderance",
+        "label": "",
+        "type": "addable",
+        "calculationType": "hinderance"
+      }
+    ]
+  },
+  {
+    "id": "edges",
+    "title": "Talente",
+    "fields": [
+      {
+        "id": "edge",
+        "label": "",
+        "type": "addable",
+        "calculationType": "edge"
+      }
+    ]
+  },
+  {
+    "id": "skills",
+    "title": "Fertigkeiten",
+    "fields": [
+      {
+        "id": "alchemy",
+        "label": "Alchemie",
+        "calculationType": "skill"
+      },
+      {
+        "id": "seduction",
+        "label": "Betören",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "games",
+        "label": "Brett- & Glückspiele",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "etiquette",
+        "label": "Etikette",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "geography",
+        "label": "Geographie",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "history",
+        "label": "Geschichtswissen",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "godsAndLegends",
+        "label": "Götter & Sagen",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "trade",
+        "label": "Handel",
+        "calculationType": "skill"
+      },
+      {
+        "id": "healing",
+        "label": "Heilkunde",
+        "calculationType": "skill"
+      },
+      {
+        "id": "cooking",
+        "label": "Kochen",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "warfare",
+        "label": "Kriegskunst",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "tracking",
+        "label": "Fährensuche",
+        "calculationType": "skill"
+      },
+      {
+        "id": "drawing",
+        "label": "Malen & Zeichnen",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "arcaneKnowledge",
+        "label": "Magiekunde",
+        "calculationType": "skill"
+      },
+      {
+        "id": "empathy",
+        "label": "Menschenkenntnis",
+        "calculationType": "skill"
+      },
+      {
+        "id": "music",
+        "label": "Musizieren",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "natureKnowledge",
+        "label": "Naturkunde",
+        "calculationType": "skill"
+      },
+      {
+        "id": "calculating",
+        "label": "Rechnen",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "law",
+        "label": "Rechtskunde",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "seafaring",
+        "label": "Seefahrt",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "singing",
+        "label": "Singen",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "language",
+        "label": "Sprache",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "astronomy",
+        "label": "Sternenkunde",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "supernatural",
+        "label": "Übernatürliches",
+        "calculationType": "skill"
+      },
+      {
+        "id": "persuade",
+        "label": "Überreden",
+        "calculationType": "skill"
+      },
+      {
+        "id": "streetwise",
+        "label": "Umhören",
+        "calculationType": "skill"
+      },
+      {
+        "id": "disguise",
+        "label": "Verkleiden",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "perception",
+        "label": "Wahrnehmung",
+        "calculationType": "skill"
+      },
+      {
+        "id": "spellcasting",
+        "label": "Zaubern",
+        "calculationType": "skill",
+        "rule": "mandatoryEdge arcaneBackground"
+      },
+      {
+        "id": "driving",
+        "label": "Fahrzeuge",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "fastHands",
+        "label": "Fingerfertigkeit",
+        "calculationType": "skill"
+      },
+      {
+        "id": "stealth",
+        "label": "Heimlichkeit",
+        "calculationType": "skill"
+      },
+      {
+        "id": "woodworking",
+        "label": "Holzbearbeitung",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "fighting",
+        "label": "Kämpfen",
+        "calculationType": "skill"
+      },
+      {
+        "id": "closeCombat",
+        "label": "Nahkampf",
+        "calculationType": "skill",
+        "rule": "<= fighting"
+      }, 
+      {
+        "id": "swords",
+        "label": "Klingenwaffen",
+        "calculationType": "skill",
+        "rule": "<= fighting"
+      }, 
+      {
+        "id": "longWepaons",
+        "label": "Stangenwaffen",
+        "calculationType": "skill",
+        "rule": "<= fighting"
+      },
+      {
+        "id": "bodyControl",
+        "label": "Körperbeherrschung",
+        "calculationType": "skill"
+      },
+      {
+        "id": "leatherworking",
+        "label": "Lederbearbeitung",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "riding",
+        "label": "Reiten",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "schooting",
+        "label": "Schießen",
+        "calculationType": "skill"
+      },
+      {
+        "id": "crossbows",
+        "label": "Armbrüste",
+        "calculationType": "skill",
+        "rule": "<= shooting"
+      }, 
+      {
+        "id": "bows",
+        "label": "Bögen",
+        "calculationType": "skill",
+        "rule": "<= shooting"
+      },
+      {
+        "id": "lockpicking",
+        "label": "Schlösser knacken",
+        "calculationType": "skill"
+      },
+      {
+        "id": "stoneworking",
+        "label": "Steinbearbeitung",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "clothworking",
+        "label": "Stoffbearbeitung",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "dancing",
+        "label": "Tanzen",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "throwing",
+        "label": "Werfen",
+        "calculationType": "skill"
+      },
+      {
+        "id": "intimidation",
+        "label": "Einschüchtern",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "faith",
+        "label": "Glaube",
+        "calculationType": "skill",
+        "rule": "mandatoryEdge arcaneBackground"
+      },
+      {
+        "id": "surival",
+        "label": "Wildnisleben",
+        "calculationType": "skill"
+      },
+      {
+        "id": "impactWeapons",
+        "label": "Hiebwaffen",
+        "calculationType": "skill",
+        "rule": "<= fighting"
+      },
+      {
+        "id": "climbing",
+        "label": "Klettern",
+        "calculationType": "cheapSkill"
+      },
+      {
+        "id": "swimming",
+        "label": "Schwimmen",
+        "calculationType": "cheapSkill"
+      }
+    ]
+  },
+  {
+    "id": "weapons-and-armor",
+    "title": "Waffen & Rüstungen",
+    "fields": [
+      {
+        "id": "",
+        "label": "test"
+      }
+    ]
+  },
+  {
+    "id": "equipment",
+    "title": "Ausrüstung",
+    "fields": [
+      {
+        "id": "",
+        "label": "test"
+      }
+    ]
+  }
+]
+}
