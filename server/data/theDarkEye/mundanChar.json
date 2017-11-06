@@ -80,42 +80,106 @@
       {
         "id": "courage",
         "label": "MU",
-        "type": "box"
+        "style": "box",
+        "type": "number",
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
       },
       {
         "id": "cleverness",
         "label": "KL",
-        "type": "box"
+        "style": "box",
+        "type": "number",
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
       },
       {
         "id": "intuition",
         "label": "IN",
-        "type": "box"
+        "style": "box",
+        "type": "number",
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
       },
       {
         "id": "charisma",
         "label": "CH",
-        "type": "box"
+        "style": "box",
+        "type": "number",
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
       },
       {
         "id": "dexterity",
         "label": "FF",
-        "type": "box"
+        "style": "box",
+        "type": "number",
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
       },
       {
         "id": "agility",
         "label": "GE",
-        "type": "box"
+        "style": "box",
+        "type": "number",
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
       },
       {
         "id": "constitution",
         "label": "KO",
-        "type": "box"
+        "style": "box",
+        "type": "number",
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
       },
       {
         "id": "strength",
         "label": "KK",
-        "type": "box"
+        "style": "box",
+        "type": "number",
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
       }
     ]
   },
