@@ -11,11 +11,12 @@ class App extends Component {
       <div>
         <header>
           <Link to="/">Home</Link>
-          <Link to="/charpage">Charpage</Link>
+          <Link to="/charpage/savageworlds">Savage Worlds</Link>
+          <Link to="/charpage/thedarkeye">Das Schwarze Auge</Link>
         </header>
         <main>
-          <Route exact path="/" component={Home} /> 
-          <Route exact path="/charpage" component={CharPageContainer} />
+          <Route path="/" component={Home} /> 
+          <Route path="/charpage/:endpoint" component={CharPageContainer}/>
         </main>
       </div>
     );

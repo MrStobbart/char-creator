@@ -3,7 +3,11 @@ import { NavEntry } from './NavEntry';
 
 export function Navigation(props) {
   console.log('char page nav props', props)
-  const fieldsets = props.fieldsets.map(fieldset => <NavEntry key={fieldset.id} fieldset={fieldset} />)
+  
+  let fieldsets = '';
+  if (props.fieldsets) {
+    fieldsets = props.fieldsets.map(fieldset => <NavEntry key={fieldset.id} fieldset={fieldset} />)
+  }
   
   return (
     <div className="xlarge-20 large-20 medium-30 hide-small hide-tiny">

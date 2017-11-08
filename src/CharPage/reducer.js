@@ -7,8 +7,7 @@ import {
 const initialState = {
   loading: false,
   error: false,
-  charSheet: [],
-  sheetFieldsets: []
+  charSheet: {}
 };
 
 export function charPageReducer(state = initialState, action) {

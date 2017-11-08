@@ -11,10 +11,12 @@ export class CharPage extends React.Component {
 
 
   componentDidMount() {
-    if (this.props.charSheet !== undefined) {
-      this.props.fetchCharPageByEndpoint('thedarkeye/mundanchar');
+    this.props.fetchCharPageByEndpoint(this.props.match.params.endpoint);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.match.params.endpoint !== nextProps.match.params.endpoint) {
+      this.props.fetchCharPageByEndpoint(nextProps.match.params.endpoint);
     }
-
   }
 
   // loadsheet() {
@@ -35,20 +37,19 @@ export class CharPage extends React.Component {
     return (
       <div className="ink-grid">
         <div className="column-group gutters">
-          <Navigation fieldsets={this.props.charSheet} />
-          <Content charSheet={this.props.charSheet}/>
+          <Navigation fieldsets={this.props.fields} />
+          <Content charSheet={this.props.fields}/>
         </div>
       </div>
     )
   }
+  // Char Page Container
 }
 
-// Char Page Container
 function mapStateToProps(state) {
   console.log('this is the state', state);
   return {
-    charSheet: state.charPage.charSheet,
-    sheetFieldsets: state.charPage.sheetFieldsets
+    fields: state.charPage.charSheet.fields,
   }
 }
 

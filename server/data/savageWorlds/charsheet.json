@@ -1,4 +1,5 @@
 {
+  "name": "Sawage Worlds",
   "meta": {
     "calculations":{
       "attribute": {
@@ -385,7 +386,7 @@
         "id": "spellcasting",
         "label": "Zaubern",
         "calculationType": "skill",
-        "rule": "mandatoryEdge arcaneBackground"
+        "rule": "arcaneBackground"
       },
       {
         "id": "driving",
@@ -496,7 +497,7 @@
         "id": "faith",
         "label": "Glaube",
         "calculationType": "skill",
-        "rule": "mandatoryEdge arcaneBackground"
+        "rule": "arcaneBackground"
       },
       {
         "id": "surival",

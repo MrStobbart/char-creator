@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const theDarkEye = require('./data/theDarkEye/mundanChar');
-const savageWorlds = require('./data/savageWorlds/mundanChar');
+const theDarkEye = require('./data/theDarkEye/charsheet');
+const savageWorlds = require('./data/savageWorlds/charsheet');
 
 const app = express();
 
