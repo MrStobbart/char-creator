@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const mundanChar = require('./data/theDarkEye/mundanChar');
+const theDarkEye = require('./data/theDarkEye/mundanChar');
+const savageWorlds = require('./data/savageWorlds/mundanChar');
 
 const app = express();
 
@@ -21,11 +22,15 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('build'));
 }
 
-app.route('/api/thedarkeye/mundanchar')
+app.route('/api/thedarkeye')
   .get((req, res) => {
-    res.json(mundanChar);
+    res.json(theDarkEye);
   });
 
+app.route('/api/savageworlds')
+  .get((req, res) => {
+    res.json(savageWorlds);
+  });
 
 app.listen(8080, () => {
   console.log('Server started on port 8080');
