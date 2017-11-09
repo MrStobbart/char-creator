@@ -12,6 +12,7 @@ export function Fieldset(props) {
             key={field.id}
             values={props.meta.defaultValues}
             default={field.default ? field.default : 0}
+            updateValue={props.createUpdateValueFunction(field.id)}
           >
             {field.label}
           </BoxField>
@@ -21,6 +22,7 @@ export function Fieldset(props) {
           <TextField
             key={field.id}
             type={field.type ? field.type : "text"}
+            updateValue={props.createUpdateValueFunction(field.id)}
           >
             {field.label}
           </TextField>

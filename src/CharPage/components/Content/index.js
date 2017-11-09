@@ -1,17 +1,43 @@
 import React from 'react';
 import { Fieldset } from './Fieldset';
 
-export function Content(props) {
-  console.log('charsheet props', props);
-  let fieldsets = '';
-  if (props.charSheet) {
-    fieldsets = props.charSheet.map(fieldset => <Fieldset key={fieldset.id} fieldset={fieldset} meta={{ defaultValues: props.meta.defaultValues }}/>);
+export class Content extends React.Component {
+
+  componentDidMount() {
+    this.fieldsets = [];
+    this.charSheetData = {}
   }
-  return (
-    <div className="xlarge-80 large-80 medium-70 small-100 tiny-100">
-      <form>
-        {fieldsets}
-      </form>
-    </div>
-  )
+
+  componentWillReceiveProps(nextProps) {
+
+    if (nextProps.charSheet) {
+      this.charSheet = nextProps.charSheet;
+      this.fieldsets = nextProps.charSheet.map(fieldset =>
+        <Fieldset
+          key={fieldset.id}
+          fieldset={fieldset}
+          meta={{ defaultValues: nextProps.meta.defaultValues }}
+          createUpdateValueFunction={this.createUpdateValueFunction}
+        />
+      );
+    }
+  }
+
+  createUpdateValueFunction = id => newValue => {
+    this.charSheetData[id] = newValue;
+    console.log(this.charSheetData);
+  }
+
+  
+  
+  render(){
+    return (
+      <div className="xlarge-80 large-80 medium-70 small-100 tiny-100">
+        <form>
+          {this.fieldsets}
+        </form>
+      </div>
+    )
+  }
+  
 }

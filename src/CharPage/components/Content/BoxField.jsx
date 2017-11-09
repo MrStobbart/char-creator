@@ -12,11 +12,12 @@ export class BoxField extends React.Component {
       value: props.values[index],
     }
   }
-  
+
   decrease = (event) => {
     event.preventDefault();
     this.setState((prevState, props) => {
       const index = prevState.index !== 0 ? prevState.index - 1 : prevState.index
+      this.props.updateValue(index);
       return {
         index,
         value: props.values[index]
@@ -28,11 +29,12 @@ export class BoxField extends React.Component {
   increase = (event) => {
     event.preventDefault();
     this.setState((prevState, props) => {
-      const index = prevState.index !== null ? prevState.index + 1 : prevState.index
-      return {
-        index,
-        value: props.values[index]
+      if (prevState.index + 1 >= props.values.length) {
+        return prevState;
       }
+      const index = prevState.index + 1;
+      this.props.updateValue(index);
+      return { index, value: props.values[index] };
     })
     this.forceUpdate()
   }
