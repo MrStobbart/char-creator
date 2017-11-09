@@ -10,12 +10,16 @@ class App extends Component {
     return (
       <div>
         <header>
-          <Link to="/">Home</Link>
-          <Link to="/charpage/savageworlds">Savage Worlds</Link>
-          <Link to="/charpage/thedarkeye">Das Schwarze Auge</Link>
+          <nav class="ink-navigation">
+            <ul class="menu horizontal black">
+              <li><Link to="/home">Home</Link></li>
+              <li><Link to="/charpage/savageworlds">Savage Worlds</Link></li>
+              <li><Link to="/charpage/thedarkeye">Das Schwarze Auge</Link></li>
+            </ul>
+          </nav>
         </header>
         <main>
-          <Route path="/" component={Home} /> 
+          <Route path="/home" component={Home} /> 
           <Route path="/charpage/:endpoint" component={CharPageContainer}/>
         </main>
       </div>
