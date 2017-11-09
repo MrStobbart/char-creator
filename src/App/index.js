@@ -6,12 +6,13 @@ import { Home } from '../Home';
 import './index.css';
 
 class App extends Component {
+  
   render() {
     return (
       <div>
         <header>
-          <nav class="ink-navigation">
-            <ul class="menu horizontal black">
+          <nav className="ink-navigation">
+            <ul className="menu horizontal black">
               <li><Link to="/home">Home</Link></li>
               <li><Link to="/charpage/savageworlds">Savage Worlds</Link></li>
               <li><Link to="/charpage/thedarkeye">Das Schwarze Auge</Link></li>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 // Actions
 import { fetchCharPageByEndpoint } from './actions';
+
 // Components
 import { Navigation } from './components/Navigation';
 import { Content } from './components/Content';
@@ -19,40 +20,33 @@ export class CharPage extends React.Component {
     }
   }
 
-  // loadsheet() {
-  // fetchEndpoint('thedarkeye/mundanchar')
-  //   .then(sheet => {
-  //     console.log('sheet', sheet);
-  //     this.setState({
-  //       sheetFieldsets: sheet.map(fieldset => {
-  //         return { id: fieldset.id, title: fieldset.title }
-  //       }),
-  //       sheet: sheet
-  //     })
-  //   })
-  //   .catch(err => console.log(err));
-  // }
-  
   render() {
     return (
       <div className="ink-grid">
         <div className="column-group gutters">
-          <Navigation fieldsets={this.props.fields} />
-          <Content charSheet={this.props.fields}/>
+          <Navigation fieldsets={this.props.charSheet.fields} />
+          <Content
+            charSheet={this.props.charSheet.fields}
+            meta={this.props.charSheet.meta}
+          />
         </div>
       </div>
     )
   }
-  // Char Page Container
 }
+
+
+/**
+ * CharPageContainer
+ */
+export const CharPageContainer = connect(mapStateToProps, mapDispatchToProps)(CharPage)
 
 function mapStateToProps(state) {
   console.log('this is the state', state);
   return {
-    fields: state.charPage.charSheet.fields,
+    charSheet: state.charPage.charSheet ? state.charPage.charSheet : '',
   }
 }
-
 function mapDispatchToProps(dispatch) {
   return {
     fetchCharPageByEndpoint: (endpoint) => {
@@ -60,6 +54,4 @@ function mapDispatchToProps(dispatch) {
     }
   }
 }
-
-export const CharPageContainer = connect(mapStateToProps, mapDispatchToProps)(CharPage)
 

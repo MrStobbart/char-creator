@@ -41,7 +41,14 @@
           }
         ]
       }
-    }
+    },
+    "defaultValues": [
+      "W4",
+      "W6",
+      "W8",
+      "W10",
+      "W12"
+    ]
 
   },
   "fields": [
@@ -128,7 +135,7 @@
         "label": "Intelligenz",
         "style": "box",
         "type": "number",
-        "values": ["W4", "W6", "W8", "W10", "W12"],
+        "default": 0,
         "calculationType": "attribute"
       },
       {
@@ -136,7 +143,7 @@
         "label": "Geschicklichkeit",
         "style": "box",
         "type": "number",
-        "values": ["W4", "W6", "W8", "W10", "W12"],
+        "default": 0,
         "calculationType": "attribute"
       },
       {
@@ -144,7 +151,7 @@
         "label": "Willenskraft",
         "style": "box",
         "type": "number",
-        "values": ["W4", "W6", "W8", "W10", "W12"],
+        "default": 0,
         "calculationType": "attribute"
       },
       {
@@ -152,7 +159,7 @@
         "label": "Konstitution",
         "style": "box",
         "type": "number",
-        "values": ["W4", "W6", "W8", "W10", "W12"],
+        "default": 0,
         "calculationType": "attribute"
       },
       {
@@ -160,7 +167,7 @@
         "label": "Stärke",
         "style": "box",
         "type": "number",
-        "values": ["W4", "W6", "W8", "W10", "W12"],
+        "default": 0,
         "costs": {
           "type": "static",
           "costsPerPoint": 4
@@ -245,279 +252,387 @@
       {
         "id": "alchemy",
         "label": "Alchemie",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "seduction",
         "label": "Betören",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "games",
         "label": "Brett- & Glückspiele",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "etiquette",
         "label": "Etikette",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "geography",
         "label": "Geographie",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "history",
         "label": "Geschichtswissen",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "godsAndLegends",
         "label": "Götter & Sagen",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "trade",
         "label": "Handel",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "healing",
         "label": "Heilkunde",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "cooking",
         "label": "Kochen",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "warfare",
         "label": "Kriegskunst",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "tracking",
         "label": "Fährensuche",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "drawing",
         "label": "Malen & Zeichnen",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "arcaneKnowledge",
         "label": "Magiekunde",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "empathy",
         "label": "Menschenkenntnis",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "music",
         "label": "Musizieren",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "natureKnowledge",
         "label": "Naturkunde",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "calculating",
         "label": "Rechnen",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "law",
         "label": "Rechtskunde",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "seafaring",
         "label": "Seefahrt",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "singing",
         "label": "Singen",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "language",
         "label": "Sprache",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "astronomy",
         "label": "Sternenkunde",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "supernatural",
         "label": "Übernatürliches",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "persuade",
         "label": "Überreden",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "streetwise",
         "label": "Umhören",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "disguise",
         "label": "Verkleiden",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "perception",
         "label": "Wahrnehmung",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "spellcasting",
         "label": "Zaubern",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill",
         "rule": "arcaneBackground"
       },
       {
         "id": "driving",
         "label": "Fahrzeuge",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "fastHands",
         "label": "Fingerfertigkeit",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "stealth",
         "label": "Heimlichkeit",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "woodworking",
         "label": "Holzbearbeitung",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "fighting",
         "label": "Kämpfen",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "closeCombat",
         "label": "Nahkampf",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill",
         "rule": "<= fighting"
       }, 
       {
         "id": "swords",
         "label": "Klingenwaffen",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill",
         "rule": "<= fighting"
       }, 
       {
         "id": "longWepaons",
         "label": "Stangenwaffen",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill",
         "rule": "<= fighting"
       },
       {
         "id": "bodyControl",
         "label": "Körperbeherrschung",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "leatherworking",
         "label": "Lederbearbeitung",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "riding",
         "label": "Reiten",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "schooting",
         "label": "Schießen",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "crossbows",
         "label": "Armbrüste",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill",
         "rule": "<= shooting"
       }, 
       {
         "id": "bows",
         "label": "Bögen",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill",
         "rule": "<= shooting"
       },
       {
         "id": "lockpicking",
         "label": "Schlösser knacken",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "stoneworking",
         "label": "Steinbearbeitung",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "clothworking",
         "label": "Stoffbearbeitung",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "dancing",
         "label": "Tanzen",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "throwing",
         "label": "Werfen",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "intimidation",
         "label": "Einschüchtern",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "faith",
         "label": "Glaube",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill",
         "rule": "arcaneBackground"
       },
       {
         "id": "surival",
         "label": "Wildnisleben",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill"
       },
       {
         "id": "impactWeapons",
         "label": "Hiebwaffen",
+        "type": "number",
+        "style": "box",
         "calculationType": "skill",
         "rule": "<= fighting"
       },
       {
         "id": "climbing",
         "label": "Klettern",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       },
       {
         "id": "swimming",
         "label": "Schwimmen",
+        "type": "number",
+        "style": "box",
         "calculationType": "cheapSkill"
       }
     ]
