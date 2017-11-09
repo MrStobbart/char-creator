@@ -3,29 +3,44 @@ import { Fieldset } from './Fieldset';
 
 export class Content extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      charSheetData: {}
+    }
+  }
+
   componentDidMount() {
-    this.fieldsets = [];
-    this.charSheetData = {}
+    // TODO default set charsheet data here
   }
 
   componentWillReceiveProps(nextProps) {
 
     if (nextProps.charSheet) {
-      this.charSheet = nextProps.charSheet;
-      this.fieldsets = nextProps.charSheet.map(fieldset =>
-        <Fieldset
-          key={fieldset.id}
-          fieldset={fieldset}
-          meta={{ defaultValues: nextProps.meta.defaultValues }}
-          createUpdateValueFunction={this.createUpdateValueFunction}
-        />
-      );
+      this.createFieldsets(nextProps);
     }
   }
 
   createUpdateValueFunction = id => newValue => {
-    this.charSheetData[id] = newValue;
-    console.log(this.charSheetData);
+    this.setState((prevState, props) => {
+      let newState = { ...prevState }
+      newState.charSheetData[id] = newValue;
+      return newState;
+    })
+    console.log('newState', this.state);
+    this.createFieldsets(this.props)
+  }
+
+  createFieldsets(nextProps) {
+    this.fieldsets = nextProps.charSheet.map(fieldset =>
+      <Fieldset
+        key={fieldset.id}
+        fieldset={fieldset}
+        meta={{ defaultValues: nextProps.meta.defaultValues }}
+        createUpdateValueFunction={this.createUpdateValueFunction}
+        charSheetData={this.state.charSheetData}
+      />
+    );
   }
 
   

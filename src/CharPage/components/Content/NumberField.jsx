@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import './BoxField.css';
+import './NumberField.css';
 
-export class BoxField extends React.Component {
+export class NumberField extends React.Component {
 
   constructor(props) {
     super();
@@ -23,7 +22,7 @@ export class BoxField extends React.Component {
         value: props.values[index]
       }
     })
-    this.forceUpdate()
+    this.forceUpdate();
   }
 
   increase = (event) => {
@@ -36,7 +35,7 @@ export class BoxField extends React.Component {
       this.props.updateValue(index);
       return { index, value: props.values[index] };
     })
-    this.forceUpdate()
+    this.forceUpdate();
   }
 
   render() {
@@ -46,7 +45,7 @@ export class BoxField extends React.Component {
         <div className="control all-60">
           <button className="change-button" onClick={this.decrease}>-</button>
           <input
-            className="box-field"
+            className="number-field"
             type="text"
             value={this.state.value}
             readOnly
@@ -56,12 +55,4 @@ export class BoxField extends React.Component {
       </div>
     )
   }
-}
-
-
-
-BoxField.propTypes = {
-  values: PropTypes.array.isRequired,
-  type: PropTypes.string,
-  children: PropTypes.string.isRequired
 }

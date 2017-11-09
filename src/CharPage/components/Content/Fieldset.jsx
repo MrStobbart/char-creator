@@ -1,21 +1,33 @@
 import React from 'react';
 import { TextField } from './TextField';
-import { BoxField } from './BoxField';
+import { NumberField } from './NumberField';
+import { CalcField } from './CalcField';
 import './Fieldset.css';
 
 export function Fieldset(props) {
   const fields = props.fieldset.fields.map(field => {
-    switch (field.style) {
-      case "box":
+    switch (field.type) {
+      case 'number':
         return (
-          <BoxField
+          <NumberField
             key={field.id}
             values={props.meta.defaultValues}
             default={field.default ? field.default : 0}
             updateValue={props.createUpdateValueFunction(field.id)}
           >
             {field.label}
-          </BoxField>
+          </NumberField>
+        );
+      case 'calculated':
+        return (
+          <CalcField
+            key={field.id}
+            charSheetData={props.charSheetData}
+            calculation={field.calculation}
+            modifier={props.charSheetData.id}
+          >
+            {field.label}
+          </CalcField>
         );
       default:
         return (

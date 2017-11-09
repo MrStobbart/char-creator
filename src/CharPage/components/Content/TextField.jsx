@@ -20,7 +20,7 @@ export class TextField extends React.Component {
         <label className="all-40 align-left" htmlFor="name">{this.props.children}</label>
         <div className="control all-60">
           <input
-            className="text"
+            className="text-field"
             type="text"
             value={this.state.value}
             onChange={this.handleChange}
@@ -34,5 +34,5 @@ export class TextField extends React.Component {
 TextField.propTypes = {
   type: PropTypes.string.isRequired,
   children: PropTypes.string.isRequired,
-  
+
 }
