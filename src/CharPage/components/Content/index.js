@@ -14,8 +14,8 @@ export class Content extends React.Component {
   componentWillReceiveProps(nextProps) {
 
     if (nextProps.charSheet) {
-      this.createFieldsets(nextProps);
       this.state.charSheetData = nextProps.meta.defaultData;
+      this.createFieldsets(nextProps);
     }
   }
 
