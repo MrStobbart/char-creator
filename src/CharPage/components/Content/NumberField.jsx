@@ -5,17 +5,17 @@ export class NumberField extends React.Component {
 
   constructor(props) {
     super();
-    const index = props.default ? props.default : 0
+    this.default = props.default ? props.default : 0
     this.state = {
-      index,
-      value: props.values[index],
+      index: this.default,
+      value: props.values[this.default],
     }
   }
 
   decrease = (event) => {
     event.preventDefault();
     this.setState((prevState, props) => {
-      const index = prevState.index !== 0 ? prevState.index - 1 : prevState.index
+      const index = prevState.index !== this.default ? prevState.index - 1 : prevState.index
       this.props.updateValue(index);
       return {
         index,
