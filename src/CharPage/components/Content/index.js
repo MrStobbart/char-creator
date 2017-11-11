@@ -1,5 +1,6 @@
 import React from 'react';
 import { Fieldset } from './Fieldset';
+import { CharHeader } from './CharHeader';
 
 export class Content extends React.Component {
 
@@ -10,14 +11,11 @@ export class Content extends React.Component {
     }
   }
 
-  componentDidMount() {
-    // TODO default set charsheet data here
-  }
-
   componentWillReceiveProps(nextProps) {
 
     if (nextProps.charSheet) {
       this.createFieldsets(nextProps);
+      this.state.charSheetData = nextProps.meta.defaultData;
     }
   }
 
@@ -31,6 +29,7 @@ export class Content extends React.Component {
     this.createFieldsets(this.props)
   }
 
+  // TODO why is this not re-rendering on state change (and createFieldsets() has to be called again?)
   createFieldsets(nextProps) {
     this.fieldsets = nextProps.charSheet.map(fieldset =>
       <Fieldset
@@ -45,9 +44,11 @@ export class Content extends React.Component {
 
   
   
-  render(){
+  render() {
+    console.log('saved data:', this.state.charSheetData);
     return (
-      <div className="xlarge-80 large-80 medium-70 small-100 tiny-100">
+      <div className="xlarge-70 large-60 medium-50 small-100 tiny-100">
+        <CharHeader />  
         <form>
           {this.fieldsets}
         </form>
