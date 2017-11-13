@@ -13,10 +13,6 @@ export class CalcField extends React.Component {
     this.calculateValue();
   }
 
-  // charSheetData = { props.charSheetData }
-  // calculation = { field.calculation }
-  // modifier = { props.charSheetData.id }
-
   componentWillReceiveProps(nextProps) {
     this.calculateValue();
   }
@@ -25,7 +21,7 @@ export class CalcField extends React.Component {
     const calculation = this.props.calculation.split(' ');
     const calculationString = calculation.map(argument => {
       if (argument.length > 2) {
-        return this.props.charSheetData[argument] ? this.props.charSheetData[argument] : 0;
+        return this.props.charSheetData[argument] ? this.props.charSheetData[argument].value : 0;
       } else {
         return argument
       }
@@ -34,8 +30,6 @@ export class CalcField extends React.Component {
     const newValue = eval(calculationString) + modifier;
     this.setState({value: newValue})
   }
-
-  
 
   render() {
     return (
