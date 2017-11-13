@@ -8,6 +8,7 @@ export class Content extends React.Component {
     super(props);
     this.state = {
       charSheet: {
+        id: '',
         name: '',
         meta: {},
         fieldsets: []
@@ -29,24 +30,25 @@ export class Content extends React.Component {
     }
   }
 
-  makeCreateUpdateValueFunction = fieldsetId => fieldId => newValue => {
-    console.log('Update function fieldset: ', fieldsetId, ' fieldId', fieldId)
+  makeCreateUpdateValueFunction = fieldsetId => field=> newValue => {
+    console.log('Update function fieldset: ', fieldsetId, ' field', field)
     this.setState((prevState, props) => {
       let newState = { ...prevState }
 
       // Find and add the calculation type of new data to saved data 
-      if (!newState.charSheetData[fieldId]) {
-        newState.charSheetData[fieldId] = {}
-        const fieldset = this.props.charSheet.find(fieldset => fieldset.id === fieldsetId);
-        const calculationType = fieldset.fields.find(field => field.id === fieldId).calculationType;
+      if (!newState.charSheetData[field.id]) {
+        newState.charSheetData[field.id] = {}
+        if (field.calculationType) {
+          newState.charSheetData[field.id].calculationType = field.calculationType
+        }
 
-        if (calculationType) {
-          newState.charSheetData[fieldId].calculationType = calculationType
+        if (field.attribute) {
+          newState.charSheetData[field.id].attribute = field.attribute
         }
       }
       
       // Set new state
-      newState.charSheetData[fieldId].value = newValue;
+      newState.charSheetData[field.id].value = newValue;
       newState.unsavedChanges = true;
       return newState;
     })
@@ -62,22 +64,34 @@ export class Content extends React.Component {
     console.log('save changes');
     // TODO dispatch save action
   }
-  
+
+  calculateStuff = () => {
+    switch (this.state.charSheet.id) {
+      case 'savageWorldsFantasy':
+        this.savageWorldsFantasyCalculations();
+        break;
+      default:
+        console.error('Unkown char sheet id');
+        break;
+    }
+  }
+
   render() {
     return (
       <div className="xlarge-70 large-60 medium-50 small-100 tiny-100">
         <CharHeader
           charSheetData={this.state.charSheetData}
           meta={this.state.charSheet.meta}
+          charSheetId={this.state.charSheet.id}
           saveChanges={this.saveChanges}
           unsavedChanges={this.state.unsavedChanges}
-        />  
+        />
         <form>
           {this.state.charSheet.fieldsets.map(fieldset =>
             <Fieldset
               key={fieldset.id}
               fieldset={fieldset}
-              meta={{ availableValues: this.state.charSheet.meta.availableValues }}
+              meta={this.state.charSheet.meta}
               createUpdateValueFunction={this.makeCreateUpdateValueFunction(fieldset.id)}
               charSheetData={this.state.charSheetData}
             />

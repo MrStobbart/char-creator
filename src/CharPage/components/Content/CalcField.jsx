@@ -18,14 +18,17 @@ export class CalcField extends React.Component {
   }
 
   calculateValue() {
-    const calculation = this.props.calculation.split(' ');
-    const calculationString = calculation.map(argument => {
-      if (argument.length > 2) {
-        return this.props.charSheetData[argument] ? this.props.charSheetData[argument].value : 0;
-      } else {
-        return argument
-      }
-    }).join(' ');
+    const calculationString = this.props.calculation
+      .split(' ')
+      .map(argument => {
+        if (argument.length > 2) {
+          // The argument is a variable
+          return this.props.charSheetData[argument] ? this.props.charSheetData[argument].value : 0;
+        } else {
+          return argument
+        }
+      })
+      .join(' ');
     const modifier = this.props.modifier ? this.props.modifier : 0
     const newValue = eval(calculationString) + modifier;
     this.setState({value: newValue})

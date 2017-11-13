@@ -12,8 +12,9 @@ export function Fieldset(props) {
           <NumberField
             key={field.id}
             values={props.meta.availableValues}
-            default={field.default ? field.default : 0}
-            updateValue={props.createUpdateValueFunction(field.id)}
+            calculationTypes={props.meta.calculationTypes}
+            updateValue={props.createUpdateValueFunction(field)}
+            field={field}
           >
             {field.label}
           </NumberField>
