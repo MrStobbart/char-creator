@@ -2,6 +2,7 @@ import React from 'react';
 import { TextField } from './TextField';
 import { NumberField } from './NumberField';
 import { CalcField } from './CalcField';
+import { AddableField } from './AddableField';
 import './Fieldset.css';
 
 export function Fieldset(props) {
@@ -30,12 +31,20 @@ export function Fieldset(props) {
             {field.label}
           </CalcField>
         );
+      case 'addable':
+        return (
+          <AddableField
+            key={field.id}
+            updateValue={props.createUpdateValueFunction(field)}
+          >
+            Addable field
+          </AddableField>
+        )  
       default:
         return (
           <TextField
             key={field.id}
-            type={field.type ? field.type : 'text'}
-            updateValue={props.createUpdateValueFunction(field.id)}
+            updateValue={props.createUpdateValueFunction(field)}
           >
             {field.label}
           </TextField>

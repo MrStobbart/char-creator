@@ -93,7 +93,7 @@
         "label": "Familie"
       },
       {
-        "id": "place-of-birth",
+        "id": "placeOfBirth",
         "label": "Geburtsort"
       },
       {
@@ -141,7 +141,7 @@
         "label": "Titel"
       },
       {
-        "id": "social-status",
+        "id": "socialStatus",
         "label": "Sozialstatus"
       },
       {
@@ -149,7 +149,7 @@
         "label": "Charakteristika"
       },
       {
-        "id": "other-information",
+        "id": "otherInformation",
         "label": "Sonstiges"
       }
     ]

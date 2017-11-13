@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './TextField.css';
 
 export class TextField extends React.Component {
@@ -29,10 +28,4 @@ export class TextField extends React.Component {
       </div>
     )
   }
-}
-
-TextField.propTypes = {
-  type: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
-
 }
