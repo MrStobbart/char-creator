@@ -5,21 +5,21 @@ export class NumberField extends React.Component {
 
   constructor(props) {
     super();
-    this.default = props.default ? props.default : 0
+    this.default = props.field.default ? props.field.default : 0;
     this.state = {
-      index: this.default,
-      value: props.values[this.default],
+      value: this.default,
+      displayValue: props.values[this.default],
     }
   }
 
   decrease = (event) => {
     event.preventDefault();
     this.setState((prevState, props) => {
-      const index = prevState.index !== this.default ? prevState.index - 1 : prevState.index
-      this.props.updateValue(index);
+      const value = prevState.value !== this.default ? prevState.value - 1 : prevState.value
+      this.props.updateValue(value);
       return {
-        index,
-        value: props.values[index]
+        value,
+        displayValue: props.values[value]
       }
     })
     this.forceUpdate();
@@ -28,12 +28,12 @@ export class NumberField extends React.Component {
   increase = (event) => {
     event.preventDefault();
     this.setState((prevState, props) => {
-      if (prevState.index + 1 >= props.values.length) {
+      if (prevState.value + 1 >= props.values.length) {
         return prevState;
       }
-      const index = prevState.index + 1;
-      this.props.updateValue(index);
-      return { index, value: props.values[index] };
+      const value = prevState.value + 1;
+      this.props.updateValue(value);
+      return { value, displayValue: props.values[value] };
     })
     this.forceUpdate();
   }
@@ -47,7 +47,7 @@ export class NumberField extends React.Component {
           <input
             className="number-field"
             type="text"
-            value={this.state.value}
+            value={this.state.displayValue}
             readOnly
           />
           <button className="change-button" onClick={this.increase}>+</button>
