@@ -24,10 +24,9 @@ export class CharPage extends React.Component {
     return (
       <div className="ink-grid">
         <div className="column-group gutters">
-          <Navigation fieldsets={this.props.charSheet.fields} />
+          <Navigation fieldsets={this.props.charSheet.fieldsets} />
           <Content
-            charSheet={this.props.charSheet.fields}
-            meta={this.props.charSheet.meta}
+            charSheet={this.props.charSheet}
           />
         </div>
       </div>
@@ -44,7 +43,7 @@ export const CharPageContainer = connect(mapStateToProps, mapDispatchToProps)(Ch
 function mapStateToProps(state) {
   console.log('this is the state', state);
   return {
-    charSheet: state.charPage.charSheet ? state.charPage.charSheet : '',
+    charSheet: state.charPage.charSheet ? state.charPage.charSheet : {},
   }
 }
 function mapDispatchToProps(dispatch) {

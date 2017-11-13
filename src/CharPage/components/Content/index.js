@@ -7,6 +7,11 @@ export class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      charSheet: {
+        name: '',
+        meta: {},
+        fieldsets: []
+      },
       charSheetData: {},
       unsavedChanges: false,
     }
@@ -14,13 +19,13 @@ export class Content extends React.Component {
 
   componentWillReceiveProps(nextProps) {
 
+    console.log('nextProps', nextProps)
     if (nextProps.charSheet) {
       this.setState(prevState => ({
         ...prevState,
-        charSheetData: nextProps.meta.defaultData
+        charSheet: nextProps.charSheet,
+        charSheetData: nextProps.charSheet.meta.defaultData,
       }));
-      // TODO this will not be called in time - set state is delayed (why does it has to be called?)
-      this.createFieldsets(nextProps);
     }
   }
 
@@ -34,7 +39,7 @@ export class Content extends React.Component {
         newState.charSheetData[fieldId] = {}
         const fieldset = this.props.charSheet.find(fieldset => fieldset.id === fieldsetId);
         const calculationType = fieldset.fields.find(field => field.id === fieldId).calculationType;
-        
+
         if (calculationType) {
           newState.charSheetData[fieldId].calculationType = calculationType
         }
@@ -46,7 +51,7 @@ export class Content extends React.Component {
       return newState;
     })
     console.log('newState', this.state);
-    this.createFieldsets(this.props)
+    // this.createFieldsets(this.props)
   }
 
   saveChanges = () => {
@@ -57,33 +62,26 @@ export class Content extends React.Component {
     console.log('save changes');
     // TODO dispatch save action
   }
-
-  // TODO why is this not re-rendering on state change (and createFieldsets() has to be called again?)
-  createFieldsets(nextProps) {
-    this.fieldsets = nextProps.charSheet.map(fieldset =>
-      <Fieldset
-        key={fieldset.id}
-        fieldset={fieldset}
-        meta={{ defaultValues: nextProps.meta.defaultValues }}
-        createUpdateValueFunction={this.makeCreateUpdateValueFunction(fieldset.id)}
-        charSheetData={this.state.charSheetData}
-      />
-    );
-  }
-
-
   
   render() {
-    console.log('saved data:', this.state.charSheetData);
     return (
       <div className="xlarge-70 large-60 medium-50 small-100 tiny-100">
         <CharHeader
           charSheetData={this.state.charSheetData}
+          meta={this.state.charSheet.meta}
           saveChanges={this.saveChanges}
           unsavedChanges={this.state.unsavedChanges}
         />  
         <form>
-          {this.fieldsets}
+          {this.state.charSheet.fieldsets.map(fieldset =>
+            <Fieldset
+              key={fieldset.id}
+              fieldset={fieldset}
+              meta={{ availableValues: this.state.charSheet.meta.availableValues }}
+              createUpdateValueFunction={this.makeCreateUpdateValueFunction(fieldset.id)}
+              charSheetData={this.state.charSheetData}
+            />
+          )}
         </form>
       </div>
     )

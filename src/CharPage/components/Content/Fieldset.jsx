@@ -11,7 +11,7 @@ export function Fieldset(props) {
         return (
           <NumberField
             key={field.id}
-            values={props.meta.defaultValues}
+            values={props.meta.availableValues}
             default={field.default ? field.default : 0}
             updateValue={props.createUpdateValueFunction(field.id)}
           >
@@ -33,15 +33,13 @@ export function Fieldset(props) {
         return (
           <TextField
             key={field.id}
-            type={field.type ? field.type : "text"}
+            type={field.type ? field.type : 'text'}
             updateValue={props.createUpdateValueFunction(field.id)}
           >
             {field.label}
           </TextField>
         )
     }
-
-    
   });
 
   return (
