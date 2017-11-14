@@ -15,15 +15,17 @@ export class TextField extends React.Component {
 
   render() {
     return (
-      <div className="column-group quarter-gutters">
-        <label className="all-40 align-left" htmlFor="name">{this.props.children}</label>
-        <div className="control all-60">
-          <input
-            className="text-field"
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChange}
-            />
+      <div className="xlarge-50 large-100 medium-100 small-100 tiny-100">
+        <div className="column-group quarter-gutters">
+          <label className="all-40 align-left" htmlFor="name">{this.props.children}</label>
+          <div className="control all-60">
+            <input
+              className="text-field"
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+              />
+          </div>
         </div>
       </div>
     )

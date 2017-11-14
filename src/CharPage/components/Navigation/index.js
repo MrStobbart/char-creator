@@ -2,8 +2,6 @@ import React from 'react';
 import { NavEntry } from './NavEntry';
 
 export function Navigation(props) {
-  console.log('char page nav props', props)
-  
   let fieldsets = '';
   if (props.fieldsets) {
     fieldsets = props.fieldsets.map(fieldset => <NavEntry key={fieldset.id} fieldset={fieldset} />)

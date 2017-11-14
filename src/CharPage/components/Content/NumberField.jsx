@@ -39,18 +39,20 @@ export class NumberField extends React.Component {
   }
 
   render() {
-    return(
-      <div className="column-group quarter-gutters">
-        <label className="all-40 align-left" htmlFor="name">{this.props.children}</label>
-        <div className="control all-60">
-          <button className="change-button" onClick={this.decrease}>-</button>
-          <input
-            className="number-field"
-            type="text"
-            value={this.state.displayValue}
-            readOnly
-          />
-          <button className="change-button" onClick={this.increase}>+</button>
+    return (
+      <div className="xlarge-50 large-100 medium-100 small-100 tiny-100">
+        <div className="column-group quarter-gutters">
+          <label className="all-40 align-left" htmlFor="name">{this.props.children}</label>
+          <div className="control all-60">
+            <button className="change-button" onClick={this.decrease}>-</button>
+            <input
+              className="number-field"
+              type="text"
+              value={this.state.displayValue}
+              readOnly
+            />
+            <button className="change-button" onClick={this.increase}>+</button>
+          </div>
         </div>
       </div>
     )
