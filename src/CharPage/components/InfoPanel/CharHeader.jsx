@@ -61,22 +61,22 @@ function savageWorldsHeader(props) {
   }
 
   return (
-    <div uk-sticky="offset: 20" uk-grid="true">
-      <div className="uk-width-1-4">
+    <div uk-sticky="offset: 20">
+      <div>
         Remaining char points: {skillPoints / 2}
       </div>
-      <div className="uk-width-1-4">
+      <div>
         Remaining attribute points: {attributePoints}
       </div>
-      <div className="uk-width-1-4">
+      <div>
         Remaining talent points: {edgePoints / 2}
       </div>
-      <div className="uk-width-1-4">
+      <div>
         <button onClick={props.saveChanges}>
           {props.unsavedChanges ? 'Unsaved changes': 'Everything saved'}
         </button>
       </div>  
-      <div className="uk-width-1-4">
+      <div>
         <button>
           Finish char creation
         </button>

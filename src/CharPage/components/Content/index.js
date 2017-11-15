@@ -1,105 +1,25 @@
 import React from 'react';
 import { Fieldset } from './Fieldset';
-import { CharHeader } from './CharHeader';
 import './index.css';
 
-export class Content extends React.Component {
+export function Content(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      charSheet: {
-        id: '',
-        name: '',
-        meta: {},
-        fieldsets: []
-      },
-      charSheetData: {},
-      unsavedChanges: false,
-    }
-  }
+  console.log('props', props)
 
-  componentWillReceiveProps(nextProps) {
-
-    console.log('nextProps', nextProps)
-    if (nextProps.charSheet) {
-      this.setState(prevState => ({
-        ...prevState,
-        charSheet: nextProps.charSheet,
-        charSheetData: nextProps.charSheet.meta.defaultData,
-      }));
-    }
-  }
-
-  makeCreateUpdateValueFunction = fieldsetId => field=> newValue => {
-    console.log('Update function fieldset: ', fieldsetId, ' field', field)
-    this.setState((prevState, props) => {
-      let newState = { ...prevState }
-
-      // Find and add the calculation type of new data to saved data 
-      if (!newState.charSheetData[field.id]) {
-        newState.charSheetData[field.id] = {}
-        if (field.calculationType) {
-          newState.charSheetData[field.id].calculationType = field.calculationType
-        }
-
-        if (field.attribute) {
-          newState.charSheetData[field.id].attribute = field.attribute
-        }
-      }
-      
-      // Set new state
-      newState.charSheetData[field.id].value = newValue;
-      newState.unsavedChanges = true;
-      return newState;
-    })
-    console.log('newState', this.state);
-    // this.createFieldsets(this.props)
-  }
-
-  saveChanges = () => {
-    this.setState(prevState => ({
-      ...prevState,
-      unsavedChanges: false
-    }))
-    console.log('save changes');
-    // TODO dispatch save action
-  }
-
-  calculateStuff = () => {
-    switch (this.state.charSheet.id) {
-      case 'savageWorldsFantasy':
-        this.savageWorldsFantasyCalculations();
-        break;
-      default:
-        console.error('Unkown char sheet id');
-        break;
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <CharHeader
-          charSheetData={this.state.charSheetData}
-          meta={this.state.charSheet.meta}
-          charSheetId={this.state.charSheet.id}
-          saveChanges={this.saveChanges}
-          unsavedChanges={this.state.unsavedChanges}
-        />
-        <form className="uk-form-horizontal">
-          {this.state.charSheet.fieldsets.map(fieldset =>
-            <Fieldset
-              key={fieldset.id}
-              fieldset={fieldset}
-              meta={this.state.charSheet.meta}
-              createUpdateValueFunction={this.makeCreateUpdateValueFunction(fieldset.id)}
-              charSheetData={this.state.charSheetData}
-            />
-          )}
-        </form>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <form className="uk-form-horizontal">
+        {props.charSheet.fieldsets.map(fieldset =>
+          <Fieldset
+            key={fieldset.id}
+            fieldset={fieldset}
+            meta={props.charSheet.meta}
+            createUpdateValueFunction={props.makeCreateUpdateValueFunction(fieldset.id)}
+            charSheetData={props.charSheetData}
+          />
+        )}
+      </form>
+    </div>
+  )
   
 }
