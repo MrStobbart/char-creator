@@ -40,7 +40,7 @@ export class CalcField extends React.Component {
         <label className="uk-form-label" htmlFor="name">{this.props.children}</label>
         <div className="uk-form-controls">
           <input
-            className="number-field uk-input"
+            className="number-field uk-input uk-form-small"
             value={this.state.value}
             readOnly
           />

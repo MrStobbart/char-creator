@@ -44,7 +44,7 @@ export class AddableField extends React.Component {
             Label
           </Field>
         )}
-        <button className="uk-button uk-button-default" onClick={this.addField}>
+        <button className="uk-button uk-button-default uk-button-small" onClick={this.addField}>
           Add field
         </button>
       </div>

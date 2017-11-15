@@ -45,7 +45,7 @@ export class NumberField extends React.Component {
         <div className="uk-form-controls">
           <button className="uk-icon-button change-button" uk-icon="icon: minus; ratio: 0.7" onClick={this.decrease}></button>
           <input
-            className="number-field uk-input"
+            className="number-field uk-input uk-form-small"
             type="text"
             value={this.state.displayValue}
             readOnly

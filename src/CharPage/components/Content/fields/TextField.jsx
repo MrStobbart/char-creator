@@ -19,7 +19,7 @@ export class TextField extends React.Component {
         <label className="uk-form-label" htmlFor="name">{this.props.children}</label>
         <div className="uk-form-controls">
           <input
-            className="text-field uk-input"
+            className="text-field uk-input uk-form-small"
             type="text"
             value={this.state.value}
             onChange={this.handleChange}

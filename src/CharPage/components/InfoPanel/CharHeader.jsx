@@ -72,12 +72,12 @@ function savageWorldsHeader(props) {
         Wählbare Talente: {edgePoints / 2}
       </div>
       <div className="uk-margin">
-        <button className="uk-button uk-button-default" onClick={props.saveChanges}>
+        <button className="uk-button uk-button-default uk-button-small" onClick={props.saveChanges}>
           {props.unsavedChanges ? 'Unsaved changes': 'Everything saved'}
         </button>
       </div>  
       <div className="uk-margin">
-        <button className="uk-button uk-button-default">
+        <button className="uk-button uk-button-default uk-button-small">
           Finish char creation
         </button>
       </div>  

@@ -1,9 +1,7 @@
 .number-field{
   width: 56px;
-  /* height: 28px; */
   text-align: center;
-  border-color: white;
-  border-width: 1px;
+  border-style: none;
   margin: 0px 10px;
   display: inline-block;
   vertical-align: middle;
