@@ -18,8 +18,8 @@
     "build": "npm-run-all -l -p buildserver buildclient",
     "devclient": "react-scripts start",
     "buildclient": "react-scripts build",
-    "devserver": "NODE_ENV=development nodemon -w server server/server.js",
-    "buildserver": "NODE_ENV=production node server/server.js",
+    "devserver": "cross-env NODE_ENV=development nodemon -w server server/server.js",
+    "buildserver": "cross-env NODE_ENV=production node server/server.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -38,6 +38,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "cross-env": "^5.1.1",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.2",
     "npm-run-all": "^4.1.2",
