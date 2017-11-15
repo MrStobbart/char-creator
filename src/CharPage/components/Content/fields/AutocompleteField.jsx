@@ -70,20 +70,25 @@ export class AutocompleteField extends React.Component {
   shouldRenderSuggestions = (value) => {
     return true;
   }
+  
+  renderInputComponent = inputProps => (
+    <div>
+      <input {...inputProps} className="uk-input"/>
+    </div>
+  );
 
   render() {
     console.log('Autocomplete props', this.props)
-    const { value, suggestions } = this.state;
     const inputProps = {
       placeholder: "Type 'c'",
-      value,
+      value: this.state.value,
       onChange: this.onChange
     };
 
     return (
       <Autosuggest
         multiSection={true}
-        suggestions={suggestions}
+        suggestions={this.state.suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         getSuggestionValue={this.getSuggestionValue}
@@ -92,6 +97,7 @@ export class AutocompleteField extends React.Component {
         getSectionSuggestions={this.getSectionSuggestions}
         inputProps={inputProps}
         shouldRenderSuggestions={this.shouldRenderSuggestions}
+        renderInputComponent={this.renderInputComponent}
       />
     );
   }

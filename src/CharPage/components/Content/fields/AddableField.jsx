@@ -12,16 +12,11 @@ export class AddableField extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selectable) {
-      this.addField();
-    }
   }
 
 
   addField = (event) => {
-    if (event) {
-      event.preventDefault();
-    }
+    event.preventDefault();
     const newField = `field-${this.state.fields.length}`;
     this.setState(prevState => ({
       fields: [...prevState.fields, newField]
@@ -58,20 +53,4 @@ export class AddableField extends React.Component {
       </div>
     )
   }
-}
-
-function Field(props) {
-  return (
-    <div className="">
-      {/* <label className="uk-form-label" htmlFor="name">{props.children}</label> */}
-      <div className="uk-form-controls">
-        <input
-          className="text-field uk-input"
-          type="text"
-          value={props.value}
-          onChange={props.handleChange}
-        />
-      </div>
-    </div>
-  )
 }
