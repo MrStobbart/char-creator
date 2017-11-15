@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <div>
         <header>
-          <nav cuk-navbar="true" className="uk-navbar-container">
+          <nav uk-navbar="true" className="uk-navbar-container">
             <div className="uk-navbar-center">  
               <ul className="uk-navbar-nav">
                 <li><Link to="/home">Home</Link></li>
