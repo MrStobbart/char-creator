@@ -5,7 +5,7 @@ import { CharHeader } from './CharHeader';
 
 export function InfoPanel(props) {
   return (
-    <div>
+    <div uk-sticky="offset: 20" className="uk-card uk-card-default uk-card-body">
       <CharHeader
         charSheetData={props.charSheetData}
         meta={props.meta}

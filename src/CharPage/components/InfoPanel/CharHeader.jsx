@@ -61,7 +61,7 @@ function savageWorldsHeader(props) {
   }
 
   return (
-    <div uk-sticky="offset: 20">
+    <div>
       <div className="uk-margin">
         Fertigkeitspunkte: {skillPoints / 2}
       </div>

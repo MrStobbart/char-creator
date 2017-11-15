@@ -8,7 +8,7 @@ export function Navigation(props) {
   }
   
   return (
-    <div uk-sticky="offset: 20">
+    <div uk-sticky="offset: 20" className="uk-card uk-card-default uk-card-body">
       <ul className="uk-nav uk-nav-default">
         {fieldsets}
       </ul>

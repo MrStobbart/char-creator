@@ -7,7 +7,7 @@ export function Content(props) {
   console.log('props', props)
 
   return (
-    <div>
+    <div className="uk-card uk-card-default uk-card-body">
       <form className="uk-form-horizontal">
         {props.charSheet.fieldsets.map(fieldset =>
           <Fieldset
