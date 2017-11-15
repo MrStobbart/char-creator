@@ -33,9 +33,7 @@ export class CharPage extends React.Component {
     }
 
     if (nextProps.charSheet) {
-      this.setState(prevState => ({
-        charSheetData: nextProps.charSheet.meta.defaultData,
-      }));
+      this.setState({ charSheetData: nextProps.charSheet.meta.defaultData });
     }
   }
 

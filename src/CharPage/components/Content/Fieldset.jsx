@@ -1,8 +1,8 @@
 import React from 'react';
-import { TextField } from './TextField';
-import { NumberField } from './NumberField';
-import { CalcField } from './CalcField';
-import { AddableField } from './AddableField';
+import { TextField } from './fields/TextField';
+import { NumberField } from './fields/NumberField';
+import { CalcField } from './fields/CalcField';
+import { AddableField } from './fields/AddableField';
 import './Fieldset.css';
 
 export function Fieldset(props) {
