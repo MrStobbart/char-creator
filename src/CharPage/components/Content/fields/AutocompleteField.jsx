@@ -1,5 +1,6 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
+import './AutocompleteField.css';
 
 export class AutocompleteField extends React.Component {
   constructor(props) {
@@ -80,7 +81,7 @@ export class AutocompleteField extends React.Component {
   render() {
     console.log('Autocomplete props', this.props)
     const inputProps = {
-      placeholder: "Type 'c'",
+      placeholder: this.props.placeholder,
       value: this.state.value,
       onChange: this.onChange
     };
@@ -88,6 +89,7 @@ export class AutocompleteField extends React.Component {
     return (
       <Autosuggest
         multiSection={true}
+        highlightFirstSuggestion={true}
         suggestions={this.state.suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}

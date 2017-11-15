@@ -1,19 +1,24 @@
 import React from 'react';
 import { AutocompleteField } from './AutocompleteField';
+import './AddableField.css';
 
 export class AddableField extends React.Component {
   
   constructor(props) {
     super(props)
     this.state = {
-      fields: ['field-0'],
+      fields: [],
       values: {}
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  createRemoveFieldFunction = fieldId => event => {
+    event.preventDefault();
+    this.setState(prevState => {
+      const newFields = prevState.fields.filter(field => field !== fieldId)
+      return { fields: newFields }
+    })
   }
-
 
   addField = (event) => {
     event.preventDefault();
@@ -37,19 +42,37 @@ export class AddableField extends React.Component {
     console.log('Addable field props', this.props);
     return (
       <div>
-        {this.state.fields.map(field => 
-          <AutocompleteField
-            key={field}
-            selectableGroups={this.props.field.selectableGroups}
-            value={this.state.values[field]}
-            onChange={this.handleChange}
+        <div>
+          <button
+            className="uk-button uk-button-default uk-button-small uk-margin uk-align-center"
+            onClick={this.addField}
           >
-            Label
-          </AutocompleteField>
-        )}
-        <button className="uk-button uk-button-default uk-button-small" onClick={this.addField}>
-          Add field
-        </button>
+            Add {this.props.field.label}
+          </button>
+        </div>
+        <div className="uk-margin">
+          {this.state.fields.map(field => 
+            <div key={field} className="uk-margin-small-bottom">
+              <div className="field-remove-button" style={{ overflow: 'auto' }}>
+                <button
+                  className="uk-icon-button"
+                  uk-icon="icon: close; ratio: 1"
+                  onClick={this.createRemoveFieldFunction(field)}>
+                </button>
+              </div>  
+              <div className="removable-field">
+                <AutocompleteField
+                  placeholder={`Search ${this.props.field.label}`}  
+                  selectableGroups={this.props.field.selectableGroups}
+                  value={this.state.values[field]}
+                  onChange={this.handleChange}
+                >
+                  Label
+                </AutocompleteField>
+              </div>  
+            </div>  
+          )}
+        </div>
       </div>
     )
   }

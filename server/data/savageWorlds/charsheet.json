@@ -234,7 +234,7 @@
     "fields": [
       {
         "id": "edges",
-        "label": "",
+        "label": "Talent",
         "type": "addable",
         "calculationType": "edge",
         "selectableGroups": [
@@ -435,7 +435,7 @@
     "fields": [
       {
         "id": "hinderances",
-        "label": "",
+        "label": "Handicap",
         "type": "addable",
         "calculationType": "hinderance",
         "selectableGroups": [
