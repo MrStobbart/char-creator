@@ -1,6 +1,17 @@
 {
   "name": "char-creator",
   "version": "0.1.0",
+  "description": "Website to create roleplaying characters.",
+  "licence": "Mozilla Public License 2.0",
+  "author": "Marek Meyer <marek_meyer@outlook.com>",
+  "bugs": {
+    "url": "https://github.com/MrStobbart/char-creator/issues",
+    "email": "marek_meyer@outlook.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrStobbart/char-creator"
+  },
   "private": true,
   "scripts": {
     "start": "npm-run-all -l -p devserver devclient",
