@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import './CharHeader.css';
 
 
@@ -11,7 +12,7 @@ export function CharHeader(props) {
     case 'savageWorldsFantasy':
       return savageWorldsHeader(props);
     default:
-      console.error('Unkown char sheet id'); 
+      console.log('Char sheet not yet loaded'); 
       return null;
   }
 }
@@ -61,16 +62,17 @@ function savageWorldsHeader(props) {
   }
 
   return (
+
     <div>
-      <div className="uk-margin">
-        Fertigkeitspunkte: {skillPoints / 2}
-      </div>
-      <div className="uk-margin">
-        Attributs punkte: {attributePoints}
-      </div>
-      <div className="uk-margin">
-        Wählbare Talente: {edgePoints / 2}
-      </div>
+      <DisplayField value={skillPoints / 2}>
+        Fertigkeitspunkte  
+      </DisplayField>
+      <DisplayField value={attributePoints}>
+        Attributspunkte
+      </DisplayField>
+      <DisplayField value={edgePoints / 2}>
+        Talentpunkte
+      </DisplayField>
       <div className="uk-margin">
         <button className="uk-button uk-button-default uk-button-small" onClick={props.saveChanges}>
           {props.unsavedChanges ? 'Unsaved changes': 'Everything saved'}
@@ -83,5 +85,21 @@ function savageWorldsHeader(props) {
       </div>  
     </div>
   )
+  
+}
+
+class DisplayField extends React.Component{
+
+  render() {
+    const classes = classNames({
+      'uk-margin uk-alert': true,
+      'uk-alert-danger': this.props.value < 0
+    });
+    return (
+      <div className={classes}>
+        {this.props.children}: {this.props.value}
+      </div>
+    )
+  }
   
 }
