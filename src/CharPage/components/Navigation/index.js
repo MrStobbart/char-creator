@@ -8,12 +8,10 @@ export function Navigation(props) {
   }
   
   return (
-    <div className="xlarge-15 large-20 medium-25 hide-small hide-tiny">
-      <nav className="ink-navigation ink-sticky">
-        <ul className="menu vertical orange">
-          {fieldsets}
-        </ul>
-      </nav>
+    <div uk-sticky="offset: 20">
+      <ul className="uk-nav uk-nav-default">
+        {fieldsets}
+      </ul>
     </div>
   );
 }

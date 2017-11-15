@@ -21,13 +21,14 @@ export class CharPage extends React.Component {
   }
 
   render() {
+    const style = { marginTop: '12px' };
     return (
-      <div className="ink-grid">
-        <div className="column-group gutters">
+      <div uk-grid="true" style={style}>
+        <div className="uk-width-1-6">
           <Navigation fieldsets={this.props.charSheet.fieldsets} />
-          <Content
-            charSheet={this.props.charSheet}
-          />
+        </div>
+        <div className="uk-width-2-3">
+          <Content charSheet={this.props.charSheet} />
         </div>
       </div>
     )

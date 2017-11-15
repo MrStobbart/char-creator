@@ -23,11 +23,13 @@ export class AddableField extends React.Component {
   }
 
   handleChange = (field, event) => {
+    console.log('handle change', field.id)
     this.setState(prevState => {
       let newState = { ...prevState };
       newState.values[field] = event.target.value;
       return newState;
     });
+    this.updateValue(field)(event.target.value);
   }
 
   render() {
@@ -52,11 +54,11 @@ export class AddableField extends React.Component {
 
 function Field(props) {
   return (
-    <div className="column-group quarter-gutters">
-      <label className="all-40 align-left" htmlFor="name">{props.children}</label>
-      <div className="control all-60">
+    <div className="">
+      {/* <label className="uk-form-label" htmlFor="name">{props.children}</label> */}
+      <div className="uk-form-controls">
         <input
-          className="text-field"
+          className="text-field uk-input"
           type="text"
           value={props.value}
           onChange={props.handleChange}

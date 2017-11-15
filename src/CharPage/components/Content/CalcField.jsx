@@ -36,16 +36,14 @@ export class CalcField extends React.Component {
 
   render() {
     return (
-      <div className="xlarge-50 large-100 medium-100 small-100 tiny-100">
-        <div className="column-group quarter-gutters">
-          <label className="all-40 align-left" htmlFor="name">{this.props.children}</label>
-          <div className="control all-60">
-            <input
-              className="number-field"
-              value={this.state.value}
-              readOnly
-            />
-          </div>
+      <div className="">
+        <label className="uk-form-label" htmlFor="name">{this.props.children}</label>
+        <div className="uk-form-controls">
+          <input
+            className="number-field uk-input"
+            value={this.state.value}
+            readOnly
+          />
         </div>
       </div>
     )

@@ -35,7 +35,7 @@ export function Fieldset(props) {
         return (
           <AddableField
             key={field.id}
-            updateValue={props.createUpdateValueFunction(field)}
+            updateValue={props.createUpdateValueFunction}
           >
             Addable field
           </AddableField>
@@ -55,7 +55,7 @@ export function Fieldset(props) {
   return (
     <fieldset id={props.fieldset.id}>
       <legend>{props.fieldset.title}</legend>
-      <div className="column-group quarter-gutters">
+      <div uk-grid="true">
         {fields}
       </div>
     </fieldset>

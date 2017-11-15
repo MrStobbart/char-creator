@@ -229,14 +229,184 @@
     ]
   },
   {
-    "id": "backgroundEdges",
-    "title": "Hintergrund Talente",
+    "id": "edges",
+    "title": "Talente",
     "fields": [
       {
-        "id": "backgroundEdge",
-        "label": "",
+        "id": "backgroundEdges",
+        "label": "Hintergrund Talente",
         "type": "addable",
-        "calculationType": "edge"
+        "calculationType": "edge",
+        "selectable": [
+          {
+            "id": "Akklimatisiert",
+            "label": "Akklimatisiert",
+            "requirementes": "A",
+            "information": "+4 auf Ko. Würfe gegen Erschöpfung bei Hitze oder Kälte",
+            "rules": ""
+          },
+          {
+            "id": "Adelig",
+            "label": "Adelig",
+            "requirementes": "A",
+            "information": "Charisma +1 (in Schichten), Reich, Verpflichtungen",
+            "rules": ""
+          },
+          {
+            "id": "Arkane Resistenz",
+            "label": "Arkane Resistenz",
+            "requirementes": "A",
+            "information": "+2 RS /+2 auf Magiewiderstand gegen Mächte",
+            "rules": ""
+          },
+          {
+            "id": "Stärkere Arkane Resistenz",
+            "label": "Stärkere Arkane Resistenz",
+            "requirementes": "A",
+            "information": "Wie oben nur +4",
+            "rules": ""
+          },
+          {
+            "id": "Arkaner Hintergrund ",
+            "label": "Arkaner Hintergrund ",
+            "requirementes": "A",
+            "information": "Siehe Regelbuch",
+            "rules": ""
+          },
+          {
+            "id": "Attraktiv",
+            "label": "Attraktiv",
+            "requirementes": "A",
+            "information": "+1 Charisma",
+            "rules": ""
+          },
+          {
+            "id": "Sehr Attraktiv",
+            "label": "Sehr Attraktiv",
+            "requirementes": "A",
+            "information": "+2 Charisma",
+            "rules": ""
+          },
+          {
+            "id": "Aufmerksamkeit",
+            "label": "Aufmerksamkeit",
+            "requirementes": "A",
+            "information": "+2 auf Wahrnehmung",
+            "rules": ""
+          },
+          {
+            "id": "Beidhändig",
+            "label": "Beidhändig",
+            "requirementes": "A",
+            "information": "Kein -2 Abzug für das verwenden der falschen Hand",
+            "rules": ""
+          },
+          {
+            "id": "Berserker*",
+            "label": "Berserker*",
+            "requirementes": "A",
+            "information": "Verstandprobe gegen Raserei nach Verletzung (Wunde). Raserei: +2 Kämpfen und Stärke, Parade -2, Robustheit +2, Wenn ein Würfel trifft aber der andere, eine 1 zeigt wird ein zufä,lliges Ziel getroffen. Zum Beenden eine Aktion und eine Verstandsprobe mit -2",
+            "rules": ""
+          },
+          {
+            "id": "Eisenaffine Aura",
+            "label": "Eisenaffine Aura",
+            "requirementes": "A, Arkaner Hintergrund",
+            "information": "Der Malus durch Bann des Eisens sinkt auf -2",
+            "rules": ""
+          },
+          {
+            "id": "Flink",
+            "label": "Flink",
+            "requirementes": "A, Ges. W6",
+            "information": "+2 Bewegungsreichweite",
+            "rules": ""
+          },
+          {
+            "id": "Glück",
+            "label": "Glück",
+            "requirementes": "A",
+            "information": "Ein Bennie mehr",
+            "rules": ""
+          },
+          {
+            "id": "Großes Glück",
+            "label": "Großes Glück",
+            "requirementes": "A, Glück",
+            "information": "Zwei Bennies mehr",
+            "rules": ""
+          },
+          {
+            "id": "Heiler",
+            "label": "Heiler",
+            "requirementes": "A, Wi. W8",
+            "information": "+2 auf Heilenproben",
+            "rules": ""
+          },
+          {
+            "id": "Kräftig",
+            "label": "Kräftig",
+            "requirementes": "A, St. und Ko. W6",
+            "information": "+1 Robustheit, erhöhte Tragkraft (x7 statt x5)",
+            "rules": ""
+          },
+          {
+            "id": "Mutig",
+            "label": "Mutig",
+            "requirementes": "A, Wi. W6",
+            "information": "+2 auf Furch widerstehen",
+            "rules": ""
+          },
+          {
+            "id": "Reich",
+            "label": "Reich",
+            "requirementes": "A",
+            "information": "Dreifaches Startkapital, Jahreseinkommen gleich dem 10fachen des dreifachen Startkapitals",
+            "rules": ""
+          },
+          {
+            "id": "Stinkreich",
+            "label": "Stinkreich",
+            "requirementes": "A, Reich",
+            "information": "Fünffaches Startkapital, Jahreseinkommen gleich dem 10fachen des fünffachen Startkapitals",
+            "rules": ""
+          },
+          {
+            "id": "Sechster Sinn",
+            "label": "Sechster Sinn",
+            "requirementes": "A",
+            "information": "Der Charakter kann mit Wahrnehmung -2 einen Hinterhalt oder eine andere Gefahr ",
+            "rules": ""
+          },
+          {
+            "id": "Schelm",
+            "label": "Schelm",
+            "requirementes": "A",
+            "information": "Ein Charakter mit diesem Hintergrund- Talent wurde als Säugling von Kobolden entführt und aufgezogen. Seine Zieheltern haben ihm allerlei magische Späße und die koboldische Lebensart beigebracht. Er kann per Zauberei Menschen nackt dastehen lassen, Kobolde rufen, Illusionen hervorrufen oder ähnliche Dinge tun, um einen Spaß zu machen. Er braucht dazu weder einen Arkanen Hintergrund noch Machtpunkte. Schelme setzen diese Fähigkeit aber nur ein, um sich selbst oder andere zu erheitern, niemals, um andere zu schädigen. Sie können aber trotzdem für Tricks uns geistige Duelle eingesetzt werden.",
+            "rules": ""
+          },
+          {
+            "id": "Schnell",
+            "label": "Schnell",
+            "requirementes": "A",
+            "information": "Im Kampf werden Aktionskarten von 5 oder niedriger neu gezogen.",
+            "rules": ""
+          },
+          {
+            "id": "Schnelle Heilung",
+            "label": "Schnelle Heilung",
+            "requirementes": "A",
+            "information": "+2 auf Genesungsproben",
+            "rules": ""
+          },
+          {
+            "id": "Tierempathie",
+            "label": "Tierempathie",
+            "requirementes": "A",
+            "information": "Der Charakter kann seine Bennies mit Tiergefährten teilen",
+            "rules": ""
+          }
+        ] 
       }
     ]
   },
@@ -245,22 +415,19 @@
     "title": "Handicaps",
     "fields": [
       {
-        "id": "hinderance",
+        "id": "hinderances",
         "label": "",
         "type": "addable",
-        "calculationType": "hinderance"
-      }
-    ]
-  },
-  {
-    "id": "edges",
-    "title": "Talente",
-    "fields": [
-      {
-        "id": "edge",
-        "label": "",
-        "type": "addable",
-        "calculationType": "edge"
+        "calculationType": "hinderance",
+        "selectable": [
+          {
+            "id": "",
+            "label": "",
+            "information": "",
+            "rules": "",
+            "requirementes": ""
+          }
+        ] 
       }
     ]
   },
@@ -298,7 +465,7 @@
       },
       {
         "id": "tracking",
-        "label": "Fährensuche",
+        "label": "Fährtensuche",
         "type": "number",
         "attribute": "smarts",
         "calculationType": "skill"

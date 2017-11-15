@@ -61,27 +61,25 @@ function savageWorldsHeader(props) {
   }
 
   return (
-    <div className="char-header ink-grid">
-      <div className="column-group gutters">
-        <div className="xlarge-25 large-25 medium-50 small-100 tiny-100">
-          Remaining char points: {skillPoints / 2}
-        </div>
-        <div className="xlarge-25 large-25 medium-50 small-100 tiny-100">
-          Remaining attribute points: {attributePoints}
-        </div>
-        <div className="xlarge-25 large-25 medium-50 small-100 tiny-100">
-          Remaining talent points: {edgePoints / 2}
-        </div>
-        <div className="xlarge-25 large-25 medium-50 small-100 tiny-100">
-          <button onClick={props.saveChanges}>
-            {props.unsavedChanges ? 'Unsaved changes': 'Everything saved'}
-          </button>
-        </div>  
-        <div className="xlarge-25 large-25 medium-50 small-100 tiny-100">
-          <button>
-            Finish char creation
-          </button>
-        </div>  
+    <div uk-sticky="offset: 20" uk-grid="true">
+      <div className="uk-width-1-4">
+        Remaining char points: {skillPoints / 2}
+      </div>
+      <div className="uk-width-1-4">
+        Remaining attribute points: {attributePoints}
+      </div>
+      <div className="uk-width-1-4">
+        Remaining talent points: {edgePoints / 2}
+      </div>
+      <div className="uk-width-1-4">
+        <button onClick={props.saveChanges}>
+          {props.unsavedChanges ? 'Unsaved changes': 'Everything saved'}
+        </button>
+      </div>  
+      <div className="uk-width-1-4">
+        <button>
+          Finish char creation
+        </button>
       </div>  
     </div>
   )

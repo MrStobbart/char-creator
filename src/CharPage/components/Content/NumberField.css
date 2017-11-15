@@ -1,8 +1,8 @@
 .number-field{
   width: 56px;
-  height: 28px;
+  /* height: 28px; */
   text-align: center;
-  border-style: none;
+  border-color: white;
   border-width: 1px;
   margin: 0px 10px;
   display: inline-block;
@@ -11,7 +11,7 @@
 }
 
 .change-button{
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
 }
 

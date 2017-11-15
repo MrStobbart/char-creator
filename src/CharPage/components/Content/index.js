@@ -1,6 +1,7 @@
 import React from 'react';
 import { Fieldset } from './Fieldset';
 import { CharHeader } from './CharHeader';
+import './index.css';
 
 export class Content extends React.Component {
 
@@ -78,7 +79,7 @@ export class Content extends React.Component {
 
   render() {
     return (
-      <div className="xlarge-70 large-60 medium-50 small-100 tiny-100">
+      <div>
         <CharHeader
           charSheetData={this.state.charSheetData}
           meta={this.state.charSheet.meta}
@@ -86,7 +87,7 @@ export class Content extends React.Component {
           saveChanges={this.saveChanges}
           unsavedChanges={this.state.unsavedChanges}
         />
-        <form>
+        <form className="uk-form-horizontal">
           {this.state.charSheet.fieldsets.map(fieldset =>
             <Fieldset
               key={fieldset.id}
