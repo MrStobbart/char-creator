@@ -1,131 +1,9 @@
-const languages = [
-  {
-    title: '1970s',
-    languages: [
-      {
-        name: 'C',
-        year: 1972
-      }
-    ]
-  },
-  {
-    title: '1980s',
-    languages: [
-      {
-        name: 'C++',
-        year: 1983
-      },
-      {
-        name: 'Perl',
-        year: 1987
-      }
-    ]
-  },
-  {
-    title: '1990s',
-    languages: [
-      {
-        name: 'Haskell',
-        year: 1990
-      },
-      {
-        name: 'Python',
-        year: 1991
-      },
-      {
-        name: 'Java',
-        year: 1995
-      },
-      {
-        name: 'Javascript',
-        year: 1995
-      },
-      {
-        name: 'PHP',
-        year: 1995
-      },
-      {
-        name: 'Ruby',
-        year: 1995
-      }
-    ]
-  },
-  {
-    title: '2000s',
-    languages: [
-      {
-        name: 'C#',
-        year: 2000
-      },
-      {
-        name: 'Scala',
-        year: 2003
-      },
-      {
-        name: 'Clojure',
-        year: 2007
-      },
-      {
-        name: 'Go',
-        year: 2009
-      }
-    ]
-  },
-  {
-    title: '2010s',
-    languages: [
-      {
-        name: 'Elm',
-        year: 2012
-      }
-    ]
-  }
-];
+import React from 'react';
+import Autosuggest from 'react-autosuggest';
 
-
-function getSuggestions(value) {
-
-  if (value === '') {
-    return languages;
-  }
-
-  return languages
-    .map(section => {
-      return {
-        title: section.title,
-        languages: section.languages.filter(language => language.name.toLowerCase().indexOf(value.toLowerCase()) > -1)
-      };
-    })
-    .filter(section => section.languages.length > 0);
-}
-
-function getSuggestionValue(suggestion) {
-  return suggestion.name;
-}
-
-function renderSuggestion(suggestion) {
-  return (
-    <span>{suggestion.name}</span>
-  );
-}
-
-function renderSectionTitle(section) {
-  return (
-    <strong>{section.title}</strong>
-  );
-}
-
-function getSectionSuggestions(section) {
-  return section.languages;
-}
-
-function shouldRenderSuggestions(value) {
-  return true;
-}
-
-class AutocompleteField extends React.Component {
-  constructor() {
-    super();
+export class AutocompleteField extends React.Component {
+  constructor(props) {
+    super(props);
 
     this.state = {
       value: '',
@@ -141,7 +19,7 @@ class AutocompleteField extends React.Component {
 
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
-      suggestions: getSuggestions(value)
+      suggestions: this.getSuggestions(value)
     });
   };
 
@@ -151,7 +29,50 @@ class AutocompleteField extends React.Component {
     });
   };
 
+  getSuggestions = (value) => {
+    const selectableGroups = this.props.selectableGroups
+
+    if (value === '') {
+      return selectableGroups;
+    }
+
+    return selectableGroups
+      .map(selectableGroup => {
+        console.log(selectableGroup)
+        return {
+          ...selectableGroup,
+          selectables: selectableGroup.selectables.filter(selectable => selectable.label.toLowerCase().indexOf(value.toLowerCase()) > -1)
+        };
+      })
+      .filter(selectableGroup => selectableGroup.selectables.length > 0);
+  }
+
+  getSuggestionValue = (suggestion) => {
+    return suggestion.label;
+  }
+
+  renderSuggestion = (suggestion) => {
+    return (
+      <span>{suggestion.label}</span>
+    );
+  }
+
+  renderSectionTitle = (selectableGroup) => {
+    return (
+      <strong>{selectableGroup.label}</strong>
+    );
+  }
+
+  getSectionSuggestions = (selectableGroup) => {
+    return selectableGroup.selectables;
+  }
+
+  shouldRenderSuggestions = (value) => {
+    return true;
+  }
+
   render() {
+    console.log('Autocomplete props', this.props)
     const { value, suggestions } = this.state;
     const inputProps = {
       placeholder: "Type 'c'",
@@ -165,16 +86,15 @@ class AutocompleteField extends React.Component {
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
-        renderSectionTitle={renderSectionTitle}
-        getSectionSuggestions={getSectionSuggestions}
+        getSuggestionValue={this.getSuggestionValue}
+        renderSuggestion={this.renderSuggestion}
+        renderSectionTitle={this.renderSectionTitle}
+        getSectionSuggestions={this.getSectionSuggestions}
         inputProps={inputProps}
-        shouldRenderSuggestions={shouldRenderSuggestions}
+        shouldRenderSuggestions={this.shouldRenderSuggestions}
       />
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
 

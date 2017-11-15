@@ -1,4 +1,5 @@
 import React from 'react';
+import { AutocompleteField } from './AutocompleteField';
 
 export class AddableField extends React.Component {
   
@@ -10,14 +11,19 @@ export class AddableField extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectable) {
+      this.addField();
+    }
   }
 
+
   addField = (event) => {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     const newField = `field-${this.state.fields.length}`;
     this.setState(prevState => ({
-      ...prevState,
       fields: [...prevState.fields, newField]
     }))
   }
@@ -33,16 +39,18 @@ export class AddableField extends React.Component {
   }
 
   render() {
+    console.log('Addable field props', this.props);
     return (
       <div>
         {this.state.fields.map(field => 
-          <Field
+          <AutocompleteField
             key={field}
+            selectableGroups={this.props.field.selectableGroups}
             value={this.state.values[field]}
             onChange={this.handleChange}
           >
             Label
-          </Field>
+          </AutocompleteField>
         )}
         <button className="uk-button uk-button-default uk-button-small" onClick={this.addField}>
           Add field

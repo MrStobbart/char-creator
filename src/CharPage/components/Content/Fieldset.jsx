@@ -36,6 +36,7 @@ export function Fieldset(props) {
           <AddableField
             key={field.id}
             updateValue={props.createUpdateValueFunction}
+            field={field}
           >
             Addable field
           </AddableField>
