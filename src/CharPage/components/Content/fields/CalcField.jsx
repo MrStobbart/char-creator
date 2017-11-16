@@ -18,13 +18,13 @@ export class CalcField extends React.Component {
   }
 
   calculateValue() {
-    console.log('XXO char data values', this.props.charData)
     const calculationString = this.props.calculation
       .split(' ')
       .map(argument => {
         if (argument.length > 2) {
           // The argument is a variable
-          return this.props.charData.values[argument] ? this.props.charData.values[argument].value : 0;
+          const argumentArr = argument.split(':');
+          return this.props.charData[argumentArr[0]][argumentArr[1]].value ? this.props.charData[argumentArr[0]][argumentArr[1]].value: 0
         } else {
           return argument
         }
@@ -32,6 +32,7 @@ export class CalcField extends React.Component {
       .join(' ');
     const modifier = this.props.modifier ? this.props.modifier : 0
     // const modifier = this.props.charData.specials.values.reduce()
+    console.log('calcstring', calculationString)
     const newValue = eval(calculationString) + modifier;
     this.setState({value: newValue})
   }

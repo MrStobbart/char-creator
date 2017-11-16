@@ -22,6 +22,7 @@ export class CharPage extends React.Component {
         equipment: []
       },
       unsavedChanges: false,
+      charDataCreated: false
     }
   }
 
@@ -39,64 +40,108 @@ export class CharPage extends React.Component {
 
     if (nextProps.charSheet) {
       this.setState(prevState => { 
+
+        // Create fieldsets in char data
+        let charDataFieldsets = {};
+        nextProps.charSheet.fieldsets.forEach(fieldset => {
+          charDataFieldsets[fieldset.id] = {}
+          fieldset.fields.forEach(field => {
+            
+            // Set field datatype according to type
+            switch (field.type) {
+              case 'addable':
+                charDataFieldsets[fieldset.id][field.id] = [];
+                break;
+              case 'number':
+                if (field.default) {
+                  charDataFieldsets[fieldset.id][field.id] = {
+                    value: field.default,
+                    calculationType: field.calculationType
+                  };
+                } else {
+                  charDataFieldsets[fieldset.id][field.id] = {};
+                }
+                break;
+              case 'calculated':
+                break;
+              default:
+                charDataFieldsets[fieldset.id][field.id] = '';  
+                break;
+            }
+          })
+        });
+
+        console.log('merged', { ...charDataFieldsets, ...nextProps.charSheet.meta.defaultData });
         return {
-          charData: { ...prevState.charData, ...nextProps.charSheet.meta.defaultData }
+          charData: { ...charDataFieldsets, ...nextProps.charSheet.meta.defaultData },
+          charDataCreated: true
         }
       });
     }
   }
 
-
-  // TODO Make this with different functions depending on the data type
-  createUpdateValueFunction = (field, charDataType) => newValue => {
-    console.log('Update function fieldset: ', charDataType, ' field:', field, ' newValue:', newValue)
+  makeCreateUpdateInformationField = fieldsetId => field => newValue => {
+    console.log('Update function fieldset: ', fieldsetId, ' field:', field, ' newValue:', newValue)
     this.setState(prevState => {
 
       let newState = { ...prevState };
-
-      switch (charDataType) {
-        case 'value':
-          newState = this.updateCharDataValue(newState, field, newValue);
-          break;
-        case 'special':
-          newState = this.updateCharDataSpecial(newState, field, newValue);
-        default:
-          newState = this.updateCharDataInformation(newState, field, newValue);  
-          break;
-      }
-
+      newState.charData[fieldsetId][field.id] = newValue;
       newState.unsavedChanges = true;
-      console.log('newState', newState);
       return newState;
-    })
+    })  
   }
 
-  updateCharDataValue = (newState, field, newValue) => {
+  makeCreateUpdateNumberField = fieldsetId => field => newValue => {
+    console.log('Update function fieldset: ', fieldsetId, ' field:', field, ' newValue:', newValue)
+    this.setState(prevState => {
 
-      // Find and add the calculation type of new data to saved data 
-      if (!newState.charData.values[field.id]) {
+      let newState = { ...prevState };
+    // TODO optimise this so it will not be called every time
+      newState.charData[fieldsetId][field.id].calculationType = field.calculationType
 
-        newState.charData.values[field.id] = {}
-        newState.charData.values[field.id].calculationType = field.calculationType
-
-        if (field.attribute) {
-          newState.charData.values[field.id].attribute = field.attribute
-        }
+      if (field.attribute) {
+        newState.charData[fieldsetId][field.id].attribute = field.attribute
       }
       // Set new state
-      newState.charData.values[field.id].value = newValue;
+      newState.charData[fieldsetId][field.id].value = newValue;
+      newState.unsavedChanges = true;
       return newState;
-  }  
+    })    
+  } 
 
-  updateCharDataSpecial = (newState, field, newValue) => {
-    // const new
-    newState.specials.push
-    return newState
+  makeCreateUpdateAddableField = fieldsetId => field => (fieldId, newValue) => {
+    console.log('Update function fieldset: ', fieldsetId, ' field:', field, ' newValue:', newValue)
+    this.setState(prevState => {
+      let newState = { ...prevState };
+
+      console.log('update value')
+      newState.unsavedChanges = true;
+      return newState;
+    })      
   }
 
-  updateCharDataInformation = (newState, field, newValue) => {
-      newState.charData.information[field.id] = newValue;
+  makeCreateRemoveAddableField = fieldsetId => field => fieldId => { 
+    console.log('remove function fieldset: ', fieldsetId, ' field:', field, ' fieldId:', fieldId)
+    this.setState(prevState => {
+      let newState = { ...prevState };
+      newState.charData[fieldsetId][field.id] = newState.charData[fieldsetId][field.id].filter(addableField => {
+        console.log(addableField.fieldId)
+        return addableField.fieldId !== fieldId
+      });
+      console.log('newState', newState)
+      newState.unsavedChanges = true;
       return newState;
+    })  
+  }
+
+  makeCreateAddAddableField = fieldsetId => field => newValue => {
+    console.log('add function fieldset: ', fieldsetId, ' field:', field, ' newValue:', newValue)
+    this.setState(prevState => {
+      let newState = { ...prevState };
+      newState.charData[fieldsetId][field.id].push(newValue);
+      newState.unsavedChanges = true;
+      return newState;
+    })
   }
 
   saveChanges = () => {
@@ -124,28 +169,41 @@ export class CharPage extends React.Component {
 
   render() {
     const style = { marginTop: '12px' };
+    let charPage = null;
+    if (this.state.charDataCreated) {
+      charPage = (
+        <div uk-grid="true" style={style}>
+          <div className="uk-width-1-6">
+            <Navigation fieldsets={this.props.charSheet.fieldsets} />
+          </div>
+          <div className="uk-width-2-3">
+            <Content
+              charSheet={this.props.charSheet}
+              makeCreateUpdateInformationField={this.makeCreateUpdateInformationField}
+              makeCreateUpdateNumberField={this.makeCreateUpdateNumberField}
+              makeCreateUpdateAddableField={this.makeCreateUpdateAddableField}
+              makeCreateRemoveAddableField={this.makeCreateRemoveAddableField}
+              makeCreateAddAddableField={this.makeCreateAddAddableField}
+              charData={this.state.charData}
+            />
+          </div>
+          <div className="uk-width-1-6">
+
+            <InfoPanel
+              charData={this.state.charData}
+              meta={this.props.charSheet.meta}
+              charSheetId={this.props.charSheet.id}
+              saveChanges={this.saveChanges}
+              unsavedChanges={this.state.unsavedChanges}
+            />
+          </div>
+        </div>
+      )
+    }
     return (
-      <div uk-grid="true" style={style}>
-        <div className="uk-width-1-6">
-          <Navigation fieldsets={this.props.charSheet.fieldsets} />
-        </div>
-        <div className="uk-width-2-3">
-          <Content
-            charSheet={this.props.charSheet}
-            createUpdateValueFunction={this.createUpdateValueFunction}
-            charData={this.state.charData}
-          />
-        </div>
-        <div className="uk-width-1-6">
-        
-          <InfoPanel
-            charData={this.state.charData}
-            meta={this.props.charSheet.meta}
-            charSheetId={this.props.charSheet.id}
-            saveChanges={this.saveChanges}
-            unsavedChanges={this.state.unsavedChanges}
-          />
-        </div>
+      <div>
+        {!this.state.charDataCreated ? (<div uk-spinner={''} />) : null}
+        {charPage}
       </div>
     )
   }

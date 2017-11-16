@@ -55,30 +55,6 @@
       "W10",
       "W12"
     ],
-    "defaultData":{
-      "values":{
-        "smarts": {
-          "value": 1,
-          "calculationType": "attribute"
-        },
-        "agility": {
-          "value": 1,
-          "calculationType": "attribute"
-        },
-        "spirit": {
-          "value": 1,
-          "calculationType": "attribute"
-        },
-        "constitution": {
-          "value": 1,
-          "calculationType": "attribute"
-        },
-        "strength": {
-          "value": 1,
-          "calculationType": "attribute"
-        }
-      }
-    },
     "charCreationPoints": 50
   },
   "fieldsets": [
@@ -193,10 +169,7 @@
         "label": "Stärke",
         "type": "number",
         "default": 1,
-        "costs": {
-          "type": "static",
-          "costsPerPoint": 4
-        }
+        "calculationType": "attribute"
       }
     ]
   },
@@ -208,7 +181,7 @@
         "id": "parry",
         "label": "Parade",
         "type": "calculated",
-        "calculation": "( fighting * 2 + 2 ) / 2 + 2"
+        "calculation": "( skills:fighting * 2 + 2 ) / 2 + 2"
       },
       {
         "id": "charisma",
@@ -220,7 +193,7 @@
         "id": "toughness",
         "label": "Robustheit",
         "type": "calculated",
-        "calculation": "( constitution * 2 + 2 ) / 2 + 2"
+        "calculation": "( attributes:constitution * 2 + 2 ) / 2 + 2"
       },
       {
         "id": "pace",

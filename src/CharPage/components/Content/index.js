@@ -14,8 +14,12 @@ export function Content(props) {
             key={fieldset.id}
             fieldset={fieldset}
             meta={props.charSheet.meta}
-            createUpdateValueFunction={props.createUpdateValueFunction}
             charData={props.charData}
+            createUpdateInformationField={props.makeCreateUpdateInformationField(fieldset.id)}
+            createUpdateNumberField={props.makeCreateUpdateNumberField(fieldset.id)}
+            createUpdateAddableField={props.makeCreateUpdateAddableField(fieldset.id)}
+            createRemoveAddableField={props.makeCreateRemoveAddableField(fieldset.id)}
+            createAddAddableField={props.makeCreateAddAddableField(fieldset.id)}
           />
         )}
       </form>

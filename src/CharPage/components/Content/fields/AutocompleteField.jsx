@@ -8,11 +8,12 @@ export class AutocompleteField extends React.Component {
 
     this.state = {
       value: '',
-      suggestions: []
+      suggestions: [],
     };
   }
 
   onChange = (event, { newValue, method }) => {
+    console.log('newValue', newValue, this.props, this.state)
     this.setState({
       value: newValue
     });
@@ -52,6 +53,11 @@ export class AutocompleteField extends React.Component {
     return suggestion.label;
   }
 
+  onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
+    console.log('onSuggestionSelected', suggestion, suggestionValue, suggestionIndex, sectionIndex);
+    this.props.updateValue(suggestion);
+  }
+
   renderSuggestion = (suggestion) => {
     return (
       <span>{suggestion.label}</span>
@@ -79,7 +85,6 @@ export class AutocompleteField extends React.Component {
   );
 
   render() {
-    console.log('Autocomplete props', this.props)
     const inputProps = {
       placeholder: this.props.placeholder,
       value: this.state.value,
@@ -100,6 +105,7 @@ export class AutocompleteField extends React.Component {
         inputProps={inputProps}
         shouldRenderSuggestions={this.shouldRenderSuggestions}
         renderInputComponent={this.renderInputComponent}
+        onSuggestionSelected={this.onSuggestionSelected}
       />
     );
   }
