@@ -52,8 +52,8 @@ export class AddableField extends React.Component {
         </div>
         <div className="uk-margin">
           {this.state.fields.map(field => 
-            <div key={field} className="uk-margin-small-bottom">
-              <div className="field-remove-button" style={{ overflow: 'auto' }}>
+            <div key={field} className="uk-margin-small-bottom" style={{ display: 'flex'}}>
+              <div className="field-remove-button">
                 <button
                   className="uk-icon-button"
                   uk-icon="icon: close; ratio: 1"
