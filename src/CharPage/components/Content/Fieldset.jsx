@@ -6,6 +6,7 @@ import { AddableField } from './fields/AddableField';
 import './Fieldset.css';
 
 export function Fieldset(props) {
+  console.log('props fieldset', props)
   const fields = props.fieldset.fields.map(field => {
     switch (field.type) {
       case 'number':
@@ -14,7 +15,7 @@ export function Fieldset(props) {
             key={field.id}
             values={props.meta.availableValues}
             calculationTypes={props.meta.calculationTypes}
-            updateValue={props.createUpdateValueFunction(field)}
+            updateValue={props.createUpdateValueFunction(field, 'value')}
             field={field}
           >
             {field.label}
@@ -24,9 +25,8 @@ export function Fieldset(props) {
         return (
           <CalcField
             key={field.id}
-            charSheetData={props.charSheetData}
+            charData={props.charData}
             calculation={field.calculation}
-            modifier={props.charSheetData.id}
           >
             {field.label}
           </CalcField>
@@ -35,7 +35,7 @@ export function Fieldset(props) {
         return (
           <AddableField
             key={field.id}
-            updateValue={props.createUpdateValueFunction}
+            updateValue={props.createUpdateValueFunction(field, 'special')}
             field={field}
           >
             Addable field
@@ -45,7 +45,7 @@ export function Fieldset(props) {
         return (
           <TextField
             key={field.id}
-            updateValue={props.createUpdateValueFunction(field)}
+            updateValue={props.createUpdateValueFunction(field, 'information')}
           >
             {field.label}
           </TextField>

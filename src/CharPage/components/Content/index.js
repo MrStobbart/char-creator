@@ -14,8 +14,8 @@ export function Content(props) {
             key={fieldset.id}
             fieldset={fieldset}
             meta={props.charSheet.meta}
-            createUpdateValueFunction={props.makeCreateUpdateValueFunction(fieldset.id)}
-            charSheetData={props.charSheetData}
+            createUpdateValueFunction={props.createUpdateValueFunction}
+            charData={props.charData}
           />
         )}
       </form>

@@ -15,7 +15,12 @@ export class CharPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      charSheetData: {},
+      charData: {
+        information: {},
+        values: {},
+        specials: [],
+        equipment: []
+      },
       unsavedChanges: false,
     }
   }
@@ -33,34 +38,65 @@ export class CharPage extends React.Component {
     }
 
     if (nextProps.charSheet) {
-      this.setState({ charSheetData: nextProps.charSheet.meta.defaultData });
+      this.setState(prevState => { 
+        return {
+          charData: { ...prevState.charData, ...nextProps.charSheet.meta.defaultData }
+        }
+      });
     }
   }
 
-  makeCreateUpdateValueFunction = fieldsetId => field => newValue => {
-    console.log('Update function fieldset: ', fieldsetId, ' field', field)
-    this.setState((prevState, props) => {
-      let newState = { ...prevState }
 
-      // Find and add the calculation type of new data to saved data 
-      if (!newState.charSheetData[field.id]) {
-        newState.charSheetData[field.id] = {}
-        if (field.calculationType) {
-          newState.charSheetData[field.id].calculationType = field.calculationType
-        }
+  // TODO Make this with different functions depending on the data type
+  createUpdateValueFunction = (field, charDataType) => newValue => {
+    console.log('Update function fieldset: ', charDataType, ' field:', field, ' newValue:', newValue)
+    this.setState(prevState => {
 
-        if (field.attribute) {
-          newState.charSheetData[field.id].attribute = field.attribute
-        }
+      let newState = { ...prevState };
+
+      switch (charDataType) {
+        case 'value':
+          newState = this.updateCharDataValue(newState, field, newValue);
+          break;
+        case 'special':
+          newState = this.updateCharDataSpecial(newState, field, newValue);
+        default:
+          newState = this.updateCharDataInformation(newState, field, newValue);  
+          break;
       }
 
-      // Set new state
-      newState.charSheetData[field.id].value = newValue;
       newState.unsavedChanges = true;
+      console.log('newState', newState);
       return newState;
     })
-    console.log('newState', this.state);
-    // this.createFieldsets(this.props)
+  }
+
+  updateCharDataValue = (newState, field, newValue) => {
+
+      // Find and add the calculation type of new data to saved data 
+      if (!newState.charData.values[field.id]) {
+
+        newState.charData.values[field.id] = {}
+        newState.charData.values[field.id].calculationType = field.calculationType
+
+        if (field.attribute) {
+          newState.charData.values[field.id].attribute = field.attribute
+        }
+      }
+      // Set new state
+      newState.charData.values[field.id].value = newValue;
+      return newState;
+  }  
+
+  updateCharDataSpecial = (newState, field, newValue) => {
+    // const new
+    newState.specials.push
+    return newState
+  }
+
+  updateCharDataInformation = (newState, field, newValue) => {
+      newState.charData.information[field.id] = newValue;
+      return newState;
   }
 
   saveChanges = () => {
@@ -72,7 +108,7 @@ export class CharPage extends React.Component {
     // TODO dispatch save action
   }
 
-  // No logic so far
+  // TODO No logic so far
   // calculateStuff = () => {
   //   switch (this.state.charSheet.id) {
   //     case 'savageWorldsFantasy':
@@ -96,13 +132,14 @@ export class CharPage extends React.Component {
         <div className="uk-width-2-3">
           <Content
             charSheet={this.props.charSheet}
-            makeCreateUpdateValueFunction={this.makeCreateUpdateValueFunction}
-            charSheetData={this.state.charSheetData}
+            createUpdateValueFunction={this.createUpdateValueFunction}
+            charData={this.state.charData}
           />
         </div>
         <div className="uk-width-1-6">
+        
           <InfoPanel
-            charSheetData={this.state.charSheetData}
+            charData={this.state.charData}
             meta={this.props.charSheet.meta}
             charSheetId={this.props.charSheet.id}
             saveChanges={this.saveChanges}

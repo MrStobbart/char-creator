@@ -7,7 +7,7 @@ export function InfoPanel(props) {
   return (
     <div uk-sticky="offset: 20" className="uk-card uk-card-default uk-card-body">
       <CharHeader
-        charSheetData={props.charSheetData}
+        charData={props.charData}
         meta={props.meta}
         charSheetId={props.charSheetId}
         saveChanges={props.saveChanges}

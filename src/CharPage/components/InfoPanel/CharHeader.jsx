@@ -26,32 +26,27 @@ function savageWorldsHeader(props) {
 
   let skillPoint = props.meta.charCreationPoints;
   console.log('availablePoints', skillPoint)
-  for (let fieldKey in props.charSheetData) {
-    const field = props.charSheetData[fieldKey];
+  for (let fieldKey in props.charData.values) {
+    const field = props.charData.values[fieldKey];
 
     switch (field.calculationType) {
       case 'attribute':
         attributePoints -= field.value;
         break;
       case 'skill':
-        calculateSkillPoints(field.value, props.charSheetData[field.attribute].value, 2)
+        calculateSkillPoints(field.value, props.charData.values[field.attribute].value, 2)
         break;
       case 'cheapSkill':
-        calculateSkillPoints(field.value, props.charSheetData[field.attribute].value, 1)
-        break;
-      case 'edge':
-        edgePoints -= field.value * 2; 
-        break;
-      case 'hinderance':
-        edgePoints += field.value * 2; 
-        break;
-      case 'smallHinderance':
-        edgePoints += field.value; 
+        calculateSkillPoints(field.value, props.charData.values[field.attribute].value, 1)
         break;
       default: 
       break;
     }
   }
+
+  // TOTO check special calculation
+
+  // TODO check equipment calculation
 
   function calculateSkillPoints(skillValue, attributeValue, cost) {
     if (skillValue <= attributeValue) {
