@@ -42,7 +42,7 @@ export class AddableField extends React.Component {
     console.log('Addable field props', this.props);
     return (
       <div>
-        <div>
+        <div style={{width: 234}}>
           <button
             className="uk-button uk-button-default uk-button-small uk-margin uk-align-center"
             onClick={this.addField}
