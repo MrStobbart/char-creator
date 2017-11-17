@@ -110,10 +110,12 @@ export class CharPage extends React.Component {
   } 
 
   makeCreateUpdateAddableField = fieldsetId => field => (fieldId, newValue) => {
-    console.log('Update function fieldset: ', fieldsetId, ' field:', field, ' newValue:', newValue)
+    console.log('Update function fieldset: ', fieldsetId, ' field: ' , field, ' newValue: ', newValue, 'fieldId: ' , fieldId)
     this.setState(prevState => {
       let newState = { ...prevState };
 
+      newState.charData[fieldsetId][field.id] = newState.charData[fieldsetId][field.id]
+        .map(addableField => addableField.fieldId === fieldId ? { ...addableField, ...newValue } : addableField);
       console.log('update value')
       newState.unsavedChanges = true;
       return newState;
