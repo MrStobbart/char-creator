@@ -55,7 +55,24 @@
       "W10",
       "W12"
     ],
-    "charCreationPoints": 50
+    "charCreationInformation": [
+      {
+        "id": "skillPoints",
+        "label": "Fertigkeitspunkte",
+        "forFieldsets": [
+          "skills"
+        ],
+        "availablePoints": 50
+      },
+      {
+        "id": "attributePoints",
+        "label": "Attribute",
+        "forFieldsets": [
+          "attributes"
+        ],
+        "availablePoints": 10
+      }
+    ]
   },
   "fieldsets": [
   {
@@ -451,7 +468,7 @@
     ]
   },
   {
-    "id": "hinderance",
+    "id": "hinderances",
     "title": "Handicaps",
     "fields": [
       {

@@ -31,8 +31,6 @@ export class CalcField extends React.Component {
       })
       .join(' ');
     const modifier = this.props.modifier ? this.props.modifier : 0
-    // const modifier = this.props.charData.specials.values.reduce()
-    console.log('calcstring', calculationString)
     const newValue = eval(calculationString) + modifier;
     this.setState({value: newValue})
   }
