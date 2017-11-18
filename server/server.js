@@ -6,6 +6,7 @@ const theDarkEye = require('./data/theDarkEye/charsheet');
 const savageWorlds = require('./data/savageWorlds/charsheet');
 
 const app = express();
+const port = 8080;
 
 
 // Middleware: Make mongoDb db object available in req.
@@ -40,6 +41,6 @@ app.route('/api/savageworlds')
     res.json(savageWorlds);
   });
 
-app.listen(8080, () => {
-  console.log('Server started on port 8080');
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
 })
