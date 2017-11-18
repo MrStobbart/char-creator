@@ -1,11 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const dbConnectionMiddleware = require('./middlewares/dbConnector');
 const theDarkEye = require('./data/theDarkEye/charsheet');
 const savageWorlds = require('./data/savageWorlds/charsheet');
 
 const app = express();
 
+
+// Middleware: Make mongoDb db object available in req.
+app.use(dbConnectionMiddleware('mongodb://127.0.0.1:27017'));
+
+// Middleware: Parse request body to json.
 app.use(bodyParser.json());
 
 // This is not needed in production
@@ -21,6 +27,8 @@ if (process.env.NODE_ENV === 'production') {
   console.log('Serve the production build');
   app.use(express.static('build'));
 }
+
+app.route('/api/users')
 
 app.route('/api/thedarkeye')
   .get((req, res) => {
