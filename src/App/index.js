@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+
 import { CharPageContainer } from '../CharPage';
 import { Home } from '../Home';
+import { Navbar } from '../Navbar';
+
 
 import './index.css';
 
@@ -11,15 +14,7 @@ class App extends Component {
     return (
       <div>
         <header>
-          <nav uk-navbar="true" className="uk-navbar-container">
-            <div className="uk-navbar-center">  
-              <ul className="uk-navbar-nav">
-                <li><Link to="/home">Home</Link></li>
-                <li><Link to="/charpage/savageworlds">Savage Worlds</Link></li>
-                <li><Link to="/charpage/thedarkeye">Das Schwarze Auge</Link></li>
-              </ul>
-            </div>  
-          </nav>
+          <Navbar/>
         </header>
         <main className="uk-container uk-container-expand	">
           <Route path="/home" component={Home} /> 
