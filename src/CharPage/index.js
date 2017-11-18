@@ -215,7 +215,7 @@ export class CharPage extends React.Component {
 /**
  * CharPageContainer
  */
-export const CharPageContainer = connect(mapStateToProps, mapDispatchToProps)(CharPage)
+export default connect(mapStateToProps, mapDispatchToProps)(CharPage)
 
 function mapStateToProps(state) {
   console.log('this is the state', state);

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import { CharPageContainer } from '../CharPage';
-import { Home } from '../Home';
-import { Navbar } from '../Navbar';
+import CharPageContainer from '../CharPage';
+import Home from '../Home';
+import Navbar from './components/Navbar';
 
 
 import './index.css';
 
 class App extends Component {
-  
+
   render() {
     return (
       <div>
@@ -25,4 +26,5 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App
+
