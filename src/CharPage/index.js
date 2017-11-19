@@ -2,7 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Actions
-import { fetchCharPageByEndpoint } from './actions';
+import {
+  fetchCharSheet,
+  fetchCharacters,
+  createCharacter,
+  updateCharacter,
+  deleteCharacter
+} from './actions';
 
 // Components
 import { Navigation } from './components/Navigation';
@@ -15,28 +21,22 @@ export class CharPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      charData: {
-        information: {},
-        values: {},
-        specials: [],
-        equipment: []
-      },
+      charData: {},
       unsavedChanges: false,
       charDataCreated: false
     }
   }
 
   componentDidMount() {
-    this.props.fetchCharPageByEndpoint(this.props.match.params.endpoint);
+    this.props.fetchCharSheet();
   }
 
   componentWillReceiveProps(nextProps) {
 
-    console.log('nextProps', nextProps)
-
-    if (this.props.match.params.endpoint !== nextProps.match.params.endpoint) {
-      this.props.fetchCharPageByEndpoint(nextProps.match.params.endpoint);
-    }
+    // Not needed anymore
+    // if (this.props.match.params.endpoint !== nextProps.match.params.endpoint) {
+    //   this.props.fetchCharSheet(nextProps.match.params.endpoint);
+    // }
 
     if (nextProps.charSheet) {
       this.setState(prevState => { 
@@ -151,21 +151,11 @@ export class CharPage extends React.Component {
       ...prevState,
       unsavedChanges: false
     }))
+    this.props.createCharacter(this.state.charData)
     console.log('save changes');
     // TODO dispatch save action
   }
 
-  // TODO No logic so far
-  // calculateStuff = () => {
-  //   switch (this.state.charSheet.id) {
-  //     case 'savageWorldsFantasy':
-  //       this.savageWorldsFantasyCalculations();
-  //       break;
-  //     default:
-  //       console.error('Unkown char sheet id');
-  //       break;
-  //   }
-  // }
 
   
 
@@ -234,9 +224,13 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    fetchCharPageByEndpoint: (endpoint) => {
-      dispatch(fetchCharPageByEndpoint(endpoint))
-    }
+    fetchCharSheet: () => { dispatch(fetchCharSheet()) },
+    fetchCharacters: () => { dispatch(fetchCharacters()) },
+    createCharacter: (character) => { dispatch(createCharacter(character)) },
+    updateCharacter: () => { dispatch(updateCharacter()) },
+    deleteCharacter: () => { dispatch(deleteCharacter()) },
   }
 }
+
+
 

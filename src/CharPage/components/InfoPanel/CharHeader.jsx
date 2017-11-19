@@ -27,7 +27,7 @@ function savageWorldsHeader(props) {
   let skillPoint = props.meta.charCreationPoints;
   console.log('availablePoints', skillPoint)
 
-  props.meta.charCreationInformation.map(information => {
+  props.meta.charCreationInformation.forEach(information => {
     
     information.forFieldsets.forEach(fieldsetId => {
 
