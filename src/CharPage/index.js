@@ -204,7 +204,16 @@ export class CharPage extends React.Component {
     }
     return (
       <div>
-        {!this.state.charDataCreated ? (<div uk-spinner={''} />) : null}
+        {!this.state.charDataCreated ? (
+          <div
+            uk-spinner={''}
+            style={{
+              textAlign: 'center',
+              display: 'block',
+              margin: 'auto',
+              padding: 30
+            }} />
+        ) : null}
         {charPage}
       </div>
     )
