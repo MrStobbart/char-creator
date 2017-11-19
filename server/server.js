@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const ObjectId = require('mongodb').ObjectID;
 
 const dbConnectionMiddleware = require('./middlewares/dbConnector');
 const theDarkEye = require('./data/theDarkEye/charsheet');
@@ -36,10 +37,74 @@ app.route('/api/thedarkeye')
     res.json(theDarkEye);
   });
 
-app.route('/api/savageworlds')
+app.route('/api/savageworldsfantasy')
   .get((req, res) => {
     res.json(savageWorlds);
   });
+
+app.route('/api/savageworldsfantasy/characters')
+  .all((req, res, next) => {
+    req.collection = req.db.collection('swFantasyCharacters')
+    next();
+  })
+  // Get all characters
+  .get((req, res) => {
+    req.collection.find({}).toArray()
+      .then(data => res.status(200).json({
+        message: 'swFantasyCharacters found!',
+        data: data
+      }))
+      .catch(err => res.status(404).json(err))
+  })
+  // Create new character
+  .post((req, res) => {
+    req.collection.insertOne(req.body)
+      .then(mongoRes => res.status(200).json({
+        message: 'Entry created!',
+        id: mongoRes.insertedId
+      }))
+      .catch(err => res.staus(404).json(err))
+  })
+
+app.route('/api/savageworldsfantasy/characters/:id')
+  .all((req, res, next) => {
+    req.collection = req.db.collection('swFantasyCharacters')
+    if (req.params.id.length !== 24) {
+      res.status(400).json({message: 'The id must be a 24 byte string!'})
+    }
+    next();
+  })
+  // Get specific character
+  .get((req, res) => {
+    req.collection.findOne({ _id: ObjectId(req.params.id) })
+      .then(mongoRes => res.status(200).json({
+          message: 'Entry found!',
+          data: mongoRes
+      }))
+      .catch(err => res.status(404).json(err))
+  })
+  // Update character with given id
+  .put((req, res) => {
+    req.collection.findOneAndReplace(
+      { _id: ObjectId(req.params.id)},
+      req.body,
+      { returnOriginal: false }
+    )
+      .then(mongoRes => res.status(200).json({
+        message: 'Entry upserted!',
+        data: mongoRes.value
+      }))
+      .catch(err => res.status(404).json(err))
+  })
+  // Delete character with given id
+  .delete((req, res) => {
+    req.collection.findOneAndDelete({ _id: ObjectId(req.params.id) })
+      .then(mongoRes => res.status(200).json({
+        message: 'Entry deleted!',
+        data: mongoRes.value
+      }))
+      .catch(err => res.status(404).json(err))
+  })
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
