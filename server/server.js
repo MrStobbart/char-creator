@@ -11,7 +11,7 @@ const port = 8080;
 
 
 // Middleware: Make mongoDb db object available in req.
-app.use(dbConnectionMiddleware('mongodb://127.0.0.1:27017'));
+app.use(dbConnectionMiddleware('mongodb://127.0.0.1:27017/charCreator'));
 
 // Middleware: Parse request body to json.
 app.use(bodyParser.json());
