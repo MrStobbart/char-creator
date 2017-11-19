@@ -160,11 +160,10 @@ export class CharPage extends React.Component {
   
 
   render() {
-    const style = { marginTop: '12px' };
     let charPage = null;
     if (this.state.charDataCreated) {
       charPage = (
-        <div uk-grid="true" style={style}>
+        <div uk-grid="true">
           <div className="uk-width-1-6">
             <Navigation fieldsets={this.props.charSheet.fieldsets} />
           </div>
