@@ -19,9 +19,8 @@ app.use(bodyParser.json());
 // This is not needed in production
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header({ 'Content-Type': 'application/json' });
+  res.header("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   next();
 });
 
@@ -29,6 +28,10 @@ if (process.env.NODE_ENV === 'production') {
   console.log('Serve the production build');
   app.use(express.static('build'));
 }
+
+app.options('*', (req, res) => {
+  res.status(200).send();
+})
 
 app.route('/api/users')
 
@@ -39,7 +42,8 @@ app.route('/api/thedarkeye')
 
 app.route('/api/savageworldsfantasy')
   .get((req, res) => {
-    res.json(savageWorlds);
+    console.log('send this')
+    res.status(200).json(savageWorlds);
   });
 
 app.route('/api/savageworldsfantasy/characters')
@@ -54,16 +58,17 @@ app.route('/api/savageworldsfantasy/characters')
         message: 'swFantasyCharacters found!',
         data: data
       }))
-      .catch(err => res.status(404).json(err))
+      .catch(err => res.status(400).json(err))
   })
   // Create new character
   .post((req, res) => {
+    console.log('save char')
     req.collection.insertOne(req.body)
       .then(mongoRes => res.status(200).json({
         message: 'Entry created!',
         id: mongoRes.insertedId
       }))
-      .catch(err => res.staus(404).json(err))
+      .catch(err => res.staus(400).json(err))
   })
 
 app.route('/api/savageworldsfantasy/characters/:id')
