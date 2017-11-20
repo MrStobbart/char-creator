@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 // Actions
 import {
   fetchCharSheet,
-  fetchCharacters,
   createCharacter,
   updateCharacter,
-  deleteCharacter
 } from './actions';
 
 // Components
@@ -16,68 +14,74 @@ import { Content } from './components/Content';
 import { InfoPanel }from './components/InfoPanel';
 
 // The charpage has its own state that will be synced with the redux state on submit. Performance reasons
-export class CharPage extends React.Component {
+class CharPage extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       charData: {},
       unsavedChanges: false,
-      charDataCreated: false
+      charDataCreated: false,
     }
   }
 
   componentDidMount() {
     this.props.fetchCharSheet();
+
+    // Load char data into char creator
+    if (this.props.match.params.characterId) {
+      const charData = this.props.characters.find(character => character._id === this.props.match.params.characterId);
+      this.setState({ charData, charDataCreated: true })
+    }
   }
 
   componentWillReceiveProps(nextProps) {
 
-    // Not needed anymore
-    // if (this.props.match.params.endpoint !== nextProps.match.params.endpoint) {
-    //   this.props.fetchCharSheet(nextProps.match.params.endpoint);
-    // }
-
-    if (nextProps.charSheet) {
-      this.setState(prevState => { 
-
-        // Create fieldsets in char data
-        let charDataFieldsets = {};
-        nextProps.charSheet.fieldsets.forEach(fieldset => {
-          charDataFieldsets[fieldset.id] = {}
-          fieldset.fields.forEach(field => {
-            
-            // Set field datatype according to type
-            switch (field.type) {
-              case 'addable':
-                charDataFieldsets[fieldset.id][field.id] = [];
-                break;
-              case 'number':
-                if (field.default) {
-                  charDataFieldsets[fieldset.id][field.id] = {
-                    value: field.default,
-                    calculationType: field.calculationType
-                  };
-                } else {
-                  charDataFieldsets[fieldset.id][field.id] = {};
-                }
-                break;
-              case 'calculated':
-                break;
-              default:
-                charDataFieldsets[fieldset.id][field.id] = '';  
-                break;
-            }
-          })
-        });
-
-        console.log('merged', { ...charDataFieldsets, ...nextProps.charSheet.meta.defaultData });
-        return {
-          charData: { ...charDataFieldsets, ...nextProps.charSheet.meta.defaultData },
-          charDataCreated: true
-        }
-      });
+    if (nextProps.charSheet && !this.props.match.params.characterId) {
+      this.createEmptyCharData(nextProps);
     }
+
+  }
+
+  createEmptyCharData(nextProps) {
+    this.setState(prevState => {
+
+      // Create fieldsets in char data
+      let charDataFieldsets = {};
+      nextProps.charSheet.fieldsets.forEach(fieldset => {
+        charDataFieldsets[fieldset.id] = {}
+        fieldset.fields.forEach(field => {
+
+          // Set field datatype according to type
+          switch (field.type) {
+            case 'addable':
+              charDataFieldsets[fieldset.id][field.id] = [];
+              break;
+            case 'number':
+              if (field.default) {
+                charDataFieldsets[fieldset.id][field.id] = {
+                  value: field.default,
+                  calculationType: field.calculationType
+                };
+              } else {
+                charDataFieldsets[fieldset.id][field.id] = {};
+              }
+              break;
+            case 'calculated':
+              break;
+            default:
+              charDataFieldsets[fieldset.id][field.id] = '';
+              break;
+          }
+        })
+      });
+
+      console.log('merged', { ...charDataFieldsets, ...nextProps.charSheet.meta.defaultData });
+      return {
+        charData: { ...charDataFieldsets, ...nextProps.charSheet.meta.defaultData },
+        charDataCreated: true
+      }
+    });
   }
 
   makeCreateUpdateInformationField = fieldsetId => field => newValue => {
@@ -147,13 +151,24 @@ export class CharPage extends React.Component {
   }
 
   saveChanges = () => {
+    console.log('save changes');
     this.setState(prevState => ({
       ...prevState,
       unsavedChanges: false
     }))
-    this.props.createCharacter(this.state.charData)
-    console.log('save changes');
-    // TODO dispatch save action
+    if (this.state.charData._id) {
+      console.log('chardata id ', this.state.charData._id)
+      const serverRes = this.props.updateCharacter(this.state.charData)
+      console.log('updated char', serverRes)
+    } else {
+      // Create new char
+      // TODO return new _id and add to chardata
+      const charDataWithId = this.props.createCharacter(this.state.charData)
+      this.setState(prevState => ({
+        ...prevState,
+        charData: charDataWithId
+      }))
+    }
   }
 
 
@@ -218,16 +233,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(CharPage)
 function mapStateToProps(state) {
   console.log('this is the state', state);
   return {
-    charSheet: state.charPage.charSheet
+    charSheet: state.charPage.charSheet,
+    characters: state.charactersPage.characters
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
     fetchCharSheet: () => { dispatch(fetchCharSheet()) },
-    fetchCharacters: () => { dispatch(fetchCharacters()) },
     createCharacter: (character) => { dispatch(createCharacter(character)) },
-    updateCharacter: () => { dispatch(updateCharacter()) },
-    deleteCharacter: () => { dispatch(deleteCharacter()) },
+    updateCharacter: (character) => { dispatch(updateCharacter(character)) },
   }
 }
 

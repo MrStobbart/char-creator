@@ -2,18 +2,12 @@ import {
   FETCH_SHEET_REQUEST,
   FETCH_SHEET_SUCCESS,
   FETCH_SHEET_FAILURE,
-  FETCH_CHARACTERS_REQUEST,
-  FETCH_CHARACTERS_SUCCESS,
-  FETCH_CHARACTERS_FAILURE,
   CREATE_CHARACTER_REQUEST,
   CREATE_CHARACTER_SUCCESS,
   CREATE_CHARACTER_FAILURE,
   UPDATE_CHARACTER_REQUEST,
   UPDATE_CHARACTER_SUCCESS,
   UPDATE_CHARACTER_FAILURE,
-  DELETE_CHARACTER_REQUEST,
-  DELETE_CHARACTER_SUCCESS,
-  DELETE_CHARACTER_FAILURE,
 } from './actions';
 
 const initialState = {
@@ -47,22 +41,6 @@ export function charPageReducer(state = initialState, action) {
         ...state,
         loading: false, 
       }
-    case FETCH_CHARACTERS_REQUEST:
-      return { 
-        ...state,
-        loading: true
-      }
-    case FETCH_CHARACTERS_SUCCESS:
-      return { 
-        ...state,
-        loading: false
-      }
-    case FETCH_CHARACTERS_FAILURE:
-      console.error(action.error)
-      return { 
-        ...state,
-        loading: false
-      }
     case CREATE_CHARACTER_REQUEST:
       return { 
         ...state,
@@ -90,22 +68,6 @@ export function charPageReducer(state = initialState, action) {
         loading: false
       }
     case UPDATE_CHARACTER_FAILURE:
-      console.error(action.error)
-      return { 
-        ...state,
-        loading: false
-      }
-    case DELETE_CHARACTER_REQUEST:
-      return { 
-        ...state,
-        loading: true
-      }
-    case DELETE_CHARACTER_SUCCESS:
-      return { 
-        ...state,
-        loading: false
-      }
-    case DELETE_CHARACTER_FAILURE:
       console.error(action.error)
       return { 
         ...state,

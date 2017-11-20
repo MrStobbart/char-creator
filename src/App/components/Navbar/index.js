@@ -12,6 +12,8 @@ export default function Navbar(props) {
             <li><Link to="/home">Home</Link></li>
             <li><Link to="/charpage">Create Character</Link></li>
             <li><Link to="/characters">View Characters</Link></li>
+            <li><Link to="/home">Switch Ruleset</Link></li>
+            <li><Link to="/home">Login</Link></li>
             {/* <li><Link to="/charpage/thedarkeye">Das Schwarze Auge</Link></li> */}
           </ul>
         </div>

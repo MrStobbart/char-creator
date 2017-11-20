@@ -51,43 +51,43 @@ app.route('/api/savageworldsfantasy/characters')
     req.collection = req.db.collection('swFantasyCharacters')
     next();
   })
+
+
   // Get all characters
   .get((req, res) => {
     req.collection.find({}).toArray()
-      .then(data => res.status(200).json({
-        message: 'swFantasyCharacters found!',
-        data: data
-      }))
+      .then(data => res.status(200).json(data))
       .catch(err => res.status(400).json(err))
   })
+
+
   // Create new character
   .post((req, res) => {
     console.log('save char')
     req.collection.insertOne(req.body)
-      .then(mongoRes => res.status(200).json({
-        message: 'Entry created!',
-        id: mongoRes.insertedId
-      }))
+      .then(mongoRes => res.status(200).json(mongoRes.ops))
       .catch(err => res.staus(400).json(err))
   })
+
 
 app.route('/api/savageworldsfantasy/characters/:id')
   .all((req, res, next) => {
     req.collection = req.db.collection('swFantasyCharacters')
     if (req.params.id.length !== 24) {
-      res.status(400).json({message: 'The id must be a 24 byte string!'})
+      res.status(400).json('The id must be a 24 byte string!')
     }
     next();
   })
+
+
   // Get specific character
   .get((req, res) => {
     req.collection.findOne({ _id: ObjectId(req.params.id) })
-      .then(mongoRes => res.status(200).json({
-          message: 'Entry found!',
-          data: mongoRes
-      }))
+      .then(mongoRes => res.status(200).json(mongoRes))
       .catch(err => res.status(404).json(err))
   })
+
+
   // Update character with given id
   .put((req, res) => {
     req.collection.findOneAndReplace(
@@ -95,19 +95,18 @@ app.route('/api/savageworldsfantasy/characters/:id')
       req.body,
       { returnOriginal: false }
     )
-      .then(mongoRes => res.status(200).json({
-        message: 'Entry upserted!',
-        data: mongoRes.value
-      }))
-      .catch(err => res.status(404).json(err))
+      .then(mongoRes => res.status(200).json(mongoRes.value))
+      .catch(err => {
+        console.log('strage error', err)
+        res.status(404).json(err)
+      })
   })
+
+
   // Delete character with given id
   .delete((req, res) => {
     req.collection.findOneAndDelete({ _id: ObjectId(req.params.id) })
-      .then(mongoRes => res.status(200).json({
-        message: 'Entry deleted!',
-        data: mongoRes.value
-      }))
+      .then(mongoRes => res.status(200).json(mongoRes.value))
       .catch(err => res.status(404).json(err))
   })
 

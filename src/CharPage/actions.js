@@ -34,38 +34,6 @@ export function fetchCharSheet() {
 }
 
 /**
- * Get all characters
- */
-export const FETCH_CHARACTERS_REQUEST = 'FETCH_CHARACTERS_REQUEST';
-export const FETCH_CHARACTERS_SUCCESS = 'FETCH_CHARACTERS_SUCCESS';
-export const FETCH_CHARACTERS_FAILURE = 'FETCH_CHARACTERS_FAILURE';
-
-export function fetchCharactersRequest() {
-  return { type: FETCH_CHARACTERS_REQUEST };
-}
-export function fetchCharactersSuccess(payload) {
-  return { type: FETCH_CHARACTERS_SUCCESS, payload }
-}
-export function fetchCharactersFailure(error) {
-  return { type: FETCH_CHARACTERS_FAILURE, error }
-}
-
-export function fetchCharacters() {
-  return (dispatch, getState) => {
-    dispatch(fetchCharactersRequest());
-    const endpoint = getState().charPage.ruleset;
-    return fetchEndpoint(`${endpoint}/characters`)
-      .then(payload => {
-        dispatch(fetchCharactersSuccess(payload));
-      })
-      .catch(err => {
-        dispatch(fetchCharactersFailure(err));
-      });
-  }
-}
-
-
-/**
  * Create character
  */
 export const CREATE_CHARACTER_REQUEST = 'CREATE_CHARACTER_REQUEST';
@@ -113,11 +81,15 @@ export function updateCharacterFailure(error) {
   return { type: UPDATE_CHARACTER_FAILURE, error }
 }
 
-export function updateCharacter( character) {
+export function updateCharacter(character) {
   return (dispatch, getState) => {
     dispatch(updateCharacterRequest());
+
+    // Remove id from character to allow update
     const endpoint = getState().charPage.ruleset;
-    return fetchEndpoint(`${endpoint}/characters`, 'put', character)
+    const body = { ...character }
+    body._id = undefined;
+    return fetchEndpoint(`${endpoint}/characters/${character._id}`, 'put', body)
       .then(payload => {
         dispatch(updateCharacterSuccess(payload));
       })
@@ -127,33 +99,3 @@ export function updateCharacter( character) {
   }
 }
 
-/**
- * Delte character
- */
-export const DELETE_CHARACTER_REQUEST = 'DELETE_CHARACTER_REQUEST';
-export const DELETE_CHARACTER_SUCCESS = 'DELETE_CHARACTER_SUCCESS';
-export const DELETE_CHARACTER_FAILURE = 'DELETE_CHARACTER_FAILURE';
-
-export function deleteCharacterRequest() {
-  return { type: DELETE_CHARACTER_REQUEST };
-}
-export function deleteCharacterSuccess(payload) {
-  return { type: DELETE_CHARACTER_SUCCESS, payload }
-}
-export function deleteCharacterFailure(error) {
-  return { type: DELETE_CHARACTER_FAILURE, error }
-}
-
-export function deleteCharacter( character) {
-  return (dispatch, getState) => {
-    dispatch(deleteCharacterRequest());
-    const endpoint = getState().charPage.ruleset;
-    return fetchEndpoint(`${endpoint}/characters`, 'delete', character)
-      .then(payload => {
-        dispatch(deleteCharacterSuccess(payload));
-      })
-      .catch(err => {
-        dispatch(deleteCharacterFailure(err));
-      });
-  }
-}
