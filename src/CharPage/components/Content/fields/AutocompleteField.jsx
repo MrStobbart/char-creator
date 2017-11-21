@@ -12,6 +12,19 @@ export class AutocompleteField extends React.Component {
     };
   }
 
+  componentDidMount() {
+    console.log('props', this.props)
+    if (this.props.selectedField) {
+      
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          value: this.props.selectedField.label
+        }
+      })
+    }
+  }
+
   onChange = (event, { newValue, method }) => {
     console.log('newValue', newValue, this.props, this.state)
     this.setState({

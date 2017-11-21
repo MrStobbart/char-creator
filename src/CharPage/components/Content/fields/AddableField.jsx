@@ -1,13 +1,14 @@
 import React from 'react';
 import { AutocompleteField } from './AutocompleteField';
 import './AddableField.css';
+import shortid from 'shortid';
 
 export class AddableField extends React.Component {
   
 
   addField = (event) => {
     event.preventDefault();
-    const newField = {fieldId: `field-${this.props.values.length}`}
+    const newField = {fieldId: shortid.generate()}
     this.props.addField(newField)
     // const newField = {
     //   fieldId: `field-${this.state.fields.length}`,
@@ -60,6 +61,7 @@ export class AddableField extends React.Component {
   // }
 
   render() {
+    console.log('autocomplete values ', this.props.values);
     return (
       <div>
         <div style={{width: 234}}>
@@ -86,7 +88,7 @@ export class AddableField extends React.Component {
                 <AutocompleteField
                   placeholder={`Search ${this.props.field.label}`}  
                   selectableGroups={this.props.field.selectableGroups}
-                  value={field.value}
+                  selectedField={field.id ? field : undefined}
                   updateValue={this.createUpdateValueFunction(field.fieldId)}
                 >
                   Label

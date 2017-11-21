@@ -38,12 +38,10 @@ class CharPage extends React.Component {
   initializeCharPage(props) {
     const nextProps = props ? props : this.props;
     const characterId = this.props.match.params.characterId;
-    console.log('characterId', this.props.match.params.characterId ? true : false, 'charsheet',nextProps.charSheet ? true : false,'characters', nextProps.characters ? true : false, 'chardata', this.state.charData)
 
     // Load character with id
     if (nextProps.charSheet && nextProps.characters && characterId) {
       const loadedCharData = nextProps.characters.find(character => character._id === characterId);
-      console.log('loasdasdf', loadedCharData, this.state)
       if (loadedCharData) {
         
         this.setState(prevState => {
