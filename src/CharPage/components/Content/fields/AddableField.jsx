@@ -22,7 +22,6 @@ export class AddableField extends React.Component {
   }
 
   render() {
-    console.log('autocomplete values ', this.props.values);
     return (
       <div>
         <div style={{width: 234}}>

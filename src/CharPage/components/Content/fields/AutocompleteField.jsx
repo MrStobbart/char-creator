@@ -13,9 +13,9 @@ export class AutocompleteField extends React.Component {
   }
 
   componentDidMount() {
-    console.log('props', this.props)
+
+    // Set field value if already in char data 
     if (this.props.selectedField) {
-      
       this.setState(prevState => {
         return {
           ...prevState,
@@ -53,7 +53,6 @@ export class AutocompleteField extends React.Component {
 
     return selectableGroups
       .map(selectableGroup => {
-        console.log(selectableGroup)
         return {
           ...selectableGroup,
           selectables: selectableGroup.selectables.filter(selectable => selectable.label.toLowerCase().indexOf(value.toLowerCase()) > -1)
@@ -67,7 +66,6 @@ export class AutocompleteField extends React.Component {
   }
 
   onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
-    console.log('onSuggestionSelected', suggestion, suggestionValue, suggestionIndex, sectionIndex);
     this.props.updateValue(suggestion);
   }
 
