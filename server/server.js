@@ -64,6 +64,10 @@ app.route('/api/savageworldsfantasy/characters')
   // Create new character
   .post((req, res) => {
     console.log('save char')
+    if (!req.body._id) {
+      res.statusMessage = 'Bad Request: A new instance must have an unique id saved in the _id property!';
+      res.status(400).end();
+    }
     req.collection.insertOne(req.body)
       .then(mongoRes => res.status(200).json(mongoRes.ops))
       .catch(err => res.staus(400).json(err))
@@ -73,32 +77,28 @@ app.route('/api/savageworldsfantasy/characters')
 app.route('/api/savageworldsfantasy/characters/:id')
   .all((req, res, next) => {
     req.collection = req.db.collection('swFantasyCharacters')
-    if (req.params.id.length !== 24) {
-      res.statusMessage = 'Bad Request: The id must be a 24 byte string!';
-      res.status(400).end();
-    }
     next();
   })
 
 
   // Get specific character
   .get((req, res) => {
-    req.collection.findOne({ _id: ObjectId(req.params.id) })
+    req.collection.findOne({ _id: req.params.id })
       .then(mongoRes => res.status(200).json(mongoRes))
       .catch(err => res.status(404).json(err))
   })
 
 
-  // Update character with given id
+  // Upsert character with given id
   .put((req, res) => {
     req.collection.findOneAndReplace(
-      { _id: ObjectId(req.params.id)},
+      { _id: req.params.id},
       req.body,
-      { returnOriginal: false }
+      { returnOriginal: false, upsert: true }
     )
       .then(mongoRes => res.status(200).json(mongoRes.value))
       .catch(err => {
-        console.log('strage error', err)
+        console.log('strange error', err)
         res.status(404).json(err)
       })
   })
@@ -106,7 +106,7 @@ app.route('/api/savageworldsfantasy/characters/:id')
 
   // Delete character with given id
   .delete((req, res) => {
-    req.collection.findOneAndDelete({ _id: ObjectId(req.params.id) })
+    req.collection.findOneAndDelete({ _id: req.params.id })
       .then(mongoRes => res.status(200).json(mongoRes.value))
       .catch(err => res.status(404).json(err))
   })

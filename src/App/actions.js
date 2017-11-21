@@ -167,23 +167,23 @@ export function createCharacter(character) {
 /**
  * Update character
  */
-export const UPDATE_CHARACTER_REQUEST = 'UPDATE_CHARACTER_REQUEST';
-export const UPDATE_CHARACTER_SUCCESS = 'UPDATE_CHARACTER_SUCCESS';
-export const UPDATE_CHARACTER_FAILURE = 'UPDATE_CHARACTER_FAILURE';
+export const UPSERT_CHARACTER_REQUEST = 'UPSERT_CHARACTER_REQUEST';
+export const UPSERT_CHARACTER_SUCCESS = 'UPSERT_CHARACTER_SUCCESS';
+export const UPSERT_CHARACTER_FAILURE = 'UPSERT_CHARACTER_FAILURE';
 
-export function updateCharacterRequest() {
-  return { type: UPDATE_CHARACTER_REQUEST };
+export function upsertCharacterRequest() {
+  return { type: UPSERT_CHARACTER_REQUEST };
 }
-export function updateCharacterSuccess(payload) {
-  return { type: UPDATE_CHARACTER_SUCCESS, payload }
+export function upsertCharacterSuccess(payload) {
+  return { type: UPSERT_CHARACTER_SUCCESS, payload }
 }
-export function updateCharacterFailure(error) {
-  return { type: UPDATE_CHARACTER_FAILURE, error }
+export function upsertCharacterFailure(error) {
+  return { type: UPSERT_CHARACTER_FAILURE, error }
 }
 
-export function updateCharacter(character) {
+export function upsertCharacter(character) {
   return (dispatch, getState) => {
-    dispatch(updateCharacterRequest());
+    dispatch(upsertCharacterRequest());
 
     // Remove id from character to allow update
     const endpoint = getState().app.ruleset;
@@ -191,10 +191,10 @@ export function updateCharacter(character) {
     body._id = undefined;
     return fetchEndpoint(`${endpoint}/characters/${character._id}`, 'put', body)
       .then(payload => {
-        dispatch(updateCharacterSuccess(payload));
+        dispatch(upsertCharacterSuccess(payload));
       })
       .catch(err => {
-        dispatch(updateCharacterFailure(err));
+        dispatch(upsertCharacterFailure(err));
       });
   }
 }

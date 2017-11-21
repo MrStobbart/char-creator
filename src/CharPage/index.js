@@ -1,11 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import shortid from 'shortid';
 
 // Actions
-import {
-  createCharacter,
-  updateCharacter,
-} from '../App/actions';
+import { upsertCharacter } from '../App/actions';
 
 // Components
 import { Navigation } from './components/Navigation';
@@ -18,7 +16,7 @@ class CharPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      charData: {},
+      charData: undefined,
       unsavedChanges: false,
       charDataCreated: false,
     }
@@ -32,14 +30,15 @@ class CharPage extends React.Component {
 
   componentWillReceiveProps(nextProps) {
 
-    this.initializeCharPage(nextProps);
-
+    if (!this.state.charData) {
+      this.initializeCharPage(nextProps);
+    } 
   }
 
   initializeCharPage(props) {
     const nextProps = props ? props : this.props;
     const characterId = this.props.match.params.characterId;
-    console.log('characterId', this.props.match.params, this.props.match.params.characterId ? true : false, 'character id nextprops', nextProps.match.params.characterId ? true : false, 'charsheet',nextProps.charSheet ? true : false,'characters', nextProps.characters ? true : false)
+    console.log('characterId', this.props.match.params.characterId ? true : false, 'charsheet',nextProps.charSheet ? true : false,'characters', nextProps.characters ? true : false, 'chardata', this.state.charData)
 
     // Load character with id
     if (nextProps.charSheet && nextProps.characters && characterId) {
@@ -62,7 +61,7 @@ class CharPage extends React.Component {
     }
 
     // Create empty character 
-    if (nextProps.charSheet && !characterId) {
+    if (nextProps.charSheet && !characterId && !this.state.charData) {
       console.log('create empty char data ')
       this.createEmptyCharData(nextProps);
     }
@@ -102,7 +101,11 @@ class CharPage extends React.Component {
       });
 
       return {
-        charData: { ...charDataFieldsets, ...nextProps.charSheet.meta.defaultData },
+        charData: {
+          ...charDataFieldsets,
+          ...nextProps.charSheet.meta.defaultData,
+          _id: shortid.generate()
+        },
         charDataCreated: true
       }
     });
@@ -176,22 +179,11 @@ class CharPage extends React.Component {
 
   saveChanges = () => {
     console.log('save changes');
+    this.props.upsertCharacter(this.state.charData);
     this.setState(prevState => ({
       ...prevState,
       unsavedChanges: false
     }))
-    if (this.state.charData._id) {
-      console.log('update this char chardate ', this.state.charData)
-      const serverRes = this.props.updateCharacter(this.state.charData)
-      console.log('updated char', serverRes)
-    } else {
-      // Create new char
-      const charDataWithId = this.props.createCharacter(this.state.charData)
-      this.setState(prevState => ({
-        ...prevState,
-        charData: charDataWithId
-      }))
-    }
   }
 
 
@@ -261,8 +253,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    createCharacter: (character) => { dispatch(createCharacter(character)) },
-    updateCharacter: (character) => { dispatch(updateCharacter(character)) },
+    upsertCharacter: (character) => { dispatch(upsertCharacter(character)) },
   }
 }
 

@@ -14,14 +14,14 @@ import {
   CREATE_CHARACTER_REQUEST,
   CREATE_CHARACTER_SUCCESS,
   CREATE_CHARACTER_FAILURE,
-  UPDATE_CHARACTER_REQUEST,
-  UPDATE_CHARACTER_SUCCESS,
-  UPDATE_CHARACTER_FAILURE,
+  UPSERT_CHARACTER_REQUEST,
+  UPSERT_CHARACTER_SUCCESS,
+  UPSERT_CHARACTER_FAILURE,
 } from './actions';
 
 const initialState = {
   loading: false,
-  characters: undefined,
+  characters: [],
   charSheet: undefined,
   ruleset: 'savageworldsfantasy'
 };
@@ -102,6 +102,7 @@ export function AppReducer(state = initialState, action) {
     case CREATE_CHARACTER_SUCCESS:
       return {
         ...state,
+        characters: [...state.characters, action.payload[0]],
         loading: false
       }
     case CREATE_CHARACTER_FAILURE:
@@ -110,17 +111,29 @@ export function AppReducer(state = initialState, action) {
         ...state,
         loading: false
       }
-    case UPDATE_CHARACTER_REQUEST:
+    case UPSERT_CHARACTER_REQUEST:
       return {
         ...state,
         loading: true
       }
-    case UPDATE_CHARACTER_SUCCESS:
+    case UPSERT_CHARACTER_SUCCESS:
+      
+      let newCharacters = [...state.characters];
+      const index = state.characters.findIndex(character => character._id === action.payload._id)
+
+      if (index === -1) {
+        // Inserted
+        newCharacters.push(action.payload)
+      } else {
+        // Updated
+        newCharacters[index] = action.payload;
+      }
       return {
         ...state,
+        characters: newCharacters,
         loading: false
       }
-    case UPDATE_CHARACTER_FAILURE:
+    case UPSERT_CHARACTER_FAILURE:
       console.error(action.error)
       return {
         ...state,
