@@ -69,12 +69,13 @@ app.route('/api/savageworldsfantasy/characters')
       .catch(err => res.staus(400).json(err))
   })
 
-
+// TODO add this kind of error handling to all endpoints
 app.route('/api/savageworldsfantasy/characters/:id')
   .all((req, res, next) => {
     req.collection = req.db.collection('swFantasyCharacters')
     if (req.params.id.length !== 24) {
-      res.status(400).json('The id must be a 24 byte string!')
+      res.statusMessage = 'Bad Request: The id must be a 24 byte string!';
+      res.status(400).end();
     }
     next();
   })

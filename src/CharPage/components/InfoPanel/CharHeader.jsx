@@ -6,8 +6,6 @@ import './CharHeader.css';
 export function CharHeader(props) {
 
 
-  console.log('PRops', props)
-
   switch (props.charSheetId) {
     case 'savageWorldsFantasy':
       return savageWorldsHeader(props);
@@ -25,8 +23,6 @@ function savageWorldsHeader(props) {
   let skillPoints = 50;
 
   let skillPoint = props.meta.charCreationPoints;
-  console.log('availablePoints', skillPoint)
-
   props.meta.charCreationInformation.forEach(information => {
     
     information.forFieldsets.forEach(fieldsetId => {

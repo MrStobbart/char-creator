@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 
 // Actions
 import {
-  fetchCharSheet,
   createCharacter,
   updateCharacter,
-} from './actions';
+} from '../App/actions';
 
 // Components
 import { Navigation } from './components/Navigation';
@@ -26,21 +25,47 @@ class CharPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchCharSheet();
-
-    // Load char data into char creator
-    if (this.props.match.params.characterId) {
-      const charData = this.props.characters.find(character => character._id === this.props.match.params.characterId);
-      this.setState({ charData, charDataCreated: true })
-    }
+    
+    this.initializeCharPage();
   }
+
 
   componentWillReceiveProps(nextProps) {
 
-    if (nextProps.charSheet && !this.props.match.params.characterId) {
-      this.createEmptyCharData(nextProps);
+    this.initializeCharPage(nextProps);
+
+  }
+
+  initializeCharPage(props) {
+    const nextProps = props ? props : this.props;
+    const characterId = this.props.match.params.characterId;
+    console.log('characterId', this.props.match.params, this.props.match.params.characterId ? true : false, 'character id nextprops', nextProps.match.params.characterId ? true : false, 'charsheet',nextProps.charSheet ? true : false,'characters', nextProps.characters ? true : false)
+
+    // Load character with id
+    if (nextProps.charSheet && nextProps.characters && characterId) {
+      const loadedCharData = nextProps.characters.find(character => character._id === characterId);
+      console.log('loasdasdf', loadedCharData, this.state)
+      if (loadedCharData) {
+        
+        this.setState(prevState => {
+          return {
+            ...prevState,
+            charData: loadedCharData,
+            charDataCreated: true
+          }
+        })
+      } else {
+
+        // TODO Hack to avoid an error with invalid param id
+        this.createEmptyCharData(nextProps);
+      }
     }
 
+    // Create empty character 
+    if (nextProps.charSheet && !characterId) {
+      console.log('create empty char data ')
+      this.createEmptyCharData(nextProps);
+    }
   }
 
   createEmptyCharData(nextProps) {
@@ -76,7 +101,6 @@ class CharPage extends React.Component {
         })
       });
 
-      console.log('merged', { ...charDataFieldsets, ...nextProps.charSheet.meta.defaultData });
       return {
         charData: { ...charDataFieldsets, ...nextProps.charSheet.meta.defaultData },
         charDataCreated: true
@@ -157,12 +181,11 @@ class CharPage extends React.Component {
       unsavedChanges: false
     }))
     if (this.state.charData._id) {
-      console.log('chardata id ', this.state.charData._id)
+      console.log('update this char chardate ', this.state.charData)
       const serverRes = this.props.updateCharacter(this.state.charData)
       console.log('updated char', serverRes)
     } else {
       // Create new char
-      // TODO return new _id and add to chardata
       const charDataWithId = this.props.createCharacter(this.state.charData)
       this.setState(prevState => ({
         ...prevState,
@@ -231,15 +254,13 @@ class CharPage extends React.Component {
 export default connect(mapStateToProps, mapDispatchToProps)(CharPage)
 
 function mapStateToProps(state) {
-  console.log('this is the state', state);
   return {
-    charSheet: state.charPage.charSheet,
-    characters: state.charactersPage.characters
+    charSheet: state.app.charSheet,
+    characters: state.app.characters
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
-    fetchCharSheet: () => { dispatch(fetchCharSheet()) },
     createCharacter: (character) => { dispatch(createCharacter(character)) },
     updateCharacter: (character) => { dispatch(updateCharacter(character)) },
   }
