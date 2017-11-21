@@ -11,9 +11,6 @@ import {
   FETCH_CHARACTER_REQUEST,
   FETCH_CHARACTER_SUCCESS,
   FETCH_CHARACTER_FAILURE,
-  CREATE_CHARACTER_REQUEST,
-  CREATE_CHARACTER_SUCCESS,
-  CREATE_CHARACTER_FAILURE,
   UPSERT_CHARACTER_REQUEST,
   UPSERT_CHARACTER_SUCCESS,
   UPSERT_CHARACTER_FAILURE,
@@ -90,23 +87,6 @@ export function AppReducer(state = initialState, action) {
         loading: false
       }
     case FETCH_CHARACTER_FAILURE:
-      return {
-        ...state,
-        loading: false
-      }
-    case CREATE_CHARACTER_REQUEST:
-      return {
-        ...state,
-        loading: true
-      }
-    case CREATE_CHARACTER_SUCCESS:
-      return {
-        ...state,
-        characters: [...state.characters, action.payload[0]],
-        loading: false
-      }
-    case CREATE_CHARACTER_FAILURE:
-      console.error(action.error)
       return {
         ...state,
         loading: false

@@ -133,36 +133,6 @@ export function fetchCharacter(id) {
   }
 }
 
-/**
- * Create character
- */
-export const CREATE_CHARACTER_REQUEST = 'CREATE_CHARACTER_REQUEST';
-export const CREATE_CHARACTER_SUCCESS = 'CREATE_CHARACTER_SUCCESS';
-export const CREATE_CHARACTER_FAILURE = 'CREATE_CHARACTER_FAILURE';
-
-export function createCharacterRequest() {
-  return { type: CREATE_CHARACTER_REQUEST };
-}
-export function createCharacterSuccess(payload) {
-  return { type: CREATE_CHARACTER_SUCCESS, payload }
-}
-export function createCharacterFailure(error) {
-  return { type: CREATE_CHARACTER_FAILURE, error }
-}
-
-export function createCharacter(character) {
-  return (dispatch, getState) => {
-    dispatch(createCharacterRequest());
-    const endpoint = getState().app.ruleset;
-    return fetchEndpoint(`${endpoint}/characters`, 'post', character)
-      .then(payload => {
-        dispatch(createCharacterSuccess(payload));
-      })
-      .catch(err => {
-        dispatch(createCharacterFailure(err));
-      });
-  }
-}
 
 /**
  * Update character

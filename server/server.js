@@ -52,26 +52,13 @@ app.route('/api/savageworldsfantasy/characters')
     next();
   })
 
-
   // Get all characters
   .get((req, res) => {
     req.collection.find({}).toArray()
       .then(data => res.status(200).json(data))
       .catch(err => res.status(400).json(err))
   })
-
-
-  // Create new character
-  .post((req, res) => {
-    console.log('save char')
-    if (!req.body._id) {
-      res.statusMessage = 'Bad Request: A new instance must have an unique id saved in the _id property!';
-      res.status(400).end();
-    }
-    req.collection.insertOne(req.body)
-      .then(mongoRes => res.status(200).json(mongoRes.ops))
-      .catch(err => res.staus(400).json(err))
-  })
+  
 
 // TODO add this kind of error handling to all endpoints
 app.route('/api/savageworldsfantasy/characters/:id')
