@@ -2,21 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchCharacters, deleteCharacter } from './actions';
 
-
-
-import './index.css';
 
 
 class CharactersPage extends React.Component{
 
-  componentDidMount() {
-    this.props.fetchCharacters();
-  }
-  
   render() {
-    console.log('characters props', this.props);
     return (
       <div uk-grid="true">
         {this.props.characters.map(character => (
@@ -48,17 +39,10 @@ class CharactersPage extends React.Component{
 /**
  * CharactersPageContainer
  */
-export default connect(mapStateToProps, mapDispatchToProps)(CharactersPage)
+export default connect(mapStateToProps)(CharactersPage)
 
 function mapStateToProps(state) {
-  console.log('this is the state', state);
   return {
-    characters: state.charactersPage.characters
-  }
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchCharacters: () => { dispatch(fetchCharacters()) },
-    deleteCharacter: (character) => { dispatch(deleteCharacter(character)) },
+    characters: state.app.characters
   }
 }

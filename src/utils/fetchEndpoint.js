@@ -9,9 +9,16 @@ export function fetchEndpoint(endpoint, method = 'get', body) {
     mode: 'cors',
     body: JSON.stringify(body),
   })
+    .then(res => {
+      if (!res.ok) {
+        throw res.statusText; 
+      }
+      return res;
+    })
     .then(res => res.json())
     .catch(err => {
-      console.error(`An error occured while fetching ${API_URL}/${endpoint}:\n${JSON.stringify(err, null, 2)}`)
-      return err
+      const message = `An error occured while fetching ${API_URL}/${endpoint}:\n${err}`;
+      console.error(message)
+      throw err
     });
 }

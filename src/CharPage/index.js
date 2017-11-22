@@ -1,12 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import shortid from 'shortid';
 
 // Actions
-import {
-  fetchCharSheet,
-  createCharacter,
-  updateCharacter,
-} from './actions';
+import { upsertCharacter } from '../App/actions';
 
 // Components
 import { Navigation } from './components/Navigation';
@@ -19,28 +16,53 @@ class CharPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      charData: {},
+      charData: undefined,
       unsavedChanges: false,
       charDataCreated: false,
     }
   }
 
   componentDidMount() {
-    this.props.fetchCharSheet();
-
-    // Load char data into char creator
-    if (this.props.match.params.characterId) {
-      const charData = this.props.characters.find(character => character._id === this.props.match.params.characterId);
-      this.setState({ charData, charDataCreated: true })
-    }
+    
+    this.initializeCharPage();
   }
+
 
   componentWillReceiveProps(nextProps) {
 
-    if (nextProps.charSheet && !this.props.match.params.characterId) {
-      this.createEmptyCharData(nextProps);
+    if (!this.state.charData) {
+      this.initializeCharPage(nextProps);
+    } 
+  }
+
+  initializeCharPage(props) {
+    const nextProps = props ? props : this.props;
+    const characterId = this.props.match.params.characterId;
+
+    // Load character with id
+    if (nextProps.charSheet && nextProps.characters && characterId) {
+      const loadedCharData = nextProps.characters.find(character => character._id === characterId);
+      if (loadedCharData) {
+        
+        this.setState(prevState => {
+          return {
+            ...prevState,
+            charData: loadedCharData,
+            charDataCreated: true
+          }
+        })
+      } else {
+
+        // TODO Hack to avoid an error with invalid param id
+        this.createEmptyCharData(nextProps);
+      }
     }
 
+    // Create empty character 
+    if (nextProps.charSheet && !characterId && !this.state.charData) {
+      console.log('create empty char data ')
+      this.createEmptyCharData(nextProps);
+    }
   }
 
   createEmptyCharData(nextProps) {
@@ -76,9 +98,12 @@ class CharPage extends React.Component {
         })
       });
 
-      console.log('merged', { ...charDataFieldsets, ...nextProps.charSheet.meta.defaultData });
       return {
-        charData: { ...charDataFieldsets, ...nextProps.charSheet.meta.defaultData },
+        charData: {
+          ...charDataFieldsets,
+          ...nextProps.charSheet.meta.defaultData,
+          _id: shortid.generate()
+        },
         charDataCreated: true
       }
     });
@@ -152,23 +177,11 @@ class CharPage extends React.Component {
 
   saveChanges = () => {
     console.log('save changes');
+    this.props.upsertCharacter(this.state.charData);
     this.setState(prevState => ({
       ...prevState,
       unsavedChanges: false
     }))
-    if (this.state.charData._id) {
-      console.log('chardata id ', this.state.charData._id)
-      const serverRes = this.props.updateCharacter(this.state.charData)
-      console.log('updated char', serverRes)
-    } else {
-      // Create new char
-      // TODO return new _id and add to chardata
-      const charDataWithId = this.props.createCharacter(this.state.charData)
-      this.setState(prevState => ({
-        ...prevState,
-        charData: charDataWithId
-      }))
-    }
   }
 
 
@@ -231,17 +244,14 @@ class CharPage extends React.Component {
 export default connect(mapStateToProps, mapDispatchToProps)(CharPage)
 
 function mapStateToProps(state) {
-  console.log('this is the state', state);
   return {
-    charSheet: state.charPage.charSheet,
-    characters: state.charactersPage.characters
+    charSheet: state.app.charSheet,
+    characters: state.app.characters
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
-    fetchCharSheet: () => { dispatch(fetchCharSheet()) },
-    createCharacter: (character) => { dispatch(createCharacter(character)) },
-    updateCharacter: (character) => { dispatch(updateCharacter(character)) },
+    upsertCharacter: (character) => { dispatch(upsertCharacter(character)) },
   }
 }
 

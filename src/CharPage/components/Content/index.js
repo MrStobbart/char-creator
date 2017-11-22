@@ -4,8 +4,6 @@ import './index.css';
 
 export function Content(props) {
 
-  console.log('props', props)
-
   return (
     <div className="uk-card uk-card-default uk-card-body">
       <form className="uk-form-horizontal">

@@ -1,63 +1,25 @@
 import React from 'react';
 import { AutocompleteField } from './AutocompleteField';
 import './AddableField.css';
+import shortid from 'shortid';
 
 export class AddableField extends React.Component {
   
 
   addField = (event) => {
     event.preventDefault();
-    const newField = {fieldId: `field-${this.props.values.length}`}
+    const newField = {fieldId: shortid.generate()}
     this.props.addField(newField)
-    // const newField = {
-    //   fieldId: `field-${this.state.fields.length}`,
-    //   value: {}
-    // }
-    // this.setState(prevState => ({
-    //   fields: [...prevState.fields, newField]
-    // }))
   }
 
   createRemoveFieldFunction = fieldId => event => {
     event.preventDefault();
     this.props.removeField(fieldId);
-    // this.setState(prevState => {
-    //   const newFields = prevState.fields.filter(field => {
-    //     // console.log('if check', field.fieldId === fieldId, field.value.id !== undefined, field.value.id)
-    //     if (field.fieldId === fieldId && field.value.id !== undefined) {
-    //       console.log('remove field', field.value.id)
-    //       this.props.removeValue(field.value.id);
-    //     }
-    //     return field.fieldId !== fieldId
-    //   })
-    //   return { fields: newFields }
-    // })
   }
 
   createUpdateValueFunction = fieldId => value => {
     this.props.updateValue(fieldId, value);
-    // this.setState(prevState => {
-    //   const newState = prevState.fields.map(field => { 
-    //     if (field.fieldId === fieldId) {
-    //       field.value = value;
-    //     }
-    //     return field;
-    //   })
-    //   this.props.addValue
-    //   return newState;
-    // })
   }
-
-  // unused
-  // handleChange = (field, event) => {
-  //   console.log('handle change', field.id, event.target.value)
-  //   this.setState(prevState => {
-  //     let newState = { ...prevState };
-  //     newState.values[field] = { id: event.target.value };
-  //     return newState;
-  //   });
-  //   this.updateValue(field)(event.target.value);
-  // }
 
   render() {
     return (
@@ -86,7 +48,7 @@ export class AddableField extends React.Component {
                 <AutocompleteField
                   placeholder={`Search ${this.props.field.label}`}  
                   selectableGroups={this.props.field.selectableGroups}
-                  value={field.value}
+                  selectedField={field.id ? field : undefined}
                   updateValue={this.createUpdateValueFunction(field.fieldId)}
                 >
                   Label
