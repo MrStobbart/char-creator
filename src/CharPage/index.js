@@ -24,23 +24,29 @@ class CharPage extends React.Component {
 
   componentDidMount() {
     
-    this.initializeCharPage();
+    this.loadSelectedCharData();
   }
 
 
   componentWillReceiveProps(nextProps) {
 
-    if (!this.state.charData) {
-      this.initializeCharPage(nextProps);
-    } 
+    if (!this.state.charData && nextProps.charSheet) {
+      this.loadSelectedCharData(nextProps);
+    }
+
+    if (!nextProps.match.params.characterId && nextProps.charSheet) {
+      console.log('create empty char data ')
+      this.createEmptyCharData(nextProps);
+    }
+
   }
 
-  initializeCharPage(props) {
+  loadSelectedCharData(props) {
     const nextProps = props ? props : this.props;
     const characterId = this.props.match.params.characterId;
 
     // Load character with id
-    if (nextProps.charSheet && nextProps.characters && characterId) {
+    if (nextProps.characters && characterId) {
       const loadedCharData = nextProps.characters.find(character => character._id === characterId);
       if (loadedCharData) {
         
@@ -51,17 +57,7 @@ class CharPage extends React.Component {
             charDataCreated: true
           }
         })
-      } else {
-
-        // TODO Hack to avoid an error with invalid param id
-        this.createEmptyCharData(nextProps);
-      }
-    }
-
-    // Create empty character 
-    if (nextProps.charSheet && !characterId && !this.state.charData) {
-      console.log('create empty char data ')
-      this.createEmptyCharData(nextProps);
+      } 
     }
   }
 
