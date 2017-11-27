@@ -21,6 +21,7 @@ class App extends Component {
     this.props.fetchCharacters();
   }
 
+  // TODO make the param optional!!!
   render() {
     return (
       <div>
@@ -29,8 +30,7 @@ class App extends Component {
         </header>
         <main className="uk-container uk-container-expand" style={{marginTop: 12}}>
           <Route path="/home" component={Home} /> 
-          <Route path="/charpage/:characterId" component={CharPageContainer}/>
-          <Route path="/charpage" component={CharPageContainer}/>
+          <Route path="/charpage/:characterId?" component={CharPageContainer}/>
           <Route path="/characters" component={CharactersPage}/>
         </main>
       </div>
