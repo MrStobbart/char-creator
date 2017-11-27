@@ -19,46 +19,53 @@ class CharPage extends React.Component {
       charData: undefined,
       unsavedChanges: false,
       charDataCreated: false,
+      id: undefined
     }
   }
 
   componentDidMount() {
     
-    this.loadSelectedCharData();
+    this.initializeComponent(this.props)
   }
 
 
   componentWillReceiveProps(nextProps) {
 
-    if (!this.state.charData && nextProps.charSheet) {
-      this.loadSelectedCharData(nextProps);
-    }
+    this.initializeComponent(nextProps)
 
-    if (!nextProps.match.params.characterId && nextProps.charSheet) {
-      console.log('create empty char data ')
-      this.createEmptyCharData(nextProps);
-    }
+  }
 
+  initializeComponent(props) {
+    if (props.charSheet) {
+      const characterId = props.match.params.characterId;
+
+      if (characterId && props.characters) {
+        this.loadSelectedCharData(props);
+      }
+
+      if (!characterId) {
+        this.createEmptyCharData(props);
+      }
+    }
   }
 
   loadSelectedCharData(props) {
     const nextProps = props ? props : this.props;
-    const characterId = this.props.match.params.characterId;
+    const characterId = nextProps.match.params.characterId;
 
-    // Load character with id
-    if (nextProps.characters && characterId) {
-      const loadedCharData = nextProps.characters.find(character => character._id === characterId);
-      if (loadedCharData) {
-        
-        this.setState(prevState => {
-          return {
-            ...prevState,
-            charData: loadedCharData,
-            charDataCreated: true
-          }
-        })
-      } 
-    }
+    const loadedCharData = nextProps.characters.find(character => character._id === characterId);
+
+    // If not found there will be an endless spinner - invalid id
+    if (loadedCharData) {
+      
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          charData: loadedCharData,
+          charDataCreated: true
+        }
+      })
+    } 
   }
 
   createEmptyCharData(nextProps) {
@@ -93,20 +100,22 @@ class CharPage extends React.Component {
           }
         })
       });
-
+      // TODO add short id to path!
+      const id = shortid.generate();
+      
       return {
         charData: {
           ...charDataFieldsets,
           ...nextProps.charSheet.meta.defaultData,
-          _id: shortid.generate()
+          _id: id
         },
-        charDataCreated: true
+        charDataCreated: true,
+        id: id
       }
     });
   }
 
   makeCreateUpdateInformationField = fieldsetId => field => newValue => {
-    console.log('Update function fieldset: ', fieldsetId, ' field:', field, ' newValue:', newValue)
     this.setState(prevState => {
 
       let newState = { ...prevState };
@@ -117,7 +126,6 @@ class CharPage extends React.Component {
   }
 
   makeCreateUpdateNumberField = fieldsetId => field => newValue => {
-    console.log('Update function fieldset: ', fieldsetId, ' field:', field, ' newValue:', newValue)
     this.setState(prevState => {
 
       let newState = { ...prevState };
@@ -135,7 +143,6 @@ class CharPage extends React.Component {
   } 
 
   makeCreateUpdateAddableField = fieldsetId => field => (fieldId, newValue) => {
-    console.log('Update function fieldset: ', fieldsetId, ' field: ' , field, ' newValue: ', newValue, 'fieldId: ' , fieldId)
     this.setState(prevState => {
       let newState = { ...prevState };
 
@@ -148,7 +155,6 @@ class CharPage extends React.Component {
   }
 
   makeCreateRemoveAddableField = fieldsetId => field => fieldId => { 
-    console.log('remove function fieldset: ', fieldsetId, ' field:', field, ' fieldId:', fieldId)
     this.setState(prevState => {
       let newState = { ...prevState };
       newState.charData[fieldsetId][field.id] = newState.charData[fieldsetId][field.id].filter(addableField => {
@@ -162,7 +168,6 @@ class CharPage extends React.Component {
   }
 
   makeCreateAddAddableField = fieldsetId => field => newValue => {
-    console.log('add function fieldset: ', fieldsetId, ' field:', field, ' newValue:', newValue)
     this.setState(prevState => {
       let newState = { ...prevState };
       newState.charData[fieldsetId][field.id].push(newValue);
@@ -172,8 +177,8 @@ class CharPage extends React.Component {
   }
 
   saveChanges = () => {
-    console.log('save changes');
     this.props.upsertCharacter(this.state.charData);
+    this.props.history.push(`/charpage/${this.state.id}`)
     this.setState(prevState => ({
       ...prevState,
       unsavedChanges: false
