@@ -50,6 +50,7 @@ export function AppReducer(state = initialState, action) {
     case DELETE_CHARACTER_SUCCESS:
       return {
         ...state,
+        characters: state.characters.filter(character => character._id !== action.payload._id),
         loading: false
       }
     case DELETE_CHARACTER_FAILURE:

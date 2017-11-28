@@ -52,12 +52,12 @@ export function deleteCharacterFailure(error) {
   return { type: DELETE_CHARACTER_FAILURE, error }
 }
 
-export function deleteCharacter(character) {
+export function deleteCharacter(characterId) {
   return (dispatch, getState) => {
     dispatch(deleteCharacterRequest());
 
     const endpoint = getState().app.ruleset;
-    return fetchEndpoint(`${endpoint}/characters`, 'delete', character)
+    return fetchEndpoint(`${endpoint}/characters/${characterId}`, 'delete')
       .then(payload => {
         dispatch(deleteCharacterSuccess(payload));
       })
