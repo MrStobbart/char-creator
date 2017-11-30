@@ -1,0 +1,15 @@
+.number-field{
+  width: 56px;
+  text-align: center;
+  border-style: none;
+  margin: 0px 10px;
+  display: inline-block;
+  vertical-align: middle;
+
+}
+
+.change-button{
+  width: 32px;
+  height: 32px;
+}
+

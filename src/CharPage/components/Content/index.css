@@ -1,0 +1,11 @@
+/* input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+} */
+
+label {
+  color: #666 !important;
+  margin-top: 5px !important;
+}

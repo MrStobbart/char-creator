@@ -1,16 +1,51 @@
 {
   "name": "char-creator",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-scripts": "1.0.14"
+  "description": "Website to create roleplaying characters.",
+  "licence": "Mozilla Public License 2.0",
+  "author": "Marek Meyer <marek_meyer@outlook.com>",
+  "bugs": {
+    "url": "https://github.com/MrStobbart/char-creator/issues",
+    "email": "marek_meyer@outlook.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrStobbart/char-creator"
+  },
+  "private": true,
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm-run-all -l -p mongodb server client",
     "build": "react-scripts build",
+    "mongodb": "mongod --dbpath ./data",
+    "client": "react-scripts start",
+    "server": "cross-env NODE_ENV=development nodemon -w server server/server.js",
+    "buildserver": "cross-env NODE_ENV=production node server server/server.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "classnames": "^2.2.5",
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33",
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-autosuggest": "^9.3.2",
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.8",
+    "react-scripts": "1.0.14",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "shortid": "^2.2.8"
+  },
+  "devDependencies": {
+    "cross-env": "^5.1.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2",
+    "npm-run-all": "^4.1.2",
+    "react-test-renderer": "^16.0.0",
+    "request-animation-frame": "^0.1.1"
   }
 }

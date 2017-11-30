@@ -1,0 +1,114 @@
+{
+  "handwerke": [
+    {
+      "id": "cooking",
+      "label": "Kochen",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "music",
+      "label": "Musik machen",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "drawing",
+      "label": "Malen & Zeichnen",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "woodworking",
+      "label": "Holzbearbeitung",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "leatherworking",
+      "label": "Lederbearbeitung",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "stoneworking",
+      "label": "Steinbearbeitung",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "clothworking",
+      "label": "Stoffbearbeitung",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "dancing",
+      "label": "Tanzen",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+  ],
+  "Wissen": [
+    {
+      "id": "etiquette",
+      "label": "Etikette",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "geography",
+      "label": "Geographie",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "history",
+      "label": "Geschichtswissen",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "godsAndLegends",
+      "label": "Götter & Sagen",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "trade",
+      "label": "Handel",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "warfare",
+      "label": "Kriegskunst",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "naturalScience",
+      "label": "Naturwissenschaften",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "law",
+      "label": "Rechtskunde",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "seafaring",
+      "label": "Seefahrt",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+    {
+      "id": "astronomy",
+      "label": "Sternenkunde",
+      "type": "number",
+      "calculationType": "cheapSkill"
+    },
+  ]
+}
