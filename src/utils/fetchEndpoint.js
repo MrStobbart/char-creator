@@ -6,14 +6,19 @@ export function fetchEndpoint(endpoint, method = 'get', body) {
   return fetch(`${API_URL}/${endpoint}`, {
     headers: { 'content-type': 'application/json' },
     method,
+    mode: 'cors',
     body: JSON.stringify(body),
   })
-    .then(res => res.json())
     .then(res => {
       if (!res.ok) {
-        return Promise.reject(res);
+        throw res.statusText; 
       }
       return res;
     })
-    .catch(err => err);
+    .then(res => res.json())
+    .catch(err => {
+      const message = `An error occured while fetching ${API_URL}/${endpoint}:\n${err}`;
+      console.error(message)
+      throw err
+    });
 }

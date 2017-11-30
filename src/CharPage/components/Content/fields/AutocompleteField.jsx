@@ -1,5 +1,6 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
+import './AutocompleteField.css';
 
 export class AutocompleteField extends React.Component {
   constructor(props) {
@@ -7,11 +8,25 @@ export class AutocompleteField extends React.Component {
 
     this.state = {
       value: '',
-      suggestions: []
+      suggestions: [],
     };
   }
 
+  componentDidMount() {
+
+    // Set field value if already in char data 
+    if (this.props.selectedField) {
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          value: this.props.selectedField.label
+        }
+      })
+    }
+  }
+
   onChange = (event, { newValue, method }) => {
+    console.log('newValue', newValue, this.props, this.state)
     this.setState({
       value: newValue
     });
@@ -38,7 +53,6 @@ export class AutocompleteField extends React.Component {
 
     return selectableGroups
       .map(selectableGroup => {
-        console.log(selectableGroup)
         return {
           ...selectableGroup,
           selectables: selectableGroup.selectables.filter(selectable => selectable.label.toLowerCase().indexOf(value.toLowerCase()) > -1)
@@ -49,6 +63,10 @@ export class AutocompleteField extends React.Component {
 
   getSuggestionValue = (suggestion) => {
     return suggestion.label;
+  }
+
+  onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
+    this.props.updateValue(suggestion);
   }
 
   renderSuggestion = (suggestion) => {
@@ -78,9 +96,8 @@ export class AutocompleteField extends React.Component {
   );
 
   render() {
-    console.log('Autocomplete props', this.props)
     const inputProps = {
-      placeholder: "Type 'c'",
+      placeholder: this.props.placeholder,
       value: this.state.value,
       onChange: this.onChange
     };
@@ -88,6 +105,7 @@ export class AutocompleteField extends React.Component {
     return (
       <Autosuggest
         multiSection={true}
+        highlightFirstSuggestion={true}
         suggestions={this.state.suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
@@ -98,6 +116,7 @@ export class AutocompleteField extends React.Component {
         inputProps={inputProps}
         shouldRenderSuggestions={this.shouldRenderSuggestions}
         renderInputComponent={this.renderInputComponent}
+        onSuggestionSelected={this.onSuggestionSelected}
       />
     );
   }

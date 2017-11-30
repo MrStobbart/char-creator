@@ -6,8 +6,6 @@ import './CharHeader.css';
 export function CharHeader(props) {
 
 
-  console.log('PRops', props)
-
   switch (props.charSheetId) {
     case 'savageWorldsFantasy':
       return savageWorldsHeader(props);
@@ -17,41 +15,44 @@ export function CharHeader(props) {
   }
 }
 
-
 function savageWorldsHeader(props) {
+  
 
   let attributePoints = 10;
   let edgePoints = 0;
   let skillPoints = 50;
 
   let skillPoint = props.meta.charCreationPoints;
-  console.log('availablePoints', skillPoint)
-  for (let fieldKey in props.charSheetData) {
-    const field = props.charSheetData[fieldKey];
+  props.meta.charCreationInformation.forEach(information => {
+    
+    information.forFieldsets.forEach(fieldsetId => {
 
-    switch (field.calculationType) {
-      case 'attribute':
-        attributePoints -= field.value;
-        break;
-      case 'skill':
-        calculateSkillPoints(field.value, props.charSheetData[field.attribute].value, 2)
-        break;
-      case 'cheapSkill':
-        calculateSkillPoints(field.value, props.charSheetData[field.attribute].value, 1)
-        break;
-      case 'edge':
-        edgePoints -= field.value * 2; 
-        break;
-      case 'hinderance':
-        edgePoints += field.value * 2; 
-        break;
-      case 'smallHinderance':
-        edgePoints += field.value; 
-        break;
-      default: 
-      break;
-    }
-  }
+      for (let fieldKey in props.charData[fieldsetId]) {
+        const field = props.charData[fieldsetId][fieldKey];
+
+        switch (field.calculationType) {
+          case 'attribute':
+            attributePoints -= field.value;
+            break;
+          case 'skill':
+            calculateSkillPoints(field.value, props.charData.attributes[field.attribute].value, 2)
+            break;
+          case 'cheapSkill':
+            calculateSkillPoints(field.value, props.charData.attributes[field.attribute].value, 1)
+            break;
+          default:
+            break;
+        }
+      }
+
+    })
+
+    
+  })
+
+  // TOTO check special calculation
+
+  // TODO check equipment calculation
 
   function calculateSkillPoints(skillValue, attributeValue, cost) {
     if (skillValue <= attributeValue) {

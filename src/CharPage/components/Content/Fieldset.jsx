@@ -12,9 +12,10 @@ export function Fieldset(props) {
         return (
           <NumberField
             key={field.id}
+            value={props.charData[props.fieldset.id][field.id].value}
             values={props.meta.availableValues}
             calculationTypes={props.meta.calculationTypes}
-            updateValue={props.createUpdateValueFunction(field)}
+            updateValue={props.createUpdateNumberField(field)}
             field={field}
           >
             {field.label}
@@ -24,9 +25,9 @@ export function Fieldset(props) {
         return (
           <CalcField
             key={field.id}
-            charSheetData={props.charSheetData}
+            value={props.charData[props.fieldset.id][field.id]}
+            charData={props.charData}
             calculation={field.calculation}
-            modifier={props.charSheetData.id}
           >
             {field.label}
           </CalcField>
@@ -35,7 +36,10 @@ export function Fieldset(props) {
         return (
           <AddableField
             key={field.id}
-            updateValue={props.createUpdateValueFunction}
+            values={props.charData[props.fieldset.id][field.id]}
+            updateValue={props.createUpdateAddableField(field)}
+            removeField={props.createRemoveAddableField(field)}
+            addField={props.createAddAddableField(field)}
             field={field}
           >
             Addable field
@@ -45,7 +49,8 @@ export function Fieldset(props) {
         return (
           <TextField
             key={field.id}
-            updateValue={props.createUpdateValueFunction(field)}
+            value={props.charData[props.fieldset.id][field.id]}
+            updateValue={props.createUpdateInformationField(field)}
           >
             {field.label}
           </TextField>

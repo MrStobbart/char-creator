@@ -14,11 +14,12 @@
   },
   "private": true,
   "scripts": {
-    "start": "npm-run-all -l -p devserver devclient",
+    "start": "npm-run-all -l -p mongodb server client",
     "build": "npm-run-all -l -p buildserver buildclient",
-    "devclient": "react-scripts start",
+    "mongodb": "mongod --dbpath ./data",
+    "client": "react-scripts start",
     "buildclient": "react-scripts build",
-    "devserver": "cross-env NODE_ENV=development nodemon -w server server/server.js",
+    "server": "cross-env NODE_ENV=development nodemon -w server server/server.js",
     "buildserver": "cross-env NODE_ENV=production node server/server.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
@@ -27,6 +28,7 @@
     "body-parser": "^1.18.2",
     "classnames": "^2.2.5",
     "express": "^4.16.2",
+    "mongodb": "^2.2.33",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-autosuggest": "^9.3.2",
@@ -36,7 +38,8 @@
     "react-router-redux": "^5.0.0-alpha.8",
     "react-scripts": "1.0.14",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "shortid": "^2.2.8"
   },
   "devDependencies": {
     "cross-env": "^5.1.1",

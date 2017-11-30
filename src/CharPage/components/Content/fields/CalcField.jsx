@@ -23,7 +23,8 @@ export class CalcField extends React.Component {
       .map(argument => {
         if (argument.length > 2) {
           // The argument is a variable
-          return this.props.charSheetData[argument] ? this.props.charSheetData[argument].value : 0;
+          const argumentArr = argument.split(':');
+          return this.props.charData[argumentArr[0]][argumentArr[1]].value ? this.props.charData[argumentArr[0]][argumentArr[1]].value: 0
         } else {
           return argument
         }

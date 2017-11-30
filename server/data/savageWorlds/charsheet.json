@@ -55,29 +55,24 @@
       "W10",
       "W12"
     ],
-    "defaultData":{
-      "smarts": {
-        "value": 1,
-        "calculationType": "attribute"
+    "charCreationInformation": [
+      {
+        "id": "skillPoints",
+        "label": "Fertigkeitspunkte",
+        "forFieldsets": [
+          "skills"
+        ],
+        "availablePoints": 50
       },
-      "agility": {
-        "value": 1,
-        "calculationType": "attribute"
-      },
-      "spirit": {
-        "value": 1,
-        "calculationType": "attribute"
-      },
-      "constitution": {
-        "value": 1,
-        "calculationType": "attribute"
-      },
-      "strength": {
-        "value": 1,
-        "calculationType": "attribute"
+      {
+        "id": "attributePoints",
+        "label": "Attribute",
+        "forFieldsets": [
+          "attributes"
+        ],
+        "availablePoints": 10
       }
-    },
-    "charCreationPoints": 50
+    ]
   },
   "fieldsets": [
   {
@@ -191,10 +186,7 @@
         "label": "Stärke",
         "type": "number",
         "default": 1,
-        "costs": {
-          "type": "static",
-          "costsPerPoint": 4
-        }
+        "calculationType": "attribute"
       }
     ]
   },
@@ -206,7 +198,7 @@
         "id": "parry",
         "label": "Parade",
         "type": "calculated",
-        "calculation": "( fighting * 2 + 2 ) / 2 + 2"
+        "calculation": "( skills:fighting * 2 + 2 ) / 2 + 2"
       },
       {
         "id": "charisma",
@@ -218,7 +210,7 @@
         "id": "toughness",
         "label": "Robustheit",
         "type": "calculated",
-        "calculation": "( constitution * 2 + 2 ) / 2 + 2"
+        "calculation": "( attributes:constitution * 2 + 2 ) / 2 + 2"
       },
       {
         "id": "pace",
@@ -234,7 +226,8 @@
     "fields": [
       {
         "id": "edges",
-        "label": "",
+        "label": "Talente",
+        "singularLabel": "Talent",
         "type": "addable",
         "calculationType": "edge",
         "selectableGroups": [
@@ -243,172 +236,216 @@
             "label": "Hintergrund Talente",
             "selectables": [
               {
-                "id": "Akklimatisiert",
+                "id": "acclimatized",
                 "label": "Akklimatisiert",
-                "requirementes": "A",
-                "information": "+4 auf Ko. Würfe gegen Erschöpfung bei Hitze oder Kälte",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "+4 auf Ko. Würfe gegen Erschöpfung bei Hitze oder Kälte"
               },
               {
-                "id": "Adelig",
+                "id": "noble",
                 "label": "Adelig",
-                "requirementes": "A",
-                "information": "Charisma +1 (in Schichten), Reich, Verpflichtungen",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "Charisma +1 (in Schichten), Reich, Verpflichtungen"
               },
               {
-                "id": "Arkane Resistenz",
+                "id": "arcaneResistance",
                 "label": "Arkane Resistenz",
-                "requirementes": "A",
-                "information": "+2 RS /+2 auf Magiewiderstand gegen Mächte",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "+2 RS /+2 auf Magiewiderstand gegen Mächte"
               },
               {
-                "id": "Stärkere Arkane Resistenz",
+                "id": "improvedArcaneResistance",
                 "label": "Stärkere Arkane Resistenz",
-                "requirementes": "A",
-                "information": "Wie oben nur +4",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "Wie oben nur +4"
               },
               {
-                "id": "Arkaner Hintergrund ",
-                "label": "Arkaner Hintergrund ",
-                "requirementes": "A",
-                "information": "Siehe Regelbuch",
-                "rules": ""
+                "id": "arcaneBackground",
+                "label": "Arkaner Hintergrund",
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "Siehe Regelbuch"
               },
               {
-                "id": "Attraktiv",
+                "id": "attractive",
                 "label": "Attraktiv",
-                "requirementes": "A",
+                "requirementes": {
+                  "level": "A"
+                },
                 "information": "+1 Charisma",
-                "rules": ""
+                "modifiers": {
+                  "charisma": 1
+                }
               },
               {
-                "id": "Sehr Attraktiv",
+                "id": "veryAttractive",
                 "label": "Sehr Attraktiv",
-                "requirementes": "A",
+                "requirementes": {
+                  "level": "A"
+                },
                 "information": "+2 Charisma",
-                "rules": ""
+                "modifiers": {
+                  "charisma": 1
+                }
               },
               {
-                "id": "Aufmerksamkeit",
+                "id": "alertness",
                 "label": "Aufmerksamkeit",
-                "requirementes": "A",
-                "information": "+2 auf Wahrnehmung",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "+2 auf Wahrnehmung"
               },
               {
-                "id": "Beidhändig",
+                "id": "ambidextrous",
                 "label": "Beidhändig",
-                "requirementes": "A",
-                "information": "Kein -2 Abzug für das verwenden der falschen Hand",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "Kein -2 Abzug für das verwenden der falschen Hand"
               },
               {
-                "id": "Berserker*",
-                "label": "Berserker*",
-                "requirementes": "A",
-                "information": "Verstandprobe gegen Raserei nach Verletzung (Wunde). Raserei: +2 Kämpfen und Stärke, Parade -2, Robustheit +2, Wenn ein Würfel trifft aber der andere, eine 1 zeigt wird ein zufä,lliges Ziel getroffen. Zum Beenden eine Aktion und eine Verstandsprobe mit -2",
-                "rules": ""
+                "id": "berserk",
+                "label": "Berserker",
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "Verstandprobe gegen Raserei nach Verletzung (Wunde). Raserei: +2 Kämpfen und Stärke, Parade -2, Robustheit +2, Wenn ein Würfel trifft aber der andere, eine 1 zeigt wird ein zufä,lliges Ziel getroffen. Zum Beenden eine Aktion und eine Verstandsprobe mit -2"
               },
               {
-                "id": "Eisenaffine Aura",
+                "id": "ironAffinity",
                 "label": "Eisenaffine Aura",
-                "requirementes": "A, Arkaner Hintergrund",
-                "information": "Der Malus durch Bann des Eisens sinkt auf -2",
-                "rules": ""
+                "requirementes": {
+                  "level": "A",
+                  "edges": ["arcaneBackground"]
+                },
+                "information": "Der Malus durch Bann des Eisens sinkt auf -2"
               },
               {
-                "id": "Flink",
+                "id": "fleetFooted",
                 "label": "Flink",
-                "requirementes": "A, Ges. W6",
+                "requirementes": {
+                  "level": "A",
+                  "agility": 2
+                },
                 "information": "+2 Bewegungsreichweite",
-                "rules": ""
+                "modifiers": {
+                  "pace": 2
+                }
               },
               {
-                "id": "Glück",
+                "id": "luck",
                 "label": "Glück",
-                "requirementes": "A",
-                "information": "Ein Bennie mehr",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "Ein Bennie mehr"
               },
               {
-                "id": "Großes Glück",
+                "id": "greatLuck",
                 "label": "Großes Glück",
-                "requirementes": "A, Glück",
-                "information": "Zwei Bennies mehr",
-                "rules": ""
+                "requirementes": {
+                  "level": "A",
+                  "edges": ["luck"]
+                },
+                "information": "Zwei Bennies mehr"
               },
               {
-                "id": "Heiler",
+                "id": "healer",
                 "label": "Heiler",
-                "requirementes": "A, Wi. W8",
-                "information": "+2 auf Heilenproben",
-                "rules": ""
+                "requirementes": {
+                  "level": "A",
+                  "constitution": 3
+                },
+                "information": "+2 auf Heilenproben"
               },
               {
-                "id": "Kräftig",
+                "id": "brawny",
                 "label": "Kräftig",
-                "requirementes": "A, St. und Ko. W6",
+                "requirementes": {
+                  "level": "A",
+                  "constitution": 2,
+                  "strength": 2
+                },
                 "information": "+1 Robustheit, erhöhte Tragkraft (x7 statt x5)",
-                "rules": ""
+                "modifiers": {
+                  "toughness": 1
+                }
               },
               {
-                "id": "Mutig",
+                "id": "brave",
                 "label": "Mutig",
-                "requirementes": "A, Wi. W6",
-                "information": "+2 auf Furch widerstehen",
-                "rules": ""
+                "requirementes": {
+                  "level": "A",
+                  "spirit": 2
+                },
+                "information": "+2 auf Furch widerstehen"
               },
               {
-                "id": "Reich",
+                "id": "rich",
                 "label": "Reich",
-                "requirementes": "A",
-                "information": "Dreifaches Startkapital, Jahreseinkommen gleich dem 10fachen des dreifachen Startkapitals",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "Dreifaches Startkapital, Jahreseinkommen gleich dem 10fachen des dreifachen Startkapitals"
               },
               {
-                "id": "Stinkreich",
+                "id": "filthyRich",
                 "label": "Stinkreich",
-                "requirementes": "A, Reich",
-                "information": "Fünffaches Startkapital, Jahreseinkommen gleich dem 10fachen des fünffachen Startkapitals",
-                "rules": ""
+                "requirementes": {
+                  "level": "A",
+                  "edges": ["rich"]
+                },
+                "information": "Fünffaches Startkapital, Jahreseinkommen gleich dem 10fachen des fünffachen Startkapitals"
               },
               {
-                "id": "Sechster Sinn",
+                "id": "sixthSense",
                 "label": "Sechster Sinn",
-                "requirementes": "A",
-                "information": "Der Charakter kann mit Wahrnehmung -2 einen Hinterhalt oder eine andere Gefahr ",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "Der Charakter kann mit Wahrnehmung -2 einen Hinterhalt oder eine andere Gefahr "
               },
               {
-                "id": "Schelm",
+                "id": "schelm",
                 "label": "Schelm",
-                "requirementes": "A",
-                "information": "Ein Charakter mit diesem Hintergrund- Talent wurde als Säugling von Kobolden entführt und aufgezogen. Seine Zieheltern haben ihm allerlei magische Späße und die koboldische Lebensart beigebracht. Er kann per Zauberei Menschen nackt dastehen lassen, Kobolde rufen, Illusionen hervorrufen oder ähnliche Dinge tun, um einen Spaß zu machen. Er braucht dazu weder einen Arkanen Hintergrund noch Machtpunkte. Schelme setzen diese Fähigkeit aber nur ein, um sich selbst oder andere zu erheitern, niemals, um andere zu schädigen. Sie können aber trotzdem für Tricks uns geistige Duelle eingesetzt werden.",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "Ein Charakter mit diesem Hintergrund- Talent wurde als Säugling von Kobolden entführt und aufgezogen. Seine Zieheltern haben ihm allerlei magische Späße und die koboldische Lebensart beigebracht. Er kann per Zauberei Menschen nackt dastehen lassen, Kobolde rufen, Illusionen hervorrufen oder ähnliche Dinge tun, um einen Spaß zu machen. Er braucht dazu weder einen Arkanen Hintergrund noch Machtpunkte. Schelme setzen diese Fähigkeit aber nur ein, um sich selbst oder andere zu erheitern, niemals, um andere zu schädigen. Sie können aber trotzdem für Tricks uns geistige Duelle eingesetzt werden."
               },
               {
-                "id": "Schnell",
+                "id": "quick",
                 "label": "Schnell",
-                "requirementes": "A",
-                "information": "Im Kampf werden Aktionskarten von 5 oder niedriger neu gezogen.",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "Im Kampf werden Aktionskarten von 5 oder niedriger neu gezogen."
               },
               {
-                "id": "Schnelle Heilung",
+                "id": "fastHealer",
                 "label": "Schnelle Heilung",
-                "requirementes": "A",
-                "information": "+2 auf Genesungsproben",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "+2 auf Genesungsproben"
               },
               {
-                "id": "Tierempathie",
+                "id": "animalEmpathy",
                 "label": "Tierempathie",
-                "requirementes": "A",
-                "information": "Der Charakter kann seine Bennies mit Tiergefährten teilen",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "Der Charakter kann seine Bennies mit Tiergefährten teilen"
               }
             ]
           },
@@ -419,9 +456,10 @@
               {
                 "id": "thisisatest",
                 "label": "Dies ist ein Test",
-                "requirementes": "A",
-                "information": "+4 auf Ko. Würfe gegen Erschöpfung bei Hitze oder Kälte",
-                "rules": ""
+                "requirementes": {
+                  "level": "A"
+                },
+                "information": "+4 auf Ko. Würfe gegen Erschöpfung bei Hitze oder Kälte"
               }
             ]
           }
@@ -430,12 +468,13 @@
     ]
   },
   {
-    "id": "hinderance",
+    "id": "hinderances",
     "title": "Handicaps",
     "fields": [
       {
         "id": "hinderances",
-        "label": "",
+        "label": "Handicaps",
+        "singularLabel": "Handicap",
         "type": "addable",
         "calculationType": "hinderance",
         "selectableGroups": [
@@ -446,9 +485,8 @@
               {
                 "id": "thisisatest",
                 "label": "Dies ist ein Test",
-                "requirementes": "A",
-                "information": "+4 auf Ko. Würfe gegen Erschöpfung bei Hitze oder Kälte",
-                "rules": ""
+                "requirementes": { },
+                "information": "+4 auf Ko. Würfe gegen Erschöpfung bei Hitze oder Kälte"
               }
             ]
           }

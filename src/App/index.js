@@ -1,33 +1,60 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
-import { CharPageContainer } from '../CharPage';
-import { Home } from '../Home';
+import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import CharPageContainer from '../CharPage';
+import Home from '../Home';
+import Navbar from './components/Navbar';
+import CharactersPage from '../Characters';
+
+import {
+  fetchCharacters,
+  fetchCharSheet
+} from './actions';
 
 import './index.css';
 
 class App extends Component {
-  
+
+  componentDidMount() {
+    this.props.fetchCharSheet();
+    this.props.fetchCharacters();
+  }
+
+  // TODO make the param optional!!!
   render() {
     return (
       <div>
         <header>
-          <nav uk-navbar="true" className="uk-navbar-container">
-            <div className="uk-navbar-center">  
-              <ul className="uk-navbar-nav">
-                <li><Link to="/home">Home</Link></li>
-                <li><Link to="/charpage/savageworlds">Savage Worlds</Link></li>
-                <li><Link to="/charpage/thedarkeye">Das Schwarze Auge</Link></li>
-              </ul>
-            </div>  
-          </nav>
+          <Navbar/>
         </header>
-        <main className="uk-container uk-container-expand	">
+        <main className="uk-container uk-container-expand" style={{marginTop: 12}}>
           <Route path="/home" component={Home} /> 
-          <Route path="/charpage/:endpoint" component={CharPageContainer}/>
+          <Route path="/charpage/:characterId?" component={CharPageContainer}/>
+          <Route path="/characters" component={CharactersPage}/>
         </main>
       </div>
     );
   }
 }
 
-export default App;
+
+/**
+ * CharPageContainer
+ */
+export default connect(mapStateToProps, mapDispatchToProps)(App)
+
+function mapStateToProps(state) {
+  return {
+    ...state,
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchCharSheet: () => { dispatch(fetchCharSheet()) },
+    fetchCharacters: () => { dispatch(fetchCharacters()) },
+  }
+}
+
+
+
