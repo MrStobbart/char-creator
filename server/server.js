@@ -84,10 +84,7 @@ app.route('/api/savageworldsfantasy/characters/:id')
       { returnOriginal: false, upsert: true }
     )
       .then(mongoRes => res.status(200).json(mongoRes.value))
-      .catch(err => {
-        console.log('strange error', err)
-        res.status(404).json(err)
-      })
+      .catch(err => { res.status(404).json(err) })
   })
 
 

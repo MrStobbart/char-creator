@@ -21,7 +21,6 @@ class App extends Component {
     this.props.fetchCharacters();
   }
 
-  // TODO make the param optional!!!
   render() {
     return (
       <div>
