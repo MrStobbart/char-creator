@@ -1,0 +1,14 @@
+[
+  {
+    "id": "hinderances",
+    "label": "Handicaps",
+    "selectables": [
+      {
+        "id": "thisisatest",
+        "label": "Dies ist ein Test",
+        "requirementes": {},
+        "information": "+4 auf Ko. Würfe gegen Erschöpfung bei Hitze oder Kälte"
+      }
+    ]
+  }
+]

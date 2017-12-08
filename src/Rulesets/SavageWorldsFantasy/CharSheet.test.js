@@ -6,7 +6,11 @@ import CharSheet, {
   toughness,
   attributes,
   constitution,
-} from './index';
+  edges
+} from './CharSheet';
+
+
+import edgesArr from './data/edges.json'
 
 it('creates an object', () => {
   const charSheet = new CharSheet();
@@ -56,6 +60,32 @@ it('calculates the available attribute points', () => {
   charSheet.character.fieldsets.find(attributes).fields.find(attribute => attribute.id == 'strength').value = 3
   charSheet.calculatePoints();
   expect(charSheet.character.charCreationInformation.attributePoints.value).toBe(3)
+})
+
+it('adds modifers and edge when an edge is added ', () => {
+  const charSheet = new CharSheet();
+  charSheet.calculatePoints();
+
+  charSheet.addEdge(edgesArr[0].selectables[5])
+  charSheet.calculatePoints();
+
+  expect(charSheet.modifiers).toHaveProperty('charisma', 1)
+  expect(charSheet.character.fieldsets.find(edges).selected).toHaveLength(1)
+
+})
+
+it('remove modifers and edge when an edge is removed ', () => {
+  const charSheet = new CharSheet();
+  charSheet.calculatePoints();
+
+  charSheet.addEdge(edgesArr[0].selectables[5])
+  charSheet.calculatePoints();
+
+  charSheet.removeEdge(edgesArr[0].selectables[5])
+
+  expect(charSheet.modifiers).not.toHaveProperty('charisma', 1)
+  expect(charSheet.character.fieldsets.find(edges).selected).not.toHaveLength(1)
+
 })
 
 it('applies modifiers on values')

@@ -1,12 +1,42 @@
 // Only import lodash cloneDeep to minimze bundle size
-import cloneDeep from 'lodash/cloneDeep';
-import emptyCharSheet from './emptyCharSheet';
+import cloneDeep from 'lodash/cloneDeep'
+import emptyCharSheet from './data/emptyCharSheet.json'
 
 
 export default class CharSheet {
 
   constructor(character = cloneDeep(emptyCharSheet)) {
-    this.character = character;
+    this.character = character
+    this.modifiers = {}
+  }
+
+  addEdge(edge) {
+    // Check if edge can be selected
+    if (true) {
+      this.character.fieldsets.find(edges).selected.push(edge)
+      if (edge.modifiers) {
+        for (const key in edge.modifiers) {
+          if (edge.modifiers.hasOwnProperty(key)) {
+            const modifier = edge.modifiers[key];
+            this.modifiers[key] = this.modifiers[key] ? this.modifiers[key] + modifier : modifier
+          }
+        }
+      }
+      return true;
+    }
+    return false
+  }
+
+  removeEdge(edgeToRemove) {
+    this.character.fieldsets.find(edges).selected = this.character.fieldsets.find(edges).selected.filter(edge => edge.id !== edgeToRemove.id)
+    if (edgeToRemove.modifiers) {
+      for (const key in edgeToRemove.modifiers) {
+        if (edgeToRemove.modifiers.hasOwnProperty(key)) {
+          const modifier = edgeToRemove.modifiers[key];
+          this.modifiers[key] = this.modifiers[key] - modifier;
+        }
+      }
+    }
   }
 
   calculatePoints() {
@@ -68,6 +98,14 @@ export function skills(fieldset) {
 
 export function attributes(fieldset) {
   return fieldset.id === 'attributes';
+}
+
+export function edges(fieldset) {
+  return fieldset.id === 'edges';
+}
+
+export function hinderances(fieldset) {
+  return fieldset.id === 'hinderances';
 }
 
 export function fighting(field) {
