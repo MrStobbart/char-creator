@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
 
+import CharSheetClass from '../Rulesets/SavageWorldsFantasy';
 // Actions
 import { upsertCharacter } from '../App/actions';
 
@@ -21,6 +22,7 @@ class CharPage extends React.Component {
       charDataCreated: false,
       id: undefined
     }
+    this.test = new CharSheetClass();
   }
 
   componentDidMount() {
