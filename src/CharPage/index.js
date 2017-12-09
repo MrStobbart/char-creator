@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
 
-import CharSheetClass from '../Rulesets/SavageWorldsFantasy';
+import CharSheetClass from '../Rulesets/SavageWorldsFantasy/CharSheet';
 // Actions
 import { upsertCharacter } from '../App/actions';
 
