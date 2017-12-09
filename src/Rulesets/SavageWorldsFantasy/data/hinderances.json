@@ -4,10 +4,140 @@
     "label": "Handicaps",
     "selectables": [
       {
-        "id": "thisisatest",
-        "label": "Dies ist ein Test",
-        "requirementes": {},
-        "information": "+4 auf Ko. Würfe gegen Erschöpfung bei Hitze oder Kälte"
+        "id": "",
+        "label": "Ahnungslos",
+        "information": "Dein Held ist sich der Welt um ihn herum nicht so bewusst wie Andere. Er bekommt vieles nicht mit oder interessiert sich einfach nicht dafür. Er erleidet einen Abzug von −2 auf Allgemeinwissen-Würfe.",
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Alt",
+        "information": "Dein Held ist nicht mehr der Jüngste, gehört aber noch nicht zum alten Eisen. Seine Bewegungsweite sinkt um 1, und seine Stärke und Konstitution sinken um einen Würfeltyp (Minimum W4) und können später nicht gesteigert werden. Immerhin bekommt der Charakter wegen seiner Altersweisheit 5 zusätzliche Punkte für Fertigkeiten, die mit Verstand zusammenhängen.",
+        "modifiers": {
+          "pace": -2,
+          "strength": -1,
+          "constitution": -1,
+          "skillPoints": 5
+        },
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Analphabet",
+        "information": "Dein Charakter kann nicht lesen. Er kann wahrscheinlich unterschreiben, und weiß, was ein Stoppschild bedeutet, aber nicht viel mehr. Er weiß auch nicht viel übers Rechnen. 2 + 2 = 4, das kriegt er wohl noch hin, aber Multiplikation und so weiter übersteigen seine Möglichkeiten. Analphabeten können in keiner Sprache lesen oder schreiben, egal wie viele sie sprechen.",
+        "points": 1
+      },
+      {
+        "id": "",
+        "label": "Angewohnheit (Leicht)",
+        "information": "Dein Charakter hat irgendeine störende und anhaltende Angewohnheit, die schlimmer ist als nur ein Tick. Kettenrauchen, sich nie die Zähne putzen, Selbstgespräche führen – ein leichtes Handicap irritiert die Leute, die ihn umgeben, ist aber nicht gefährlich.",
+        "modifiers":{
+          "charisma": -1
+        },
+        "points": 1
+      },
+      {
+        "id": "",
+        "label": "Angewohnheit (Schwer)",
+        "information": "Ein schweres Handicap ist eine körperliche oder geistige Sucht, die schwer hinderlich oder sogar tödlich sein kann. Beispiele sind Drogenmissbrauch, Trunksucht, oder vielleicht in einem Hightech- Setting sogar die Sucht nach der virtuellen Realität. Ein Charakter, der seine notwendige Dosis nicht bekommt, muss alle24 Stunden nach der letzten Dosis eine Erschöpfungs-Probe (siehe Seite173) machen. Der erste gescheiterte Wurf Ermüdet den Charakter, der zweite Erschöpft ihn. Das Endergebnis bei einem dritten Scheitern dieser Erschöpfungs-Probe ist bei harten Drogen ein Koma-Zustand, oder bei Dingen wie Alkohol und VR schlimme Entzugserscheinungen. Medizinische Versorgung kann die Symptome lindern. Ansonsten muss der Charakter für1W6 Tage mit den Abzügen leben. Danach könnte der Charakter sich von dem Handicap freikaufen, indem er auf eine Aufstiegsmöglichkeit verzichtet, ansonsten fällt er irgendwann wieder in seine Sucht zurück. Beim schweren Handicap erleidet der Charakter keinen Abzug auf sein Charisma.",
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Arm",
+        "information": "Dein Charakter beginnt das Spiel mit der Hälfte des für das Setting üblichen Startbetrags an Geld, und ihm  ießt Geld, das er später im Spiel verdient, einfach durch die Hände. Vielleicht spendet er als religiöser Mann alles an seine Kirche. Oder er verzockt sein Geld in Spielhöllen. Oder er geht auf Einkaufstour für lauter nutzloses Zeug. Was auch immer ihn Arm macht, in jeder Spielwoche sollte der Charakter sein verfügbares Gesamtvermögen halbieren.",
+        "points": 1
+      },
+      {
+        "id": "",
+        "label": "Arrogant",
+        "information": "Dein Charakter denkt nicht, er sei der Beste – er weiß es. Egal, worum es geht – Schwertkampf, Kung Fu, Laufen – es gibt niemanden, der an seine Fertigkeiten heranreicht, und er gibt bei jeder Gelegenheit mit ihnen an. Es reicht deinem Charakter nicht, einfach nur zu gewinnen. Er muss seinen Gegner komplett dominieren. Wenn es nur einen Schatten des Zweifels gibt, wer besser ist, dann muss er seinen Gegner erniedrigen und beweisen, dass er den Sieg problemlos jederzeit ergreifen kann. Er ist die Art von Mensch, der einen Gegner im Duell entwa net, um das Schwert wieder aufzuheben, und es mit einem Lächeln zurückzugeben. Arrogante Charaktere suchen in einem Kampf immer den „würdigsten“ Gegner, den „Meister“ und greifen Schergen nur an, wenn sie in den Weg geraten.",
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Außenseiter",
+        "information": "Außenseiter zahlen höhere Preise, ihre Bitten um Hilfe werden ignoriert, und man behandelt sie so, als seien sie Bürger zweiter Klasse. Zusätzlich zu den Rollenspielauswirkungen erleidet sein Charisma einen Abzug von −1, wenn sich der Charakter nicht unter seinen eigenen Leuten be ndet.",
+        "points": 1
+      },
+      {
+        "id": "",
+        "label": "Blind",
+        "information": "Dein Charakter kann nicht sehen. Er erleidet einen Abzug von −6 auf alle physischen Aktionen, die Sicht erfordern – also auf die meisten – und −2 auf soziale Aktivitäten, weil er die Gesichter der Personen, mit denen er interagiert, nicht lesen und nur anhand der Stimme Rückschlüsse ziehen kann. Immerhin erhalten blinde Charaktere ein zusätzliches freies Talent, um dieses besonders tödliche Handicap etwas zu kompensieren.",
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Blutrünstig",
+        "information": "Dein Charakter macht keine Gefangenen, außer er steht unter der direkten Aufsicht eines Vorgesetzten, der andere Befehle hat. Das kann in Militärkampagnen große Probleme verursachen, es sei denn, seine Vorgesetzten sehen solch ein Verhalten gerne. Dein Charakter erhält einen Abzug von −2 auf sein Charisma, aber nur, wenn seine grausamen Gewohnheiten bekannt werden.",
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Dünnhäutig",
+        "information": "Dein Charakter verträgt einfach keine Schmerzen. Solange er mindestens eine Wunde erlitten hat, bekommt er einen zusätzlichen Abzug von −1 auf seine Aktionen (ein Held mit zwei Wunden hätte also einen Abzug von −3).",
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Ehrenkodex",
+        "information": "Ehre ist deinem Charakter sehr wichtig. Er hält sein Wort, wird keine Gefangenen schlecht behandeln oder töten, und versucht sich allgemein wie ein Gentleman oder eine Lady zu verhalten (entsprechend der jeweiligen Welt). Dabei kann es sich um einen allgemein erwarteten Ehrenkodex handeln (O zier und Gentleman) oder um einen persönlichen Ehrenkodex (z.B. als ehrbarer Gunslinger im Wilden Westen schießt man Leuten nicht in den Rücken).",
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Einarmig",
+        "information": "Egal, ob aufgrund einer Verstümmelung oder von Geburt an, der Held hat nur einen Arm. Glücklicherweise ist der verbliebene Arm (jetzt) der „richtige“. Aufgaben, die zwei Hände erfordern, so wie Klettern, erleiden einen Abzug von −4.",
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Einäugig (Schwer)",
+        "information": "Irgendein grausamer Schurke hat dem Helden in der Vergangenheit ein Auge ausgestochen. Wenn er keine Klappe oder ein Glasauge trägt (kostet normalerweise 500€), dann erleidet er wegen der grotesken Wunde einen Abzug von −1 auf sein Charisma. Er erleidet einen Abzug von −2 auf alle Eigenschafts-Würfe, die Tiefenschärfe erfordern, wie Schießen oder Werfen, Springen von einem Mast zum anderen, und so weiter.",
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Einbeinig (Schwer)",
+        "information": "Wenn der Charakter eine Prothese verwendet, dann funktioniert Einbeinig genau wie das Handicap Lahm. Die Bewegungsweite sinkt um 2, und der Sprint-Würfel ist ein W4. Ohne Holzbein ist die Bewegungsweite 2, und er kann niemals sprinten. Er hat auch einen Abzug von −2 auf Eigenschafts- Würfe, die Beweglichkeit erfordern, wie Klettern und Kämpfen. Ein Charakter mit nur einem Bein erleidet einen Abzug von −2 auf seine Schwimmen-Fertigkeit (und die Bewegungsweite beim Schwimmen).",
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Feigling (Schwer)",
+        "information": "Nicht jeder hat in Stresssituationen die Ruhe weg. Dein Charakter kann kein Blut sehen, und hat Angst, sich weh zu tun. Er erleidet einen Abzug von −2 auf alle Mumm-Proben.",
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Feind (Leicht)",
+        "information": "Irgendjemand hasst deinen Helden und will ihn tot sehen. Der Wert des Handicaps hängt davon ab, wie mächtig der Feind ist und wie oft er auftauchen könnte. Ein leichter Feind könnte ein einzelner Revolverheld sein, der auf Rache aus ist, oder eine nur lokal agierende Gruppierung, wie die Diebesgilde einer Stadt. Ein schwerer Feind wäre ein übernatürlich begabter Revolverheld, der den Charakter bis aufs Blut hasst und keine Ruhe geben wird, bis er oder der Charakter tot ist. Alternativ könnte es sich auch um eine ein ussreichere Organisation handeln, zum Beispiel die Mafia. Wenn der Feind irgendwann besiegt wird, dann sollte der SL Schritt für Schritt für einen Ersatz sorgen, oder der Held kauft sich von dem Handicap frei, indem er auf eine Aufstiegsmöglichkeit verzichtet.",
+        "points": 1
+      },
+      {
+        "id": "",
+        "label": "Feind (Schwer)",
+        "information": "Irgendjemand hasst deinen Helden und will ihn tot sehen. Der Wert des Handicaps hängt davon ab, wie mächtig der Feind ist und wie oft er auftauchen könnte. Ein leichter Feind könnte ein einzelner Revolverheld sein, der auf Rache aus ist, oder eine nur lokal agierende Gruppierung, wie die Diebesgilde einer Stadt. Ein schwerer Feind wäre ein übernatürlich begabter Revolverheld, der den Charakter bis aufs Blut hasst und keine Ruhe geben wird, bis er oder der Charakter tot ist. Alternativ könnte es sich auch um eine ein ussreichere Organisation handeln, zum Beispiel die Mafia. Wenn der Feind irgendwann besiegt wird, dann sollte der SL Schritt für Schritt für einen Ersatz sorgen, oder der Held kauft sich von dem Handicap frei, indem er auf eine Aufstiegsmöglichkeit verzichtet.",
+        "points": 2
+      },
+      {
+        "id": "",
+        "label": "Fett (Leicht)",
+        "information": "Besonders dicke Leute haben oft Schwierigkeiten in gefährlichen körperlichen Situationen. Diejenigen, die gut mit ihrem Gewicht zurechtkommen, haben das Talent Kräftig (siehe Seite 45). Die anderen sind fett. Ein Charakter kann nicht gleichzeitig kräftig und fett sein. Der Sprint-Würfel ist nur ein W4. Fette Charaktere haben vielleicht Schwierigkeiten, passende Rüstung oder Kleidung zu  nden, sich in enge Spalten zu drücken oder sogar in engen Fahrzeugen, wie Flugzeugsitzen und Kleinwagen.",
+        "modifiers":{
+          "pace": -2,
+          "toughness": 1
+        },
+        "points": 1
+      },
+      {
+        "id": "",
+        "label": "Fies (Leicht)",
+        "information": "Dein Charakter ist übellaunig, gemein und streitlustig. Niemand kann ihn wirklich leiden, und er tut nur ungern irgendetwas für Andere.",
+        "modifiers":{
+          "charisma": -1
+        },
+        "points": 2
       }
     ]
   }
