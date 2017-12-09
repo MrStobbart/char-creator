@@ -58,50 +58,49 @@ it('calculates the available attribute points', () => {
 
 it('adds modifers and edge when an edge is added ', () => {
   const charSheet = new CharSheet();
-  charSheet.addEdge(edgesArr[0].selectables[5])
+  charSheet.addSpecial('edges', edgesArr[0].selectables[5])
 
   expect(charSheet.modifiers).toHaveProperty('charisma', 1)
   expect(charSheet.character.fieldsets.find(edges).selected).toHaveLength(1)
 })
 
-it('applies modifiers on the character', () => {
-  const charSheet = new CharSheet()
-  charSheet.addEdge(edgesArr[0].selectables[5])
-  expect(charSheet.character.fieldsets.find(deliveredData).fields.find(field => field.id === 'charisma').value).toBe(1)
-})
 
 it('remove modifers and edge when an edge is removed ', () => {
   const charSheet = new CharSheet();
-  charSheet.addEdge(edgesArr[0].selectables[5])
-  charSheet.removeEdge(edgesArr[0].selectables[5])
-
+  charSheet.addSpecial('edges', edgesArr[0].selectables[5])
+  charSheet.removeSpecial('edges', edgesArr[0].selectables[5])
+  
   
   expect(charSheet.modifiers).not.toHaveProperty('charisma', 1)
   expect(charSheet.character.fieldsets.find(edges).selected).not.toHaveLength(1)
-
+  
 })
 
-xit('adds modifers and hinderance when an hinderance is added ', () => {
+it('adds modifers and hinderance when an hinderance is added ', () => {
   const charSheet = new CharSheet();
-  charSheet.addHinderance(hinderancesArr[0].selectables[5])
-
+  charSheet.addSpecial('hinderances', hinderancesArr[0].selectables[3])
+  
   expect(charSheet.modifiers).toHaveProperty('charisma', -1)
   expect(charSheet.character.fieldsets.find(hinderances).selected).toHaveLength(1)
-
+  
 })
 
-xit('remove modifers and hinderance when an hinderance is removed ', () => {
+it('remove modifers and hinderance when an hinderance is removed ', () => {
   const charSheet = new CharSheet();
-  charSheet.addHinderance(edgesArr[0].selectables[5])
-  charSheet.removeHinderance(edgesArr[0].selectables[5])
-
+  charSheet.addSpecial('hinderances', hinderancesArr[0].selectables[3])
+  charSheet.removeSpecial('hinderances', hinderancesArr[0].selectables[3])
+  
   expect(charSheet.modifiers).not.toHaveProperty('charisma', -1)
   expect(charSheet.character.fieldsets.find(hinderances).selected).not.toHaveLength(1)
+  
+})
 
+it('applies modifiers on the character', () => {
+  const charSheet = new CharSheet()
+  charSheet.addSpecial('edges', edgesArr[0].selectables[5])
+  expect(charSheet.character.fieldsets.find(deliveredData).fields.find(field => field.id === 'charisma').value).toBe(1)
 })
 
 it('merges modifiert correctly')
-
-it('applies modifiers on values')
 
 it('calculates the available edge points')

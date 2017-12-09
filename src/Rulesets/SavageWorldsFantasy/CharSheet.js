@@ -35,14 +35,14 @@ export default class CharSheet {
     return true
   }
 
-  addEdge(edge) {
+  addSpecial(fieldsetId, special) {
     // Check if edge can be selected
     if (true) {
-      this.character.fieldsets.find(edges).selected.push(edge)
-      if (edge.modifiers) {
-        for (const key in edge.modifiers) {
-          if (edge.modifiers.hasOwnProperty(key)) {
-            const modifier = edge.modifiers[key];
+      this.character.fieldsets.find(fieldset => fieldset.id === fieldsetId).selected.push(special)
+      if (special.modifiers) {
+        for (const key in special.modifiers) {
+          if (special.modifiers.hasOwnProperty(key)) {
+            const modifier = special.modifiers[key];
             this.modifiers[key] = this.modifiers[key] ? this.modifiers[key] + modifier : modifier
           }
         }
@@ -53,12 +53,13 @@ export default class CharSheet {
     return false
   }
 
-  removeEdge(edgeToRemove) {
-    this.character.fieldsets.find(edges).selected = this.character.fieldsets.find(edges).selected.filter(edge => edge.id !== edgeToRemove.id)
-    if (edgeToRemove.modifiers) {
-      for (const key in edgeToRemove.modifiers) {
-        if (edgeToRemove.modifiers.hasOwnProperty(key)) {
-          const modifier = edgeToRemove.modifiers[key];
+  removeSpecial(fieldsetId, specialToRemove) {
+    this.character.fieldsets.find(fieldset => fieldset.id === fieldsetId).selected = this.character.fieldsets.find(fieldset => fieldset.id === fieldsetId).selected.filter(edge => edge.id !== specialToRemove.id)
+
+    if (specialToRemove.modifiers) {
+      for (const key in specialToRemove.modifiers) {
+        if (specialToRemove.modifiers.hasOwnProperty(key)) {
+          const modifier = specialToRemove.modifiers[key];
           this.modifiers[key] = this.modifiers[key] - modifier;
         }
       }
@@ -78,7 +79,7 @@ export default class CharSheet {
 
   applyModifiers() {
     let fieldIndex, key
-    
+
     for (key in this.modifiers) {
       const fieldsetIndex = this.character.fieldsets.findIndex(fieldsetWithField)
       this.character.fieldsets[fieldsetIndex].fields[fieldIndex].value = this.character.fieldsets[fieldsetIndex].fields[fieldIndex].value + this.modifiers[key]

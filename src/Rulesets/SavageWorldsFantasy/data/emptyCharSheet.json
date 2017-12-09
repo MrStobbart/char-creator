@@ -183,16 +183,11 @@
     {
       "id": "hinderances",
       "title": "Handicaps",
-      "fields": [
-        {
-          "id": "hinderances",
-          "label": "Handicaps",
-          "singularLabel": "Handicap",
-          "type": "addable",
-          "path": "/data/hinderances.json",
-          "selected": []
-        }
-      ]
+      "label": "Handicaps",
+      "singularLabel": "Handicap",
+      "type": "addable",
+      "path": "/data/hinderances.json",
+      "selected": []
     },
     {
       "id": "skills",
