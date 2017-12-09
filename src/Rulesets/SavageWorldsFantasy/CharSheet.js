@@ -9,6 +9,7 @@ export default class CharSheet {
     this.character = character
     this.modifiers = {}
     this.calculateValues()
+
   }
 
   setValue(fieldsetId, fieldId, value) {
@@ -46,6 +47,7 @@ export default class CharSheet {
           }
         }
       }
+      this.applyModifiers()
       return true;
     }
     return false
@@ -61,6 +63,7 @@ export default class CharSheet {
         }
       }
     }
+    this.applyModifiers()
   }
 
   calculateValues() {
@@ -74,7 +77,20 @@ export default class CharSheet {
   }
 
   applyModifiers() {
+    let fieldIndex, key
     
+    for (key in this.modifiers) {
+      const fieldsetIndex = this.character.fieldsets.findIndex(fieldsetWithField)
+      this.character.fieldsets[fieldsetIndex].fields[fieldIndex].value = this.character.fieldsets[fieldsetIndex].fields[fieldIndex].value + this.modifiers[key]
+    }
+
+    function fieldsetWithField(fieldset) {
+      fieldIndex = fieldset.fields.findIndex(field => field.id === key)
+      if (fieldIndex === -1) {
+        return false;
+      }
+      return true;
+    }
   }
 
   calcParry() {
@@ -85,12 +101,6 @@ export default class CharSheet {
   calcToughness() {
     const constitutionValue = this.character.fieldsets.find(attributes).fields.find(constitution).value;
     this.character.fieldsets.find(deliveredData).fields.find(toughness).value = (constitutionValue * 2 + 2) / 2 + 2;
-  }
-
-  calcCharisma() {
-  }
-
-  calcPace() {
   }
 
   calcAvailableSkillPoints() {

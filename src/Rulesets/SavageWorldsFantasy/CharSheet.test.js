@@ -62,7 +62,12 @@ it('adds modifers and edge when an edge is added ', () => {
 
   expect(charSheet.modifiers).toHaveProperty('charisma', 1)
   expect(charSheet.character.fieldsets.find(edges).selected).toHaveLength(1)
+})
 
+it('applies modifiers on the character', () => {
+  const charSheet = new CharSheet()
+  charSheet.addEdge(edgesArr[0].selectables[5])
+  expect(charSheet.character.fieldsets.find(deliveredData).fields.find(field => field.id === 'charisma').value).toBe(1)
 })
 
 it('remove modifers and edge when an edge is removed ', () => {
