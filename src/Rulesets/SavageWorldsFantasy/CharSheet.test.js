@@ -12,7 +12,7 @@ import CharSheet, {
 
 
 import edgesArr from './data/edges.json'
-import hinderancesArr from './data/hinderances';
+import hinderancesArr from './data/hinderances.json';
 
 it('creates an object', () => {
   const charSheet = new CharSheet();
@@ -112,4 +112,11 @@ it('merges modifiert correctly', () => {
 
 })
 
-it('calculates the available edge points')
+it('calculates the available edge points', () => {
+  const charSheet = new CharSheet()
+  charSheet.addSpecial('edges', edgesArr[0].selectables[5])
+  charSheet.addSpecial('edges', edgesArr[0].selectables[6])
+  charSheet.addSpecial('hinderances', hinderancesArr[0].selectables[3])
+
+  expect(charSheet.character.charCreationInformation.edgePoints.value).toBe(-3)
+})

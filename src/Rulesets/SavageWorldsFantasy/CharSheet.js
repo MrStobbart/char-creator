@@ -75,6 +75,7 @@ export default class CharSheet {
     this.calcPace()
     this.calcAvailableSkillPoints()
     this.calcAvailableAttributePoints()
+    this.calcAvailableEdgePoints()
     this.applyModifiers() 
     // console.timeEnd('calculate values')
   }
@@ -129,6 +130,14 @@ export default class CharSheet {
   calcAvailableAttributePoints() {
     this.character.charCreationInformation.attributePoints.value = this.character.fieldsets.find(attributes).fields
       .reduce((sum, attribute) => sum - attribute.value, 10)
+  }
+
+  calcAvailableEdgePoints() {
+    const numberOfEdges = this.character.fieldsets.find(edges).selected.length;
+    const hinderancePoints = this.character.fieldsets.find(hinderances).selected.reduce((sum, hinderance) => sum + hinderance.points, 0)
+    
+    this.character.charCreationInformation.edgePoints.value = hinderancePoints - numberOfEdges * 2
+    
   }
 
 }
