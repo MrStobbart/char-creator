@@ -47,7 +47,7 @@ export default class CharSheet {
           }
         }
       }
-      this.applyModifiers()
+      this.calculateValues()
       return true;
     }
     return false
@@ -64,13 +64,15 @@ export default class CharSheet {
         }
       }
     }
-    this.applyModifiers()
+    this.calculateValues()
   }
 
   calculateValues() {
     // console.time('calculate values')
     this.calcParry()
     this.calcToughness()
+    this.calcCharisma()
+    this.calcPace()
     this.calcAvailableSkillPoints()
     this.calcAvailableAttributePoints()
     this.applyModifiers() 
@@ -102,6 +104,14 @@ export default class CharSheet {
   calcToughness() {
     const constitutionValue = this.character.fieldsets.find(attributes).fields.find(constitution).value;
     this.character.fieldsets.find(deliveredData).fields.find(toughness).value = (constitutionValue * 2 + 2) / 2 + 2;
+  }
+
+  calcCharisma() {
+    this.character.fieldsets.find(deliveredData).fields.find(field => field.id === 'charisma').value = 0
+  }
+
+  calcPace() {
+    this.character.fieldsets.find(deliveredData).fields.find(field => field.id === 'pace').value = 12
   }
 
   calcAvailableSkillPoints() {

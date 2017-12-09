@@ -51,7 +51,6 @@ it('calculates the available attribute points', () => {
   
   expect(charSheet.character.charCreationInformation.attributePoints.value).toBe(5)
 
-  // TODO it should not be done like this?
   charSheet.setValue('attributes', 'strength', 3)
   expect(charSheet.character.charCreationInformation.attributePoints.value).toBe(3)
 })
@@ -101,6 +100,16 @@ it('applies modifiers on the character', () => {
   expect(charSheet.character.fieldsets.find(deliveredData).fields.find(field => field.id === 'charisma').value).toBe(1)
 })
 
-it('merges modifiert correctly')
+it('merges modifiert correctly', () => {
+  const charSheet = new CharSheet()
+  charSheet.addSpecial('edges', edgesArr[0].selectables[5])
+  charSheet.addSpecial('edges', edgesArr[0].selectables[6])
+  charSheet.addSpecial('hinderances', hinderancesArr[0].selectables[3])
+
+  expect(charSheet.modifiers).toHaveProperty('charisma', 1)
+  expect(charSheet.character.fieldsets.find(hinderances).selected).toHaveLength(1)
+  expect(charSheet.character.fieldsets.find(deliveredData).fields.find(field => field.id === 'charisma').value).toBe(1)
+
+})
 
 it('calculates the available edge points')
