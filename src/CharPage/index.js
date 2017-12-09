@@ -199,47 +199,27 @@ class CharPage extends React.Component {
   
 
   render() {
-    let charPage = null;
-    if (true) {
-      charPage = (
-        <div uk-grid="true">
-          <div className="uk-width-1-6">
-            <Navigation fieldsets={this.state.charSheet.character.fieldsets} />
-          </div>
-          <div className="uk-width-2-3">
-            <Content
-              availableValues={this.state.charSheet.availableValues}
-              makeCreateSetValue={this.makeCreateSetValue}
-              createGetValue={this.createGetValue}
-              character={this.state.charSheet.character}
-            />
-          </div>
-          <div className="uk-width-1-6">
-
-            {/* <InfoPanel
-              charData={this.state.charData}
-              meta={this.state.charSheet.character.meta}
-              charSheetId={this.props.charSheet.id}
-              saveChanges={this.saveChanges}
-              unsavedChanges={this.state.unsavedChanges}
-            /> */}
-          </div>
-        </div>
-      )
-    }
     return (
-      <div>
-        {!this.state.charDataCreated ? (
-          <div
-            uk-spinner={''}
-            style={{
-              textAlign: 'center',
-              display: 'block',
-              margin: 'auto',
-              padding: 30
-            }} />
-        ) : null}
-        {charPage}
+      <div uk-grid="true">
+        <div className="uk-width-1-6">
+          <Navigation fieldsets={this.state.charSheet.character.fieldsets} />
+        </div>
+        <div className="uk-width-2-3">
+          <Content
+            availableValues={this.state.charSheet.availableValues}
+            makeCreateSetValue={this.makeCreateSetValue}
+            createGetValue={this.createGetValue}
+            character={this.state.charSheet.character}
+          />
+        </div>
+        <div className="uk-width-1-6">
+
+          <InfoPanel
+            character={this.state.charSheet.character}
+            saveChanges={this.saveChanges}
+            unsavedChanges={this.state.unsavedChanges}
+          />
+        </div>
       </div>
     )
   }

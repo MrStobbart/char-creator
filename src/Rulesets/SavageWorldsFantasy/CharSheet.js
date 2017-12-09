@@ -131,7 +131,7 @@ export default class CharSheet {
   }
 
   calcAvailableSkillPoints() {
-    this.character.charCreationInformation.skillPoints.value = this.character.fieldsets.find(skills).fields
+    this.character.charCreationInformation.find(info => info.id === 'skillPoints').value = this.character.fieldsets.find(skills).fields
       .reduce((sum, skill) => {
         const attribute = this.character.fieldsets.find(attributes).fields.find(field => field.id === skill.attribute);
         if (skill.calculationType === 'cheapSkill') {
@@ -143,7 +143,7 @@ export default class CharSheet {
   }
 
   calcAvailableAttributePoints() {
-    this.character.charCreationInformation.attributePoints.value = this.character.fieldsets.find(attributes).fields
+    this.character.charCreationInformation.find(info => info.id === 'attributePoints').value = this.character.fieldsets.find(attributes).fields
       .reduce((sum, attribute) => sum - attribute.value, 10)
   }
 
@@ -151,7 +151,7 @@ export default class CharSheet {
     const numberOfEdges = this.character.fieldsets.find(edges).selected.length;
     const hinderancePoints = this.character.fieldsets.find(hinderances).selected.reduce((sum, hinderance) => sum + hinderance.points, 0)
     
-    this.character.charCreationInformation.edgePoints.value = hinderancePoints - numberOfEdges * 2
+    this.character.charCreationInformation.find(info => info.id === 'edgePoints').value = hinderancePoints - numberOfEdges * 2
     
   }
 

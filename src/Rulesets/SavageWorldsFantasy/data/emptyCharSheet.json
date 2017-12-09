@@ -1,20 +1,23 @@
 {
   "id": "savageWorldsFantasy",
   "title": "Savage Worlds Fantasy",
-  "charCreationInformation": {
-    "skillPoints": {
+  "charCreationInformation": [
+    {
+      "id": "skillPoints",
       "label": "Fertigkeitspunkte",
       "value": 0
     },
-    "attributePoints": {
+    {
+      "id": "attributePoints",
       "label": "Attribute",
       "value": 0
     },
-    "edgePoints": {
+    {
+      "id": "edgePoints",
       "label": "Wählbare Talente",
       "value": 0
     }
-  },
+  ],
   "charLevelInformation": {
     "xp": {
       "label": "Erfahrungspunkte",
