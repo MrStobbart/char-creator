@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
-
-import CharSheetClass from '../Rulesets/SavageWorldsFantasy/CharSheet';
 // Actions
 import { upsertCharacter } from '../App/actions';
 
@@ -10,6 +8,7 @@ import { upsertCharacter } from '../App/actions';
 import { Navigation } from './components/Navigation';
 import { Content } from './components/Content';
 import { InfoPanel }from './components/InfoPanel';
+import CharSheet from '../Rulesets/SavageWorldsFantasy/CharSheet';
 
 // The charpage has its own state that will be synced with the redux state on submit. Performance reasons
 class CharPage extends React.Component {
@@ -17,24 +16,21 @@ class CharPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      charSheet: new CharSheet(),
       charData: undefined,
       unsavedChanges: false,
       charDataCreated: false,
       id: undefined
     }
-    this.test = new CharSheetClass();
   }
 
   componentDidMount() {
-    
     this.initializeComponent(this.props)
   }
 
 
   componentWillReceiveProps(nextProps) {
-
     this.initializeComponent(nextProps)
-
   }
 
   initializeComponent(props) {
@@ -117,32 +113,44 @@ class CharPage extends React.Component {
     });
   }
 
-  makeCreateUpdateInformationField = fieldsetId => field => newValue => {
-    this.setState(prevState => {
 
+  makeCreateSetValue = fieldsetId => field => newValue => {
+    this.setState(prevState => {
       let newState = { ...prevState };
-      newState.charData[fieldsetId][field.id] = newValue;
+      newState.charSheet.setValue(fieldsetId, field.id, newValue)
       newState.unsavedChanges = true;
-      return newState;
-    })  
+      return newState
+    })
   }
 
-  makeCreateUpdateNumberField = fieldsetId => field => newValue => {
-    this.setState(prevState => {
+  createGetValue = fieldsetId => fieldId => {
+    return this.state.charSheet.getValue(fieldsetId, fieldId)
+  }
+  // makeCreateUpdateInformationField = fieldsetId => field => newValue => {
+  //   this.setState(prevState => {
 
-      let newState = { ...prevState };
-    // TODO optimise this so it will not be called every time
-      newState.charData[fieldsetId][field.id].calculationType = field.calculationType
+  //     let newState = { ...prevState };
+  //     newState.charData[fieldsetId][field.id] = newValue;
+  //     return newState;
+  //   })  
+  // }
 
-      if (field.attribute) {
-        newState.charData[fieldsetId][field.id].attribute = field.attribute
-      }
-      // Set new state
-      newState.charData[fieldsetId][field.id].value = newValue;
-      newState.unsavedChanges = true;
-      return newState;
-    })    
-  } 
+  // makeCreateUpdateNumberField = fieldsetId => field => newValue => {
+  //   this.setState(prevState => {
+
+  //     let newState = { ...prevState };
+  //   // TODO optimise this so it will not be called every time
+  //     newState.charData[fieldsetId][field.id].calculationType = field.calculationType
+
+  //     if (field.attribute) {
+  //       newState.charData[fieldsetId][field.id].attribute = field.attribute
+  //     }
+  //     // Set new state
+  //     newState.charData[fieldsetId][field.id].value = newValue;
+  //     newState.unsavedChanges = true;
+  //     return newState;
+  //   })    
+  // } 
 
   makeCreateUpdateAddableField = fieldsetId => field => (fieldId, newValue) => {
     this.setState(prevState => {
@@ -179,7 +187,7 @@ class CharPage extends React.Component {
   }
 
   saveChanges = () => {
-    this.props.upsertCharacter(this.state.charData);
+    this.props.upsertCharacter(this.state.charSheet.character);
     this.props.history.push(`/charpage/${this.state.id}`)
     this.setState(prevState => ({
       ...prevState,
@@ -192,32 +200,29 @@ class CharPage extends React.Component {
 
   render() {
     let charPage = null;
-    if (this.state.charDataCreated) {
+    if (true) {
       charPage = (
         <div uk-grid="true">
           <div className="uk-width-1-6">
-            <Navigation fieldsets={this.props.charSheet.fieldsets} />
+            <Navigation fieldsets={this.state.charSheet.character.fieldsets} />
           </div>
           <div className="uk-width-2-3">
             <Content
-              charSheet={this.props.charSheet}
-              makeCreateUpdateInformationField={this.makeCreateUpdateInformationField}
-              makeCreateUpdateNumberField={this.makeCreateUpdateNumberField}
-              makeCreateUpdateAddableField={this.makeCreateUpdateAddableField}
-              makeCreateRemoveAddableField={this.makeCreateRemoveAddableField}
-              makeCreateAddAddableField={this.makeCreateAddAddableField}
-              charData={this.state.charData}
+              availableValues={this.state.charSheet.availableValues}
+              makeCreateSetValue={this.makeCreateSetValue}
+              createGetValue={this.createGetValue}
+              character={this.state.charSheet.character}
             />
           </div>
           <div className="uk-width-1-6">
 
-            <InfoPanel
+            {/* <InfoPanel
               charData={this.state.charData}
-              meta={this.props.charSheet.meta}
+              meta={this.state.charSheet.character.meta}
               charSheetId={this.props.charSheet.id}
               saveChanges={this.saveChanges}
               unsavedChanges={this.state.unsavedChanges}
-            />
+            /> */}
           </div>
         </div>
       )

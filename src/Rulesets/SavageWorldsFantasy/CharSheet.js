@@ -8,6 +8,7 @@ export default class CharSheet {
   constructor(character = cloneDeep(emptyCharSheet)) {
     this.character = character
     this.modifiers = {}
+    this.availableValues = [" ", "W4", "W6", "W8", "W10", "W12"],  
     this.calculateValues()
 
   }
@@ -16,14 +17,12 @@ export default class CharSheet {
     
     const fieldsetIndex = this.character.fieldsets.findIndex(fieldset => fieldset.id === fieldsetId)
     if (fieldsetIndex === -1) {
-      console.log('fieldset', fieldsetId, 'not found')
-      return false;
+      throw `fieldset ${fieldsetId} not found`
     }
     
     const fieldIndex = this.character.fieldsets[fieldsetIndex].fields.findIndex(field => field.id === fieldId)
     if (fieldIndex === -1) {
-      console.log('field', fieldId, 'not fount in the fieldset', fieldsetId)
-      return false;
+      throw `field ${fieldId} not fount in the fieldset ${fieldsetId}`
     }
     
     this.character.fieldsets[fieldsetIndex].fields[fieldIndex].value = value
@@ -33,6 +32,22 @@ export default class CharSheet {
       this.calculateValues()
     }
     return true
+  }
+
+  getValue(fieldsetId, fieldId) {
+    const fieldsetIndex = this.character.fieldsets.findIndex(fieldset => fieldset.id === fieldsetId)
+    if (fieldsetIndex === -1) {
+      throw `fieldset ${fieldsetId} not found`
+      return false;
+    }
+
+    const fieldIndex = this.character.fieldsets[fieldsetIndex].fields.findIndex(field => field.id === fieldId)
+    if (fieldIndex === -1) {
+      throw `field ${fieldId} not fount in the fieldset ${fieldsetId}`
+      return false;
+    }
+
+    return this.character.fieldsets[fieldsetIndex].fields[fieldIndex].value
   }
 
   addSpecial(fieldsetId, special) {

@@ -1,14 +1,6 @@
 {
   "id": "savageWorldsFantasy",
   "title": "Savage Worlds Fantasy",
-  "availableValues": [
-    " ",
-    "W4",
-    "W6",
-    "W8",
-    "W10",
-    "W12"
-  ],
   "charCreationInformation": {
     "skillPoints": {
       "label": "Fertigkeitspunkte",
@@ -36,71 +28,88 @@
       "fields": [
         {
           "id": "name",
-          "label": "Name"
+          "label": "Name",
+          "value": ""
         },
         {
           "id": "family",
-          "label": "Familie"
+          "label": "Familie",
+          "value": ""
         },
         {
           "id": "placeOfBirth",
-          "label": "Geburtsort"
+          "label": "Geburtsort",
+          "value": ""
         },
         {
           "id": "birthday",
-          "label": "Geburtsdatum"
+          "label": "Geburtsdatum",
+          "value": ""
         },
         {
           "id": "age",
-          "label": "Alter"
+          "label": "Alter",
+          "value": ""
         },
         {
           "id": "sex",
-          "label": "Geschlecht"
+          "label": "Geschlecht",
+          "value": ""
         },
         {
           "id": "species",
-          "label": "Spezies"
+          "label": "Spezies",
+          "value": ""
         },
         {
           "id": "size",
-          "label": "Größe"
+          "label": "Größe",
+          "value": ""
         },
         {
           "id": "weight",
-          "label": "Gewicht"
+          "label": "Gewicht",
+          "value": ""
         },
         {
           "id": "hairColor",
-          "label": "Haarfarbe"
+          "label": "Haarfarbe",
+          "value": ""
         },
         {
           "id": "eyecolor",
-          "label": "Augenfarbe"
+          "label": "Augenfarbe",
+          "value": ""
         },
         {
           "id": "culture",
-          "label": "Kultur"
+          "label": "Kultur",
+          "value": ""
         },
         {
           "id": "profession",
-          "label": "Profession"
+          "label": "Profession",
+          "value": ""
         },
         {
           "id": "title",
-          "label": "Titel"
+          "label": "Titel",
+          "value": ""
         },
         {
           "id": "socialStatus",
-          "label": "Sozialstatus"
+          "label": "Sozialstatus",
+          "value": ""
         },
         {
           "id": "characteristics",
-          "label": "Charakteristika"
+          "label": "Charakteristika",
+          "value": ""
         },
         {
           "id": "otherInformation",
-          "label": "Sonstiges"
+          "label": "Sonstiges",
+          "value": ""
         }
       ]
     },
@@ -182,7 +191,8 @@
       "singularLabel": "Talent",
       "type": "addable",
       "path": "/data/edges.json",
-      "selected": []
+      "selected": [],
+      "fields": []
     },
     {
       "id": "hinderances",
@@ -191,7 +201,8 @@
       "singularLabel": "Handicap",
       "type": "addable",
       "path": "/data/hinderances.json",
-      "selected": []
+      "selected": [],
+      "fields": []
     },
     {
       "id": "skills",

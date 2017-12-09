@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from './fields/TextField';
 import { NumberField } from './fields/NumberField';
-import { CalcField } from './fields/CalcField';
+import {DataField} from './fields/DataField';
 import { AddableField } from './fields/AddableField';
 import './Fieldset.css';
 
@@ -12,10 +12,9 @@ export function Fieldset(props) {
         return (
           <NumberField
             key={field.id}
-            value={props.charData[props.fieldset.id][field.id].value}
-            values={props.meta.availableValues}
-            calculationTypes={props.meta.calculationTypes}
-            updateValue={props.createUpdateNumberField(field)}
+            value={props.getValue(field.id)}
+            values={props.availableValues}
+            updateValue={props.createSetValue(field)}
             field={field}
           >
             {field.label}
@@ -23,34 +22,33 @@ export function Fieldset(props) {
         );
       case 'calculated':
         return (
-          <CalcField
+          <DataField
             key={field.id}
-            value={props.charData[props.fieldset.id][field.id]}
-            charData={props.charData}
-            calculation={field.calculation}
+            value={props.getValue(field.id)}
           >
             {field.label}
-          </CalcField>
+          </DataField>
         );
       case 'addable':
-        return (
-          <AddableField
-            key={field.id}
-            values={props.charData[props.fieldset.id][field.id]}
-            updateValue={props.createUpdateAddableField(field)}
-            removeField={props.createRemoveAddableField(field)}
-            addField={props.createAddAddableField(field)}
-            field={field}
-          >
-            Addable field
-          </AddableField>
-        )  
+        // return (
+        // <AddableField
+        //   key={field.id}
+        //   values={props.charData[props.fieldset.id][field.id]}
+        //   updateValue={props.createUpdateAddableField(field)}
+        //   removeField={props.createRemoveAddableField(field)}
+        //   addField={props.createAddAddableField(field)}
+        //   field={field}
+        // >
+        //   Addable field
+        // </AddableField>
+        // )  
+        break;
       default:
         return (
           <TextField
             key={field.id}
-            value={props.charData[props.fieldset.id][field.id]}
-            updateValue={props.createUpdateInformationField(field)}
+            value={props.getValue(field.id)}
+            updateValue={props.createSetValue(field)}
           >
             {field.label}
           </TextField>

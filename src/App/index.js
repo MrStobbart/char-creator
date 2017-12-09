@@ -17,7 +17,6 @@ import './index.css';
 class App extends Component {
 
   componentDidMount() {
-    this.props.fetchCharSheet();
     this.props.fetchCharacters();
   }
 
