@@ -6,7 +6,7 @@
       {
         "id": "acclimatized",
         "label": "Akklimatisiert",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "+4 auf Ko. Würfe gegen Erschöpfung bei Hitze oder Kälte"
@@ -14,7 +14,7 @@
       {
         "id": "noble",
         "label": "Adelig",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "Charisma +1 (in Schichten), Reich, Verpflichtungen"
@@ -22,7 +22,7 @@
       {
         "id": "arcaneResistance",
         "label": "Arkane Resistenz",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "+2 RS /+2 auf Magiewiderstand gegen Mächte"
@@ -30,7 +30,7 @@
       {
         "id": "improvedArcaneResistance",
         "label": "Stärkere Arkane Resistenz",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "Wie oben nur +4"
@@ -38,7 +38,7 @@
       {
         "id": "arcaneBackground",
         "label": "Arkaner Hintergrund",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "Siehe Regelbuch"
@@ -46,7 +46,7 @@
       {
         "id": "attractive",
         "label": "Attraktiv",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "+1 Charisma",
@@ -57,7 +57,7 @@
       {
         "id": "veryAttractive",
         "label": "Sehr Attraktiv",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "+2 Charisma",
@@ -68,7 +68,7 @@
       {
         "id": "alertness",
         "label": "Aufmerksamkeit",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "+2 auf Wahrnehmung"
@@ -76,7 +76,7 @@
       {
         "id": "ambidextrous",
         "label": "Beidhändig",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "Kein-2 Abzug für das verwenden der falschen Hand"
@@ -84,7 +84,7 @@
       {
         "id": "berserk",
         "label": "Berserker",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "Verstandprobe gegen Raserei nach Verletzung (Wunde). Raserei: +2 Kämpfen und Stärke, Parade-2, Robustheit +2, Wenn ein Würfel trifft aber der andere, eine1 zeigt wird ein zufä,lliges Ziel getroffen. Zum Beenden eine Aktion und eine Verstandsprobe mit-2"
@@ -92,7 +92,7 @@
       {
         "id": "ironAffinity",
         "label": "Eisenaffine Aura",
-        "requirementes": {
+        "requirements": {
           "level": "A",
           "edges": [
             "arcaneBackground"
@@ -103,7 +103,7 @@
       {
         "id": "fleetFooted",
         "label": "Flink",
-        "requirementes": {
+        "requirements": {
           "level": "A",
           "agility": 2
         },
@@ -115,7 +115,7 @@
       {
         "id": "luck",
         "label": "Glück",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "Ein Bennie mehr"
@@ -123,7 +123,7 @@
       {
         "id": "greatLuck",
         "label": "Großes Glück",
-        "requirementes": {
+        "requirements": {
           "level": "A",
           "edges": [
             "luck"
@@ -134,7 +134,7 @@
       {
         "id": "healer",
         "label": "Heiler",
-        "requirementes": {
+        "requirements": {
           "level": "A",
           "constitution": 3
         },
@@ -143,7 +143,7 @@
       {
         "id": "brawny",
         "label": "Kräftig",
-        "requirementes": {
+        "requirements": {
           "level": "A",
           "constitution": 2,
           "strength": 2
@@ -156,7 +156,7 @@
       {
         "id": "brave",
         "label": "Mutig",
-        "requirementes": {
+        "requirements": {
           "level": "A",
           "spirit": 2
         },
@@ -165,7 +165,7 @@
       {
         "id": "rich",
         "label": "Reich",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "Dreifaches Startkapital, Jahreseinkommen gleich dem10fachen des dreifachen Startkapitals"
@@ -173,7 +173,7 @@
       {
         "id": "filthyRich",
         "label": "Stinkreich",
-        "requirementes": {
+        "requirements": {
           "level": "A",
           "edges": [
             "rich"
@@ -184,7 +184,7 @@
       {
         "id": "sixthSense",
         "label": "Sechster Sinn",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "Der Charakter kann mit Wahrnehmung-2 einen Hinterhalt oder eine andere Gefahr "
@@ -192,7 +192,7 @@
       {
         "id": "schelm",
         "label": "Schelm",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "Ein Charakter mit diesem Hintergrund- Talent wurde als Säugling von Kobolden entführt und aufgezogen. Seine Zieheltern haben ihm allerlei magische Späße und die koboldische Lebensart beigebracht. Er kann per Zauberei Menschen nackt dastehen lassen, Kobolde rufen, Illusionen hervorrufen oder ähnliche Dinge tun, um einen Spaß zu machen. Er braucht dazu weder einen Arkanen Hintergrund noch Machtpunkte. Schelme setzen diese Fähigkeit aber nur ein, um sich selbst oder andere zu erheitern, niemals, um andere zu schädigen. Sie können aber trotzdem für Tricks uns geistige Duelle eingesetzt werden."
@@ -200,7 +200,7 @@
       {
         "id": "quick",
         "label": "Schnell",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "Im Kampf werden Aktionskarten von5 oder niedriger neu gezogen."
@@ -208,7 +208,7 @@
       {
         "id": "fastHealer",
         "label": "Schnelle Heilung",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "+2 auf Genesungsproben"
@@ -216,7 +216,7 @@
       {
         "id": "animalEmpathy",
         "label": "Tierempathie",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "Der Charakter kann seine Bennies mit Tiergefährten teilen"
@@ -230,7 +230,7 @@
       {
         "id": "thisisatest",
         "label": "Dies ist ein Test",
-        "requirementes": {
+        "requirements": {
           "level": "A"
         },
         "information": "+4 auf Ko. Würfe gegen Erschöpfung bei Hitze oder Kälte"

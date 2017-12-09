@@ -8,6 +8,30 @@ export default class CharSheet {
   constructor(character = cloneDeep(emptyCharSheet)) {
     this.character = character
     this.modifiers = {}
+    this.calculateValues()
+  }
+
+  setValue(fieldsetId, fieldId, value) {
+    
+    const fieldsetIndex = this.character.fieldsets.findIndex(fieldset => fieldset.id === fieldsetId)
+    if (fieldsetIndex === -1) {
+      console.log('fieldset', fieldsetId, 'not found')
+      return false;
+    }
+    
+    const fieldIndex = this.character.fieldsets[fieldsetIndex].fields.findIndex(field => field.id === fieldId)
+    if (fieldIndex === -1) {
+      console.log('field', fieldId, 'not fount in the fieldset', fieldsetId)
+      return false;
+    }
+    
+    this.character.fieldsets[fieldsetIndex].fields[fieldIndex].value = value
+    
+    // Only calculate stuff when a numeric value was changed
+    if (fieldsetId !== 'generalInformation') {
+      this.calculateValues()
+    }
+    return true
   }
 
   addEdge(edge) {
@@ -39,11 +63,18 @@ export default class CharSheet {
     }
   }
 
-  calculatePoints() {
+  calculateValues() {
+    // console.time('calculate values')
     this.calcParry()
     this.calcToughness()
     this.calcAvailableSkillPoints()
     this.calcAvailableAttributePoints()
+    this.applyModifiers() 
+    // console.timeEnd('calculate values')
+  }
+
+  applyModifiers() {
+    
   }
 
   calcParry() {
