@@ -1,6 +1,7 @@
 // Only import lodash cloneDeep to minimze bundle size
 import cloneDeep from 'lodash/cloneDeep'
 import emptyCharSheet from './data/emptyCharSheet.json'
+import shortId from 'shortid'
 
 
 export default class CharSheet {
@@ -8,7 +9,7 @@ export default class CharSheet {
   constructor(character = cloneDeep(emptyCharSheet)) {
     this.character = character
     this.modifiers = {}
-    this.availableValues = [" ", "W4", "W6", "W8", "W10", "W12"],  
+    this.availableValues = [" ", "W4", "W6", "W8", "W10", "W12"]
     this.calculateValues()
 
   }
@@ -17,12 +18,12 @@ export default class CharSheet {
     
     const fieldsetIndex = this.character.fieldsets.findIndex(fieldset => fieldset.id === fieldsetId)
     if (fieldsetIndex === -1) {
-      throw `fieldset ${fieldsetId} not found`
+      throw new Error(`fieldset ${fieldsetId} not found`)
     }
     
     const fieldIndex = this.character.fieldsets[fieldsetIndex].fields.findIndex(field => field.id === fieldId)
     if (fieldIndex === -1) {
-      throw `field ${fieldId} not fount in the fieldset ${fieldsetId}`
+      throw new Error(`field ${fieldId} not fount in the fieldset ${fieldsetId}`)
     }
     
     this.character.fieldsets[fieldsetIndex].fields[fieldIndex].value = value
@@ -37,23 +38,45 @@ export default class CharSheet {
   getValue(fieldsetId, fieldId) {
     const fieldsetIndex = this.character.fieldsets.findIndex(fieldset => fieldset.id === fieldsetId)
     if (fieldsetIndex === -1) {
-      throw `fieldset ${fieldsetId} not found`
-      return false;
+      throw new Error (`fieldset ${fieldsetId} not found`)
     }
 
     const fieldIndex = this.character.fieldsets[fieldsetIndex].fields.findIndex(field => field.id === fieldId)
     if (fieldIndex === -1) {
-      throw `field ${fieldId} not fount in the fieldset ${fieldsetId}`
-      return false;
+      throw new Error(`field ${fieldId} not fount in the fieldset ${fieldsetId}`)
     }
 
     return this.character.fieldsets[fieldsetIndex].fields[fieldIndex].value
   }
 
-  addSpecial(fieldsetId, special) {
+  addSpecialField(fieldsetId) {
+    const fieldId = shortId.generate()
+    const newField = { addableFieldId: fieldId }
+    const fieldsetIndex = this.character.fieldsets.findIndex(fieldset => fieldset.id === fieldsetId)
+    if (fieldsetIndex === -1) {
+      throw new Error(`fieldset ${fieldsetId} not found`)
+    }
+    this.character.fieldsets[fieldsetIndex].fields[0].selected.push(newField)
+    return fieldId
+  }
+  
+  updateSpecialField(fieldsetId, addableFieldId, special) {
     // Check if edge can be selected
     if (true) {
-      this.character.fieldsets.find(fieldset => fieldset.id === fieldsetId).selected.push(special)
+      
+      const fieldsetIndex = this.character.fieldsets.findIndex(fieldset => fieldset.id === fieldsetId)
+      if (fieldsetIndex === -1) {
+        throw new Error(`fieldset ${fieldsetId} not found`)
+      }
+      
+      const addableFieldIndex = this.character.fieldsets[fieldsetIndex].fields[0].selected.findIndex(field => field.addableFieldId === addableFieldId)
+      if (addableFieldIndex === -1) {
+        throw new Error(`addableField ${addableFieldIndex} not found in fieldset ${fieldsetIndex}`)
+      }
+      
+      const newSpecial = { addableFieldId: addableFieldId, ...special }
+      this.character.fieldsets[fieldsetIndex].fields[0].selected[addableFieldIndex] = newSpecial
+      
       if (special.modifiers) {
         for (const key in special.modifiers) {
           if (special.modifiers.hasOwnProperty(key)) {
@@ -68,9 +91,10 @@ export default class CharSheet {
     return false
   }
 
-  removeSpecial(fieldsetId, specialToRemove) {
-    this.character.fieldsets.find(fieldset => fieldset.id === fieldsetId).selected = this.character.fieldsets.find(fieldset => fieldset.id === fieldsetId).selected.filter(edge => edge.id !== specialToRemove.id)
+  removeSpecialField(fieldsetId, addableFieldId) {
+    const specialToRemove = this.character.fieldsets.find(fieldset => fieldset.id === fieldsetId).fields[0].selected.find(field => field.addableFieldId === addableFieldId)
 
+    // Remove modifiers from special to remove
     if (specialToRemove.modifiers) {
       for (const key in specialToRemove.modifiers) {
         if (specialToRemove.modifiers.hasOwnProperty(key)) {
@@ -79,11 +103,13 @@ export default class CharSheet {
         }
       }
     }
+
+    // Remvoe special field
+    this.character.fieldsets.find(fieldset => fieldset.id === fieldsetId).fields[0].selected = this.character.fieldsets.find(fieldset => fieldset.id === fieldsetId).fields[0].selected.filter(field => field.addableFieldId !== addableFieldId)
     this.calculateValues()
   }
 
   calculateValues() {
-    // console.time('calculate values')
     this.calcParry()
     this.calcToughness()
     this.calcCharisma()
@@ -92,7 +118,6 @@ export default class CharSheet {
     this.calcAvailableAttributePoints()
     this.calcAvailableEdgePoints()
     this.applyModifiers() 
-    // console.timeEnd('calculate values')
   }
 
   applyModifiers() {
@@ -148,8 +173,8 @@ export default class CharSheet {
   }
 
   calcAvailableEdgePoints() {
-    const numberOfEdges = this.character.fieldsets.find(edges).selected.length;
-    const hinderancePoints = this.character.fieldsets.find(hinderances).selected.reduce((sum, hinderance) => sum + hinderance.points, 0)
+    const numberOfEdges = this.character.fieldsets.find(edges).fields[0].selected.length;
+    const hinderancePoints = this.character.fieldsets.find(hinderances).fields[0].selected.reduce((sum, hinderance) => sum + hinderance.points, 0)
     
     this.character.charCreationInformation.find(info => info.id === 'edgePoints').value = hinderancePoints - numberOfEdges * 2
     

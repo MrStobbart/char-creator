@@ -19,7 +19,6 @@ class CharPage extends React.Component {
       charSheet: new CharSheet(),
       charData: undefined,
       unsavedChanges: false,
-      charDataCreated: false,
       id: undefined
     }
   }
@@ -126,61 +125,30 @@ class CharPage extends React.Component {
   createGetValue = fieldsetId => fieldId => {
     return this.state.charSheet.getValue(fieldsetId, fieldId)
   }
-  // makeCreateUpdateInformationField = fieldsetId => field => newValue => {
-  //   this.setState(prevState => {
 
-  //     let newState = { ...prevState };
-  //     newState.charData[fieldsetId][field.id] = newValue;
-  //     return newState;
-  //   })  
-  // }
 
-  // makeCreateUpdateNumberField = fieldsetId => field => newValue => {
-  //   this.setState(prevState => {
-
-  //     let newState = { ...prevState };
-  //   // TODO optimise this so it will not be called every time
-  //     newState.charData[fieldsetId][field.id].calculationType = field.calculationType
-
-  //     if (field.attribute) {
-  //       newState.charData[fieldsetId][field.id].attribute = field.attribute
-  //     }
-  //     // Set new state
-  //     newState.charData[fieldsetId][field.id].value = newValue;
-  //     newState.unsavedChanges = true;
-  //     return newState;
-  //   })    
-  // } 
-
-  makeCreateUpdateAddableField = fieldsetId => field => (fieldId, newValue) => {
+  createUpdateAddableField = fieldsetId => (addableFieldId, special) => {
     this.setState(prevState => {
       let newState = { ...prevState };
-
-      newState.charData[fieldsetId][field.id] = newState.charData[fieldsetId][field.id]
-        .map(addableField => addableField.fieldId === fieldId ? { ...addableField, ...newValue } : addableField);
-      console.log('update value')
+      newState.charSheet.updateSpecialField(fieldsetId, addableFieldId, special)
       newState.unsavedChanges = true;
       return newState;
     })      
   }
 
-  makeCreateRemoveAddableField = fieldsetId => field => fieldId => { 
+  createRemoveAddableField = fieldsetId => addableFieldId => { 
     this.setState(prevState => {
       let newState = { ...prevState };
-      newState.charData[fieldsetId][field.id] = newState.charData[fieldsetId][field.id].filter(addableField => {
-        console.log(addableField.fieldId)
-        return addableField.fieldId !== fieldId
-      });
-      console.log('newState', newState)
+      newState.charSheet.removeSpecialField(fieldsetId, addableFieldId)
       newState.unsavedChanges = true;
       return newState;
     })  
   }
 
-  makeCreateAddAddableField = fieldsetId => field => newValue => {
+  createAddAddableField = fieldsetId => () => {
     this.setState(prevState => {
       let newState = { ...prevState };
-      newState.charData[fieldsetId][field.id].push(newValue);
+      newState.charSheet.addSpecialField(fieldsetId)
       newState.unsavedChanges = true;
       return newState;
     })
@@ -210,6 +178,9 @@ class CharPage extends React.Component {
             makeCreateSetValue={this.makeCreateSetValue}
             createGetValue={this.createGetValue}
             character={this.state.charSheet.character}
+            createAddAddableField={this.createAddAddableField}
+            createUpdateAddableField={this.createUpdateAddableField}
+            createRemoveAddableField={this.createRemoveAddableField}
           />
         </div>
         <div className="uk-width-1-6">

@@ -1,24 +1,22 @@
 import React from 'react';
 import { AutocompleteField } from './AutocompleteField';
 import './AddableField.css';
-import shortid from 'shortid';
 
 export class AddableField extends React.Component {
   
 
   addField = (event) => {
     event.preventDefault();
-    const newField = {fieldId: shortid.generate()}
-    this.props.addField(newField)
+    this.props.addField()
   }
 
-  createRemoveFieldFunction = fieldId => event => {
+  createRemoveFieldFunction = addableFieldId => event => {
     event.preventDefault();
-    this.props.removeField(fieldId);
+    this.props.removeField(addableFieldId);
   }
 
-  createUpdateValueFunction = fieldId => value => {
-    this.props.updateValue(fieldId, value);
+  createUpdateValueFunction = addableFieldId => value => {
+    this.props.updateValue(addableFieldId, value);
   }
 
   render() {

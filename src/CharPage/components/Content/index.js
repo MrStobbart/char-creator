@@ -14,6 +14,9 @@ export function Content(props) {
             availableValues={props.availableValues}
             createSetValue={props.makeCreateSetValue(fieldset.id)}
             getValue={props.createGetValue(fieldset.id)}
+            createAddAddableField={props.createAddAddableField}
+            createUpdateAddableField={props.createUpdateAddableField}
+            createRemoveAddableField={props.createRemoveAddableField}
           />
         )}
       </form>

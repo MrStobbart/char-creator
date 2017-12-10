@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from './fields/TextField';
 import { NumberField } from './fields/NumberField';
-import {DataField} from './fields/DataField';
+import { DataField } from './fields/DataField';
 import { AddableField } from './fields/AddableField';
 import './Fieldset.css';
 
@@ -30,19 +30,18 @@ export function Fieldset(props) {
           </DataField>
         );
       case 'addable':
-        // return (
-        // <AddableField
-        //   key={field.id}
-        //   values={props.charData[props.fieldset.id][field.id]}
-        //   updateValue={props.createUpdateAddableField(field)}
-        //   removeField={props.createRemoveAddableField(field)}
-        //   addField={props.createAddAddableField(field)}
-        //   field={field}
-        // >
-        //   Addable field
-        // </AddableField>
-        // )  
-        break;
+        return (
+          <AddableField
+            key={field.id}
+            values={props.fieldset.fields[0].selected}
+            addField={props.createAddAddableField(props.fieldset.id)}
+            updateValue={props.createUpdateAddableField(props.fieldset.id)}
+            removeField={props.createRemoveAddableField(props.fieldset.id)}
+            field={field}
+          >
+            Addable field
+          </AddableField>
+        )  
       default:
         return (
           <TextField

@@ -190,22 +190,30 @@
     {
       "id": "edges",
       "title": "Talente",
-      "label": "Talente",
-      "singularLabel": "Talent",
-      "type": "addable",
-      "path": "/data/edges.json",
-      "selected": [],
-      "fields": []
+      "fields": [
+        {
+          "id": "edges",
+          "label": "Talente",
+          "singularLabel": "Talent",
+          "type": "addable",
+          "path": "/data/edges.json",
+          "selected": []
+        }
+      ]
     },
     {
       "id": "hinderances",
       "title": "Handicaps",
-      "label": "Handicaps",
-      "singularLabel": "Handicap",
-      "type": "addable",
-      "path": "/data/hinderances.json",
-      "selected": [],
-      "fields": []
+      "fields": [
+        {
+          "id": "hinderances",
+          "label": "Handicaps",
+          "singularLabel": "Handicap",
+          "type": "addable",
+          "path": "/data/hinderances.json",
+          "selected": []
+        }
+      ]
     },
     {
       "id": "skills",
