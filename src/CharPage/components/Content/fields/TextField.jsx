@@ -1,6 +1,4 @@
 import React from 'react';
-import './TextField.css';
-
 
 export function TextField(props){
   
@@ -8,12 +6,20 @@ export function TextField(props){
     props.updateValue(event.target.value)
   }
 
+  const style = {
+    borderStyle: 'none',
+    borderColor: '#666',
+    borderBottomStyle: 'solid',
+    borderWidth: 1,
+  }
+
   return (
     <div className="">
       <label className="uk-form-label" htmlFor="name">{props.children}</label>
       <div className="uk-form-controls">
         <input
-          className="text-field uk-input uk-form-small"
+          className="uk-input uk-form-small"
+          style={style}
           type="text"
           value={props.value}
           onChange={handleChange}

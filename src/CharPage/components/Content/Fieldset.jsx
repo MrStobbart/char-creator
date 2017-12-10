@@ -3,7 +3,6 @@ import { TextField } from './fields/TextField';
 import { NumberField } from './fields/NumberField';
 import { DataField } from './fields/DataField';
 import { AddableField } from './fields/AddableField';
-import './Fieldset.css';
 
 export function Fieldset(props) {
   const fields = props.fieldset.fields.map(field => {
@@ -56,8 +55,8 @@ export function Fieldset(props) {
   });
 
   return (
-    <fieldset id={props.fieldset.id}>
-      <legend>{props.fieldset.title}</legend>
+    <fieldset id={props.fieldset.id} style={{ padding: '1em 2em 1em', borderWidth: 1 }}>
+      <legend style={{ fontSize: '1.2em' }}>{props.fieldset.title}</legend>
       <div uk-grid="true">
         {fields}
       </div>

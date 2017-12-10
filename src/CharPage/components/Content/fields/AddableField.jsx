@@ -1,6 +1,5 @@
 import React from 'react';
 import { AutocompleteField } from './AutocompleteField';
-import './AddableField.css';
 
 export class AddableField extends React.Component {
   
@@ -33,7 +32,7 @@ export class AddableField extends React.Component {
         <div className="uk-margin">
           {this.props.values.map((field) => 
             <div key={field.fieldId} className="uk-margin-small-bottom" style={{ display: 'flex'}}>
-              <div className="field-remove-button">
+              <div className="field-remove-button" style={{ float: 'left'}}>
                 <button
                   className="uk-icon-button"
                   uk-icon="icon: close; ratio: 1"
@@ -42,7 +41,7 @@ export class AddableField extends React.Component {
                 >
                 </button>
               </div>  
-              <div className="removable-field">
+              <div className="removable-field" style={{ float: 'left', marginLeft: 10 }}>
                 <AutocompleteField
                   placeholder={`Search ${this.props.field.label}`}  
                   selectableGroups={this.props.field.selectableGroups}
