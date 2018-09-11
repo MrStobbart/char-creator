@@ -1,5 +1,5 @@
-import React from 'react';
-import { render } from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 
@@ -9,13 +9,15 @@ import registerServiceWorker from './utils/registerServiceWorker';
 
 import './index.css';
 
-render(
+export default ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <App />
     </ConnectedRouter>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root') as HTMLElement
+  // Alternative would have been the following:
+  // document.getElementById('root')!
 );
 
 registerServiceWorker();
