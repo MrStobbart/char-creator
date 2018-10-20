@@ -1,7 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteCharacter } from '../App/actions';
+import { deleteCharacter } from '../actions';
 import { DeleteCharacterButton } from './components/DeleteCharacterButton/index';
 
 

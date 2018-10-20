@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import CharPageContainer from '../CharPage';
-import Home from '../Home';
-import Navbar from './components/Navbar';
-import CharactersPage from '../Characters';
+import CharPageContainer from './CharPage';
+import Home from './Home';
+import Navbar from './Navbar';
+import CharactersPage from './Characters';
 
 import {
   fetchCharacters,

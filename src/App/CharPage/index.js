@@ -2,13 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
 // Actions
-import { upsertCharacter } from '../App/actions';
+import { upsertCharacter } from '../actions';
 
 // Components
 import { Navigation } from './components/Navigation';
 import { Content } from './components/Content';
-import { InfoPanel }from './components/InfoPanel';
-import CharSheet from '../Rulesets/SavageWorldsFantasy/CharSheet';
+import { InfoPanel } from './components/InfoPanel';
+import Character from '../../models/savageWorldsCharacter';
+import CharSheet from '../../Rulesets/SavageWorldsFantasy/CharSheet';
 
 // The charpage has its own state that will be synced with the redux state on submit. Performance reasons
 class CharPage extends React.Component {
