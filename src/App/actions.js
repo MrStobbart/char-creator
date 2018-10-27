@@ -67,39 +67,6 @@ export function deleteCharacter(characterId) {
   }
 }
 
-
-/**
- * Get char sheet
- */
-export const FETCH_SHEET_REQUEST = 'FETCH_SHEET_REQUEST';
-export const FETCH_SHEET_SUCCESS = 'FETCH_SHEET_SUCCESS';
-export const FETCH_SHEET_FAILURE = 'FETCH_SHEET_FAILURE';
-
-export function fetchSheetRequest() {
-  return { type: FETCH_SHEET_REQUEST };
-}
-export function fetchSheetSuccess(payload) {
-  return { type: FETCH_SHEET_SUCCESS, payload }
-}
-export function fetchSheetFailure(error) {
-  return { type: FETCH_SHEET_FAILURE, error }
-}
-
-export function fetchCharSheet() {
-  return (dispatch, getState) => {
-    dispatch(fetchSheetRequest());
-
-    const endpoint = getState().app.ruleset;
-    return fetchEndpoint(endpoint)
-      .then(payload => {
-        dispatch(fetchSheetSuccess(payload));
-      })
-      .catch(err => {
-        dispatch(fetchSheetFailure(err));
-      });
-  }
-}
-
 /**
  * Get one specific character
  */

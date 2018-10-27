@@ -7,10 +7,8 @@ import Home from './Home';
 import Navbar from './Navbar';
 import CharactersPage from './Characters';
 
-import {
-  fetchCharacters,
-  fetchCharSheet
-} from './actions';
+import { fetchCharacters } from './actions';
+
 
 import './index.css';
 
@@ -49,7 +47,6 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    fetchCharSheet: () => { dispatch(fetchCharSheet()) },
     fetchCharacters: () => { dispatch(fetchCharacters()) },
   }
 }

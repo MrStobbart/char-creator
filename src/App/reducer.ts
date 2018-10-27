@@ -5,9 +5,6 @@ import {
   DELETE_CHARACTER_REQUEST,
   DELETE_CHARACTER_SUCCESS,
   DELETE_CHARACTER_FAILURE,
-  FETCH_SHEET_REQUEST,
-  FETCH_SHEET_SUCCESS,
-  FETCH_SHEET_FAILURE,
   FETCH_CHARACTER_REQUEST,
   FETCH_CHARACTER_SUCCESS,
   FETCH_CHARACTER_FAILURE,
@@ -16,14 +13,29 @@ import {
   UPSERT_CHARACTER_FAILURE,
 } from './actions';
 
-const initialState = {
+import Character from '../models/savageWorldsCharacter';
+
+
+
+export interface AppState{
+  loading: boolean,
+  characters: Character[],
+  ruleset: string
+}
+
+const initialState: AppState = {
   loading: false,
   characters: [],
-  charSheet: undefined,
   ruleset: 'savageworldsfantasy'
 };
 
-export function AppReducer(state = initialState, action) {
+interface Action{
+  type: string,
+  payload: any
+  error: string
+}
+
+export function AppReducer(state = initialState, action: Action) {
   switch (action.type) { 
     case FETCH_CHARACTERS_REQUEST:
       return {
@@ -50,7 +62,7 @@ export function AppReducer(state = initialState, action) {
     case DELETE_CHARACTER_SUCCESS:
       return {
         ...state,
-        characters: state.characters.filter(character => character._id !== action.payload._id),
+        characters: state.characters.filter(character => character.id !== action.payload.id),
         loading: false
       }
     case DELETE_CHARACTER_FAILURE:
@@ -58,23 +70,6 @@ export function AppReducer(state = initialState, action) {
       return {
         ...state,
         loading: false
-      }
-    case FETCH_SHEET_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      }
-    case FETCH_SHEET_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        charSheet: action.payload
-      }
-    case FETCH_SHEET_FAILURE:
-      console.error(action.error)
-      return {
-        ...state,
-        loading: false,
       }
     case FETCH_CHARACTER_REQUEST:
       return {
@@ -100,7 +95,7 @@ export function AppReducer(state = initialState, action) {
     case UPSERT_CHARACTER_SUCCESS:
       
       let newCharacters = [...state.characters];
-      const index = state.characters.findIndex(character => character._id === action.payload._id)
+      const index = state.characters.findIndex(character => character.id === action.payload.id)
 
       if (index === -1) {
         // Inserted
