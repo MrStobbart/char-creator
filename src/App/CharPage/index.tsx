@@ -81,7 +81,7 @@ class CharPage extends React.Component<Props, State> {
   }
 
 
-  updateAddableField = (addableFieldId: string, special) => {
+  updateAddableField = (addableFieldId: string, special: any) => {
     this.setState(prevState => {
       let newState = { ...prevState };
       newState.character.updateSpecialField(addableFieldId, special)
