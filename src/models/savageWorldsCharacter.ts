@@ -3,6 +3,8 @@ import { CharCreationInformation, Modifier, ObjWithId, Fieldset, Edge, Hinderanc
 import { Skill } from './Skill';
 import { Attribute } from './Attribute';
 import { Addable} from './Addable';
+import { Edges} from './Edges';
+import { Qualities} from './Qualities';
 
 export default class SavageWorldsCharacter{
 
@@ -64,16 +66,25 @@ export default class SavageWorldsCharacter{
     this.modifiers.forEach(modifier => {
       this[modifier.changesProperty] = this[modifier.changesProperty] + modifier.value
     });
+
   }
 
-  checkRequirements = (requirements: Requirement[]): boolean => {
-    const requirementsFulfilled = requirements.reduce((sum, requirement) => {
+  // TODO check this
+  checkRequirements = (requirements: Requirement[]): boolean | Requirement[] => {
+    let requirementsFulfilled = true
+    const unmetRequirements = requirements.filter((requirement) => {
       if (requirement.value > this[requirement.propertyId].value) {
-        return false
-      }
-      return sum
-    }, true)
-    return requirementsFulfilled
+        requirementsFulfilled = false
+        return true
+      } 
+      return false
+    })
+
+    if (requirementsFulfilled === true) {
+      return true
+    } else {
+      return unmetRequirements
+    }
   }
 
   // TODO Remove modifier again while calculating skillpoints?
@@ -108,8 +119,8 @@ export default class SavageWorldsCharacter{
 
   addables: Fieldset = addables
   // Idea, make a class for each that handles the updates automatically and have another logical group for the renderer. Then only edges.push()
-  edges: Addable<Edge> = Addable.create<Edge>(this.calculateData)
-  hinderances: Addable<Hinderance> = Addable.create<Hinderance>(this.calculateData)
+  edges: Edges = new Edges(this.calculateData, this.checkRequirements)
+  hinderances: Qualities<Hinderance> = new Qualities<Hinderance>(this.calculateData)
 
   // General information
   generalInformation = generalInformation

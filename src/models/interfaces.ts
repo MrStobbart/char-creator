@@ -5,7 +5,6 @@ export interface CharCreationInformation {
 
 export interface Modifier {
   changesProperty: string
-  createdFromProperty: string
   value: number
 }
 
@@ -36,3 +35,4 @@ export interface Edge extends Quality {
 
 export interface Hinderance extends Quality{
 }
+

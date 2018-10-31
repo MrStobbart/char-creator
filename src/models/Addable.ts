@@ -1,30 +1,33 @@
-import { ObjWithId } from './interfaces';
+import { ObjWithId, Edge, Requirement } from './interfaces';
 
-
-export class Addable<T extends ObjWithId> extends Array<T>{
+/**
+ * Array that will call the function sideEffects when a new item is pushed.
+ */
+export class Addable<T extends ObjWithId> extends Array<T> {
 
   sideEffects: Function = () => { }
 
-  // Because otherwise Addable would have the Array prototype and not the desired Addable prototype
-  private constructor(items?: Array<T>) {
+  constructor(sideEffects: Function, ...items: T[]) {
     super(...items)
+    Object.setPrototypeOf(this, Addable.prototype)
+    this.sideEffects = sideEffects
+    // Prototype of the object can otherwise be lost
   }
 
-  static create<T extends ObjWithId>(sideEffects: Function): Addable<T> {
-    const addable = Object.create(Addable.prototype);
-    addable.sideEffects = sideEffects
-    return addable
-  }
-
-  push(items: T) {
+  /**
+   * @param item Item to push in the addable
+   */
+  push(item: T): number {
+    const newArrayLength = super.push(item)
     if (this.sideEffects) {
       this.sideEffects()
     }
-    
-    return super.push(items)
+    return newArrayLength
   }
 
-  // Is this inefficient
+  /**
+   * @param id Id of object to remove from the addable
+   */
   remove(id: string) {
     const index = this.findIndex(item => item.id === id)
     this.splice(index, 1)
