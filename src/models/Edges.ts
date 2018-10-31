@@ -14,7 +14,7 @@ export class Edges extends Qualities<Edge>{
   }
 
   /**
-   
+   * @throws {RequirementsError} When not all requirements were met
    * @param item Edge to add to the addable
    */
   push(item: Edge): number {

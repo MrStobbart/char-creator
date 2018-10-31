@@ -98,9 +98,29 @@ it('adds modifers and edge when an edge is added ', () => {
 })
 
 
-xit('remove modifers and edge when an edge is removed ', () => {
+it('remove modifers and edge when an edge is removed ', () => {
   const character = new Character();
+  character.smarts.value = 5
+  character.fighting.value = 3
+  character.strength.value = 3
+  character.perception.value = 3
+  try {
+    character.edges.push(edgeWithMetRequirements)
+  } catch (error) {
+    expect(false).toBe(true)
+  }
+  try {
+    character.edges.push(edgeWithUnmetRequirements)
+  } catch (error) {
+    expect(false).toBe(true)
+  }
 
+  expect(character.edges.getModifiers()).toEqual(modifiers)
+  expect(character.edges.length).toBe(2)
+  character.edges.remove('1')
+  character.edges.remove('2')
+  expect(character.edges.length).toBe(0)
+  expect(character.edges.getModifiers()).toEqual([])
 })
 
 xit('adds modifers and hinderance when an hinderance is added ', () => {
