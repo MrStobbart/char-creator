@@ -9,34 +9,30 @@ export class Edges extends Qualities<Edge>{
 
   constructor(sideEffects: Function, checkRequirements: Function, ...items: Edge[]) {
     super(sideEffects, ...items)
-    Object.setPrototypeOf(this, Qualities.prototype)
-    this.sideEffects = sideEffects
+    Object.setPrototypeOf(this, Edges.prototype)
     this.checkRequirements = checkRequirements
   }
 
   /**
-   * @throws {RequirementsError} when one or more requirements were not met
-   * @param edge Edge to add to the addable
+   
+   * @param item Edge to add to the addable
    */
-  push(edge: Edge): number {
-    let fullfillsRequirements = false
+  push(item: Edge): number {
+    let fullfillsRequirements = []
     if (this.checkRequirements) {
-      fullfillsRequirements = this.checkRequirements(edge.requirements)
+      fullfillsRequirements = this.checkRequirements(item.requirements)
     }
 
-    if (fullfillsRequirements) {
-      const newArrayLength = super.push(edge)
-      if (this.sideEffects) {
-        this.sideEffects()
-      }
-      return newArrayLength
+    if (fullfillsRequirements instanceof Array) {
+      throw new RequirementsError('Requirements not met', fullfillsRequirements)  
     }
 
-    // TODO make a proper class for this 
-    throw "Requirements not met";
+    const newArrayLength = super.push(item)
+    // if (this.sideEffects) {
+    //   this.sideEffects()
+    // }
+    return newArrayLength
 
-
-    return this.length
   }
 
 

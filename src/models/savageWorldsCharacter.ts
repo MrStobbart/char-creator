@@ -69,7 +69,11 @@ export default class SavageWorldsCharacter{
 
   }
 
-  // TODO check this
+
+  /**
+   * @param requirements An array of all requirements that have to be met
+   * @returns Either true or an array of all requirements that were not met
+   */
   checkRequirements = (requirements: Requirement[]): boolean | Requirement[] => {
     let requirementsFulfilled = true
     const unmetRequirements = requirements.filter((requirement) => {
@@ -80,11 +84,7 @@ export default class SavageWorldsCharacter{
       return false
     })
 
-    if (requirementsFulfilled === true) {
-      return true
-    } else {
-      return unmetRequirements
-    }
+    return requirementsFulfilled ? true : unmetRequirements
   }
 
   // TODO Remove modifier again while calculating skillpoints?

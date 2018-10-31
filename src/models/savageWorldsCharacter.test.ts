@@ -1,5 +1,5 @@
 import Character from './savageWorldsCharacter'
-import { Modifier, Requirement } from './interfaces'
+import { Modifier, Requirement, Edge } from './interfaces'
 
 it('creates an object', () => {
   const character = new Character();
@@ -68,15 +68,33 @@ it('calculates the requirements correctly', () => {
   character.fighting.value = 2
   character.strength.value = 1
   let characterMeetsReqirements = character.checkRequirements(requirements)
-  expect(characterMeetsReqirements).toBe(false)
+  expect(characterMeetsReqirements).not.toBe(true)
   character.fighting.value = 2
   character.strength.value = 4
   characterMeetsReqirements = character.checkRequirements(requirements)
   expect(characterMeetsReqirements).toBe(true)
 })
 
-xit('adds modifers and edge when an edge is added ', () => {
+it('adds modifers and edge when an edge is added ', () => {
   const character = new Character();
+  character.smarts.value = 5
+  character.fighting.value = 3
+  character.strength.value = 3
+  character.perception.value = 3
+  try {
+    character.edges.push(edgeWithMetRequirements)
+  } catch (error) {
+    expect(false).toBe(true)
+  }
+  try {
+    character.edges.push(edgeWithUnmetRequirements)
+  } catch (error) {
+    expect(false).toBe(true)
+  }
+
+  expect(character.edges.getModifiers()).toEqual(modifiers)
+  expect(character.edges.length).toBe(2)
+
 })
 
 
@@ -105,3 +123,54 @@ xit('merges modifiert correctly', () => {
 xit('calculates the available edge points', () => {
   const character = new Character()
 })
+
+
+const modifiers = [
+  { changesProperty: 'fighting', value: 2 },
+  { changesProperty: 'parry', value: 1 },
+  { changesProperty: 'pace', value: 1 }
+]
+
+const unmetRequirement: Requirement = {
+  propertyId: 'smarts',
+  value: 4
+}
+
+const edgeWithMetRequirements: Edge = {
+  id: '1',
+  modifiers: [
+    modifiers[0],
+    modifiers[1],
+  ],
+  label: 'Label',
+  information: 'information',
+  requirements: [
+    {
+      propertyId: 'fighting',
+      value: 2
+    },
+    {
+      propertyId: 'strength',
+      value: 3
+    }
+  ]
+}
+
+
+const edgeWithUnmetRequirements: Edge = {
+  id: '2',
+  modifiers: [
+    modifiers[2]
+  ],
+  label: 'Label2',
+  information: 'information2',
+  requirements: [
+    unmetRequirement,
+    {
+      propertyId: 'perception',
+      value: 3
+    }
+  ]
+}
+
+

@@ -4,6 +4,7 @@ import { Edge, Quality, Modifier } from './interfaces';
 
 export class Qualities<T extends Quality> extends Addable<T>{
 
+
   getModifiers = (): Modifier[] => {
 
     if (this.length > 0) {
