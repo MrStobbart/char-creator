@@ -4,10 +4,10 @@ import { RequirementsError } from "../Errors/RequirementsError";
 
 let referenceValue = 0
 
-it('creates and array', () => {
+it('creates an object ', () => {
   const edges = new Edges(sideEffects, checkRequirements)
-  expect(edges).toBeInstanceOf(Array)
   expect(edges.sideEffects).toBe(sideEffects)
+  expect(edges).toBeInstanceOf(Edges)
 })
 
 it('throws an RequirementsError when at least one requirement was not met', () => {

@@ -5,7 +5,7 @@ let referenceValue = 0
 
 it('creates and array', () => {
   const addable = new Addable<ObjWithId>(changeReferenceTo1)
-  expect(addable).toBeInstanceOf(Array)
+  // expect(addable).toBeInstanceOf(Array)
   expect(addable.sideEffects).toBe(changeReferenceTo1)
 })
 
@@ -35,6 +35,31 @@ it('removes the right object from the addable when the remove function is called
   addable.remove('2')
   expect(addable.length).toBe(1)
   expect(addable).not.toContain({ id: '2' })
+})
+
+it('allows simple mapping as implement with default js arrays', () => {
+  const addable = new Addable<ObjWithId>(changeReferenceTo1)
+  addable.push({ id: '1' })
+  addable.push({ id: '2' })
+  addable.push({ id: '3' })
+  const mappedAddable = addable.map(item => 'id' + item.id)
+  expect(mappedAddable[0]).toBe('id1')
+  expect(mappedAddable[1]).toBe('id2')
+  expect(mappedAddable[2]).toBe('id3')
+
+})
+
+it('allows the second and third parameter for the mapping function', () => {
+  const addable = new Addable<ObjWithId>(changeReferenceTo1)
+  addable.push({ id: '1' })
+  addable.push({ id: '2' })
+  addable.push({ id: '3' })
+  const mappedAddable = addable.map((item, index, array) => {
+    return `id${item.id}, index${index}, length${array.length}`
+  })
+  expect(mappedAddable[0]).toBe('id1, index0, length3')
+  expect(mappedAddable[1]).toBe('id2, index1, length3')
+  expect(mappedAddable[2]).toBe('id3, index2, length3')
 })
 
 function changeReferenceTo1() {

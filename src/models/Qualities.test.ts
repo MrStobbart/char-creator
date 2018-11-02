@@ -1,9 +1,9 @@
 import { Qualities } from "./Qualities";
 import { Quality } from "./interfaces";
 
-it('creates and array', () => {
+it('creates an object', () => {
   const qualities = new Qualities<Quality>(mockFunction)
-  expect(qualities).toBeInstanceOf(Array)
+  expect(qualities).toBeInstanceOf(Qualities)
 })
 
 it('has the function getModifiers always returns something', () => {
