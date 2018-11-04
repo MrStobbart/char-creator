@@ -3,11 +3,13 @@ export interface CharCreationInformation {
   attributePoints: number
 }
 
+/**
+ * @changesProperty string id of either an attribute or delivered data
+ */
 export interface Modifier {
   changesProperty: string
   value: number
 }
-
 
 export interface Fieldset {
   title: string
@@ -37,3 +39,7 @@ export interface Edge extends Quality{
 export interface Hinderance extends Quality{
 }
 
+export interface DeliveredData extends ObjWithId{
+  label: string
+  value: number
+}

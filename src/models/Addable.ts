@@ -37,7 +37,7 @@ export class Addable<T extends ObjWithId> {
     return this.items.map(callbackFn)
   }
 
-  private update() {
+  protected update() {
     if (this.sideEffects) {
       this.sideEffects()
     }

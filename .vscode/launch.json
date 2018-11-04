@@ -34,8 +34,8 @@
       ],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
-      "console": "externalTerminal",
-      "internalConsoleOptions": "neverOpen"
+      "console":"integratedTerminal",
+      "internalConsoleOptions":"openOnSessionStart"
     }
   ]
 }

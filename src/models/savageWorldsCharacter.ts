@@ -1,72 +1,100 @@
 import * as shortid from 'shortid';
-import { CharCreationInformation, Modifier, ObjWithId, Fieldset, Edge, Hinderance, Requirement } from './interfaces';
+import { CharCreationInformation, Modifier, ObjWithId, Fieldset, Edge, Hinderance, Requirement, DeliveredData } from './interfaces';
 import { Skill } from './Skill';
 import { Attribute } from './Attribute';
 import { Qualities} from './Qualities';
 
 export default class SavageWorldsCharacter{
 
-  
-  equipment: {
-    weapons: []
-    armor: []
-    gear: []
-    money: number
-  }
-
   constructor(json?: any) {
 
     if (json) {
       this.loadCharacterData(json)
     }
-    
-    this.calculateData()
-    this.applyAllModifiers()
+
+    this.init()
+  }
+  
+  // initial calculation
+  init = () => {
+    this.calcAvailableSkillPoints()
+    this.calcAvailableAttributePoints()
+    this.calcDeliveredData()
   }
 
+  
   loadCharacterData = (json: any) => {
     // TODO load the character data from json into the class
   }
 
-  values = ["W4 - 2", "W4", "W6", "W8", "W10", "W12"]
 
-  charCreationInformation: CharCreationInformation = {
-    skillPoints: 50,
-    attributePoints: 10
+
+  /**
+   * This function calculates the remaining skill and attribute points and applies modifiers when parameter set to true.
+   * @param modifiersChanged Lets the function know if the modifiers should be re calculated
+   */
+
+  skillSideEffects = (effectsSkillPoints: boolean = false) => {
+    this.calcDeliveredData()
+    if (effectsSkillPoints) this.calcAvailableSkillPoints()
   }
 
-  private modifiers: Modifier[] = []
-
-
-  calculateData = () => {
+  attributeSideEffects = (effectsAttributePoints: boolean = false) => {
     this.calcDeliveredData()
-    this.calcAvailableSkillPoints()
-    this.calcAvailableAttributePoints()
+    if(effectsAttributePoints) this.calcAvailableAttributePoints()
+  }
+
+  qualitiesSideEffects = () => {
+    this.calculateQualityPoints()
+    this.calcDeliveredData()
   }
 
   calcDeliveredData = () => {
-    this.parry = (this.fighting.value * 2 + 2) / 2 + 2
-    this.toughness = (this.vigor.value * 2 + 2) / 2 + 2
-    this.pace = this.basePace
-    this.charisma = this.baseCharisma
+    const modifiers = this.getAllModifiers()
+
+    const parryModifer = modifiers.reduce((sum, modifier) => modifier.changesProperty === 'parry' ? sum + modifier.value : sum, 0)
+    const toughnessModifer = modifiers.reduce((sum, modifier) => modifier.changesProperty === 'toughness' ? sum + modifier.value : sum, 0)
+    const paceModifer = modifiers.reduce((sum, modifier) => modifier.changesProperty === 'pace' ? sum + modifier.value : sum, 0)
+    const charismaModifer = modifiers.reduce((sum, modifier) => modifier.changesProperty === 'charisma' ? sum + modifier.value : sum, 0)
+
+    this.parry.value = (this.fighting.value * 2 + 2) / 2 + 2 + parryModifer
+    this.toughness.value = (this.vigor.value * 2 + 2) / 2 + 2 + toughnessModifer
+    this.pace.value = this.basePace + paceModifer
+    this.charisma.value = this.baseCharisma + charismaModifer
   }
 
-  addModifer = (modifier: Modifier) => {
-    this.modifiers.push(modifier)
+
+  // TODO Remove modifier again while calculating skillpoints?
+  calcAvailableSkillPoints = () => {
+    this.charCreationInformation.skillPoints = this.skills.order
+      .reduce((sum, skillName) => {
+        const skill: Skill = this[skillName]
+        const attribute = this[skill.attribute]
+        if (skill.calculationType === 'cheapSkill') {
+          return sum - calculateSkillPoints(skill.value, attribute.value, 1)
+        } else {
+          return sum - calculateSkillPoints(skill.value, attribute.value, 2)
+        }
+      }, 50)
   }
 
-  removeModifier = (modifierToRemove: Modifier) => {
-    this[modifierToRemove.changesProperty] = this[modifierToRemove.changesProperty] - modifierToRemove.value
-    this.modifiers = this.modifiers.filter(modifier => modifierToRemove !== modifier)
+
+  calcAvailableAttributePoints = () => {
+    this.charCreationInformation.attributePoints = this.attributes.order.reduce((sum, attribute) => sum - this[attribute].value, 10)
   }
 
-  applyAllModifiers = () => {
-    this.modifiers.forEach(modifier => {
-      this[modifier.changesProperty] = this[modifier.changesProperty] + modifier.value
-    });
-
+  calculateQualityPoints = () => {
+    // TODO implement this
   }
 
+
+  private appliedModifiers: Modifier[] = []
+  
+  getAllModifiers = (): Modifier[] => {
+    const edgeModifiers = this.edges.getModifiers()
+    const hinderanceModifiers = this.hinderances.getModifiers()
+    return edgeModifiers.concat(hinderanceModifiers)
+  }
 
   /**
    * @param requirements An array of all requirements that have to be met
@@ -78,36 +106,21 @@ export default class SavageWorldsCharacter{
       if (requirement.value > this[requirement.propertyId].value) {
         requirementsFulfilled = false
         return true
-      } 
+      }
       return false
     })
 
     return requirementsFulfilled ? [] : unmetRequirements
   }
 
-  // TODO Remove modifier again while calculating skillpoints?
-  calcAvailableSkillPoints = () => {
-    this.charCreationInformation.skillPoints = this.skills.order
-      .reduce((sum, skillName) => {
-        const skill: Skill = this[skillName]
-        const skillValueWithoutModifiers = this.modifiers.reduce((sum, modifier) => {
-          if (modifier.changesProperty === skillName) {
-            return sum - modifier.value
-          }
-          return sum
-        }, skill.value)
-        const attribute = this[skill.attribute]
-        if (skill.calculationType === 'cheapSkill') {
-          return sum - calculateSkillPoints(skillValueWithoutModifiers, attribute.value, 1)
-        } else {
-          return sum - calculateSkillPoints(skillValueWithoutModifiers, attribute.value, 2)
-        }
-      }, 50)
+
+  values = ["W4 - 2", "W4", "W6", "W8", "W10", "W12"]
+
+  charCreationInformation: CharCreationInformation = {
+    skillPoints: 50,
+    attributePoints: 10
   }
 
-  calcAvailableAttributePoints = () => {
-    this.charCreationInformation.attributePoints = this.attributes.order.reduce((sum, attribute) => sum - this[attribute].value, 10)
-  }
 
   fieldsets: string[] = fieldsets
 
@@ -115,13 +128,13 @@ export default class SavageWorldsCharacter{
   label: string = 'A'
   availableLevels: string[] = ['A', 'F', 'V', 'H']
 
-  addables: Fieldset = addables
+  qualities: Fieldset = qualitiesFieldset
   // Idea, make a class for each that handles the updates automatically and have another logical group for the renderer. Then only edges.push()
-  edges: Qualities<Edge> = new Qualities<Edge>(this.calculateData)
-  hinderances: Qualities<Hinderance> = new Qualities<Hinderance>(this.calculateData)
+  edges: Qualities<Edge> = new Qualities<Edge>(this.qualitiesSideEffects)
+  hinderances: Qualities<Hinderance> = new Qualities<Hinderance>(this.qualitiesSideEffects)
 
   // General information
-  generalInformation = generalInformation
+  generalInformation = generalInformationFieldset
   name: string = ''
   family: string = ''
   placeOfBirth: string = ''
@@ -141,64 +154,70 @@ export default class SavageWorldsCharacter{
   otherInformation: string = ''
 
   // Delivered data
-  deliveredData: Fieldset = deliveredData
+  deliveredData: Fieldset = deliveredDataFieldset
   private baseCharisma = 0
   private basePace = 0
-  parry: number = 0
-  charisma: number = 0
-  toughness: number = 0
-  pace: number = 0
+  parry: DeliveredData = { id: 'parry', label: 'Parade', value: 0 }
+  charisma: DeliveredData = { id: 'charisma', label: 'Charisma', value: 0 }
+  toughness: DeliveredData = { id: 'toughness', label: 'Robustheit', value: 0 }
+  pace: DeliveredData = { id: 'pace', label: 'Geschwindigkeit', value: 0 }
 
   // Attributes
-  attributes: Fieldset = attributes
-  agility: Attribute = new Attribute('Geschicklichkeit', this.calculateData)
-  smarts: Attribute = new Attribute('Verstand', this.calculateData)
-  spirit: Attribute = new Attribute('Willenskraft', this.calculateData)
-  vigor: Attribute = new Attribute('Konstitution', this.calculateData)
-  strength: Attribute = new Attribute('Stärke', this.calculateData)
+  attributes: Fieldset = attributesFieldset
+  agility: Attribute = new Attribute('Geschicklichkeit', this.attributeSideEffects)
+  smarts: Attribute = new Attribute('Verstand', this.attributeSideEffects)
+  spirit: Attribute = new Attribute('Willenskraft', this.attributeSideEffects)
+  vigor: Attribute = new Attribute('Konstitution', this.attributeSideEffects)
+  strength: Attribute = new Attribute('Stärke', this.attributeSideEffects)
 
   // Skills
-  skills: Fieldset = skills
+  skills: Fieldset = skillsFieldset
   // Combat skills
-  fighting: Skill = new Skill('Kämpfen', 'agility', this.calculateData)
-  schooting: Skill = new Skill('Schießen', 'agility', this.calculateData)
-  throwing: Skill = new Skill('Werfen', 'agility', this.calculateData)
+  fighting: Skill = new Skill('Kämpfen', 'agility', this.skillSideEffects)
+  schooting: Skill = new Skill('Schießen', 'agility', this.skillSideEffects)
+  throwing: Skill = new Skill('Werfen', 'agility', this.skillSideEffects)
 
   // Body skills
-  fastHands: Skill = new Skill('Fingerfertigkeit', 'agility', this.calculateData)
-  stealth: Skill = new Skill('Heimlichkeit', 'agility', this.calculateData)
-  climbing: Skill = new Skill('Klettern', 'strength', this.calculateData, true)
-  bodyControl: Skill = new Skill('Körperbeherschung', 'agility', this.calculateData)
-  crafting: Skill = new Skill('Handwerk', 'agility', this.calculateData, true)   // TODO mehrere Handwerke möglich
-  riding: Skill = new Skill('Reiten', 'agility', this.calculateData, true)
-  driving: Skill = new Skill('Fahrzeuge', 'agility', this.calculateData, true)
-  lockpicking: Skill = new Skill('Schlösserknacken', 'agility', this.calculateData)
-  swimming: Skill = new Skill('Schwimmen', 'strength', this.calculateData, true)
-  perception: Skill = new Skill('Wahrnehmen', 'smarts', this.calculateData)
+  fastHands: Skill = new Skill('Fingerfertigkeit', 'agility', this.skillSideEffects)
+  stealth: Skill = new Skill('Heimlichkeit', 'agility', this.skillSideEffects)
+  climbing: Skill = new Skill('Klettern', 'strength', this.skillSideEffects, true)
+  bodyControl: Skill = new Skill('Körperbeherschung', 'agility', this.skillSideEffects)
+  crafting: Skill = new Skill('Handwerk', 'agility', this.skillSideEffects, true)   // TODO mehrere Handwerke möglich
+  riding: Skill = new Skill('Reiten', 'agility', this.skillSideEffects, true)
+  driving: Skill = new Skill('Fahrzeuge', 'agility', this.skillSideEffects, true)
+  lockpicking: Skill = new Skill('Schlösserknacken', 'agility', this.skillSideEffects)
+  swimming: Skill = new Skill('Schwimmen', 'strength', this.skillSideEffects, true)
+  perception: Skill = new Skill('Wahrnehmen', 'smarts', this.skillSideEffects)
 
   // Social skills
-  seduction: Skill = new Skill('Betören', 'smarts', this.calculateData, true)
-  intimidation: Skill = new Skill('Einschüchtern', 'spirit', this.calculateData, true)
-  etiquette: Skill = new Skill('Etikette', 'smarts', this.calculateData, true)
-  empathy: Skill = new Skill('Menschenkenntnis', 'smarts', this.calculateData)
-  persuade: Skill = new Skill('Überreden', 'smarts', this.calculateData)
-  streetwise: Skill = new Skill('Umhören', 'smarts', this.calculateData)
+  seduction: Skill = new Skill('Betören', 'smarts', this.skillSideEffects, true)
+  intimidation: Skill = new Skill('Einschüchtern', 'spirit', this.skillSideEffects, true)
+  etiquette: Skill = new Skill('Etikette', 'smarts', this.skillSideEffects, true)
+  empathy: Skill = new Skill('Menschenkenntnis', 'smarts', this.skillSideEffects)
+  persuade: Skill = new Skill('Überreden', 'smarts', this.skillSideEffects)
+  streetwise: Skill = new Skill('Umhören', 'smarts', this.skillSideEffects)
 
   // Nature skills
-  tracking: Skill = new Skill('Fährtensuche', 'smarts', this.calculateData)
-  natureKnowledge: Skill = new Skill('Naturkunde', 'smarts', this.calculateData)
-  surival: Skill = new Skill('Wildnisleben', 'spirit', this.calculateData)
+  tracking: Skill = new Skill('Fährtensuche', 'smarts', this.skillSideEffects)
+  natureKnowledge: Skill = new Skill('Naturkunde', 'smarts', this.skillSideEffects)
+  surival: Skill = new Skill('Wildnisleben', 'spirit', this.skillSideEffects)
 
   // Knowledge skills
-  alchemy: Skill = new Skill('Alchemie', 'smarts', this.calculateData)
-  gambling: Skill = new Skill('Glücksspiel', 'smarts', this.calculateData, true)
-  faith: Skill = new Skill('Glaube', 'spirit', this.calculateData)  // TODO nur wenn arkaner Hintergrund(Wunder) gewählt wurde
-  healing: Skill = new Skill('Heilkunde', 'smarts', this.calculateData)
-  arcaneKnowledge: Skill = new Skill('Magiekunde', 'smarts', this.calculateData)
-  language: Skill = new Skill('Sprache', 'smarts', this.calculateData, true)  // TODO mehrere Sprachen möglich
-  knowledge: Skill = new Skill('Wissen', 'smarts', this.calculateData, true) // TODO mehrere Wissensfertigkeiten möglich
-  spellcasting: Skill = new Skill('Zaubern', 'smarts', this.calculateData)  // Nur wenn arkaner Hintergrund(Magie) gewählt wurde
+  alchemy: Skill = new Skill('Alchemie', 'smarts', this.skillSideEffects)
+  gambling: Skill = new Skill('Glücksspiel', 'smarts', this.skillSideEffects, true)
+  faith: Skill = new Skill('Glaube', 'spirit', this.skillSideEffects)  // TODO nur wenn arkaner Hintergrund(Wunder) gewählt wurde
+  healing: Skill = new Skill('Heilkunde', 'smarts', this.skillSideEffects)
+  arcaneKnowledge: Skill = new Skill('Magiekunde', 'smarts', this.skillSideEffects)
+  language: Skill = new Skill('Sprache', 'smarts', this.skillSideEffects, true)  // TODO mehrere Sprachen möglich
+  knowledge: Skill = new Skill('Wissen', 'smarts', this.skillSideEffects, true) // TODO mehrere Wissensfertigkeiten möglich
+  spellcasting: Skill = new Skill('Zaubern', 'smarts', this.skillSideEffects)  // Nur wenn arkaner Hintergrund(Magie) gewählt wurde
 
+  equipment: {
+    weapons: []
+    armor: []
+    gear: []
+    money: number
+  }
 
 }
 
@@ -214,11 +233,11 @@ const fieldsets = [
   'generalInformation',
   'attributes',
   'deliveredData',
-  'addables',
+  'qualities',
   'skills',
 ]
 
-const generalInformation = {
+const generalInformationFieldset = {
   title: 'Allgemeine Informationen',
   order: [
     'name',
@@ -241,7 +260,7 @@ const generalInformation = {
   ]
 }
 
-const skills = {
+const skillsFieldset = {
   title: 'Fähigkeiten',
   order: [
     'fighting',
@@ -277,7 +296,7 @@ const skills = {
   ]
 }
 
-const attributes = {
+const attributesFieldset = {
   title: 'Attribute',
   order: [
     'agility',
@@ -288,7 +307,7 @@ const attributes = {
   ]
 }
 
-const deliveredData = {
+const deliveredDataFieldset = {
   title: 'Abgeleitete Werte',
   order: [
     'parry',
@@ -298,7 +317,7 @@ const deliveredData = {
   ]
 }
 
-const addables = {
+const qualitiesFieldset = {
   title: 'Talente und Handicaps',
   order: [
     'edges',

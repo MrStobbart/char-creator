@@ -1,5 +1,5 @@
 import Character from './savageWorldsCharacter'
-import { Modifier, Requirement, Edge } from './interfaces'
+import { Requirement, Edge, Hinderance, Modifier } from './interfaces'
 
 it('creates an object', () => {
   const character = new Character();
@@ -8,18 +8,18 @@ it('creates an object', () => {
 
 it('calculates the parry correctly', () => {
   const character = new Character();
-  expect(character.parry).toBe(3)
+  expect(character.parry.value).toBe(3)
 
   character.fighting.value = 2
-  expect(character.parry).toBe(5)
+  expect(character.parry.value).toBe(5)
 })
 
 it('calculates the toughness correctly', () => {
   const character = new Character();
-  expect(character.toughness).toBe(4)
+  expect(character.toughness.value).toBe(4)
 
   character.vigor.value = 3
-  expect(character.toughness).toBe(6)
+  expect(character.toughness.value).toBe(6)
 })
 
 it('calculates the available skillpoints', () => {
@@ -81,16 +81,9 @@ it('adds modifers and edge when an edge is added ', () => {
   character.fighting.value = 3
   character.strength.value = 3
   character.perception.value = 3
-  try {
-    character.edges.push(edgeWithMetRequirements)
-  } catch (error) {
-    expect(false).toBe(true)
-  }
-  try {
-    character.edges.push(edgeWithUnmetRequirements)
-  } catch (error) {
-    expect(false).toBe(true)
-  }
+
+  character.edges.push(edgeWithMetRequirements)
+  character.edges.push(edgeWithUnmetRequirements)
 
   expect(character.edges.getModifiers()).toEqual(modifiers)
   expect(character.edges.length).toBe(2)
@@ -115,6 +108,27 @@ it('remove modifers and edge when an edge is removed ', () => {
   expect(character.edges.getModifiers()).toEqual([])
 })
 
+
+it('adds modifers and hinderance when an hinderance is added ', () => {
+  const character = new Character();
+  character.hinderances.push(hinderance)
+  expect(character.toughness.value).toBe(6)
+  expect(character.parry.value).toBe(4)
+  expect(character.pace.value).toBe(1)
+})
+
+it('remove modifers and hinderance when an hinderance is removed ', () => {
+  const character = new Character();
+  character.hinderances.push(hinderance)
+  expect(character.toughness.value).toBe(6)
+  expect(character.parry.value).toBe(4)
+  expect(character.pace.value).toBe(1)
+  character.hinderances.remove('hinderance')
+  expect(character.toughness.value).toBe(4)
+  expect(character.parry.value).toBe(3)
+  expect(character.pace.value).toBe(0)
+})
+
 xit('adds modifers and hinderance when an hinderance is added ', () => {
   const character = new Character();
 })
@@ -128,17 +142,13 @@ xit('applies modifiers on the character', () => {
   const character = new Character()
 })
 
-xit('merges modifiert correctly', () => {
-  const character = new Character()
-})
-
 xit('calculates the available edge points', () => {
   const character = new Character()
 })
 
 
-const modifiers = [
-  { changesProperty: 'fighting', value: 2 },
+const modifiers: Modifier[] = [
+  { changesProperty: 'toughness', value: 2 },
   { changesProperty: 'parry', value: 1 },
   { changesProperty: 'pace', value: 1 }
 ]
@@ -168,7 +178,6 @@ const edgeWithMetRequirements: Edge = {
   ]
 }
 
-
 const edgeWithUnmetRequirements: Edge = {
   id: '2',
   modifiers: [
@@ -183,6 +192,15 @@ const edgeWithUnmetRequirements: Edge = {
       value: 3
     }
   ]
+}
+
+const hinderance: Hinderance = {
+  id: 'hinderance',
+  label: 'Hinderance',
+  information: 'Lorem Ipsum',
+  modifiers: modifiers,
+  requirements: []
+
 }
 
 

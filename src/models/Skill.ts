@@ -20,6 +20,11 @@ export class Skill {
   }
   set value(value: number) {
     this._value = value
+    this.sideEffects(true)
+  }
+
+  setValueFromModifier(value: number) {
+    this._value = value
     this.sideEffects()
   }
 }
