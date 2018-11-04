@@ -82,7 +82,6 @@ export default class SavageWorldsCharacter{
       return false
     })
 
-    console.log('unmetRequirements', unmetRequirements, requirements)
     return requirementsFulfilled ? [] : unmetRequirements
   }
 

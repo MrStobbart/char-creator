@@ -4,20 +4,30 @@ import { Quality, Requirement, Edge } from "./interfaces";
 let referenceValue = 0
 
 it('creates an object', () => {
-  const qualities = new Qualities<Quality>(mockFunction)
+  const qualities = new Qualities<Quality>(sideEffects)
   expect(qualities).toBeInstanceOf(Qualities)
-  expect(qualities.sideEffects).toBe(mockFunction)
+  expect(qualities.sideEffects).toBe(sideEffects)
+})
+
+it('calls the side effects function when an item is pushed into it', () => {
+
+  const addable = new Qualities<Quality>(sideEffects)
+  const addable2 = new Qualities<Quality>(sideEffects2)
+  addable.push(quality1)
+  expect(referenceValue).toBe(1)
+  addable2.push(quality2)
+  expect(referenceValue).toBe(2)
 })
 
 it('has the function getModifiers always returns something', () => {
-  const qualities = new Qualities<Quality>(mockFunction)
+  const qualities = new Qualities<Quality>(sideEffects)
   expect(qualities.getModifiers()).toEqual([])
   qualities.push(quality1)
   expect(qualities.getModifiers()).toEqual([])
 })
 
 it('has the function getModifiers returns an array of all modifiers', () => {
-  const qualities = new Qualities<Quality>(mockFunction)
+  const qualities = new Qualities<Quality>(sideEffects)
   qualities.push(quality1)
   qualities.push(quality2)
   qualities.push(quality3)
@@ -39,6 +49,10 @@ it('returns all unmet requirements', () => {
 
 function sideEffects() {
   referenceValue = 1
+}
+
+function sideEffects2() {
+  referenceValue = 2
 }
 
 function checkRequirements(requirements: Requirement[]) {
@@ -91,11 +105,6 @@ const edgeWithUnmetRequirements: Edge = {
   ]
 }
 
-
-
-
-function mockFunction() {
-}
 
 const modifiers = [
   { changesProperty: 'fighting', value: 2 },
