@@ -67,12 +67,12 @@ it('calculates the requirements correctly', () => {
   
   character.fighting.value = 2
   character.strength.value = 1
-  let characterMeetsReqirements = character.checkRequirements(requirements)
-  expect(characterMeetsReqirements).not.toBe(true)
+  let unmetRequirements = character.checkRequirements(requirements)
+  expect(unmetRequirements.length).toBe(1)
   character.fighting.value = 2
   character.strength.value = 4
-  characterMeetsReqirements = character.checkRequirements(requirements)
-  expect(characterMeetsReqirements).toBe(true)
+  unmetRequirements = character.checkRequirements(requirements)
+  expect(unmetRequirements.length).toBe(0)
 })
 
 it('adds modifers and edge when an edge is added ', () => {
@@ -104,16 +104,8 @@ it('remove modifers and edge when an edge is removed ', () => {
   character.fighting.value = 3
   character.strength.value = 3
   character.perception.value = 3
-  try {
-    character.edges.push(edgeWithMetRequirements)
-  } catch (error) {
-    expect(false).toBe(true)
-  }
-  try {
-    character.edges.push(edgeWithUnmetRequirements)
-  } catch (error) {
-    expect(false).toBe(true)
-  }
+  character.edges.push(edgeWithMetRequirements)
+  character.edges.push(edgeWithUnmetRequirements)
 
   expect(character.edges.getModifiers()).toEqual(modifiers)
   expect(character.edges.length).toBe(2)

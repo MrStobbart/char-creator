@@ -5,20 +5,19 @@ import { ObjWithId, Edge, Requirement } from './interfaces';
  */
 export class Addable<T extends ObjWithId> {
 
-  private items: T[] = []
+  protected items: T[] = []
   length: number = this.items.length
   sideEffects: Function = () => { }
 
   constructor(sideEffects: Function, ...items: T[]) {
-    // this.array.push(...items)
+    this.items.push(...items)
     this.sideEffects = sideEffects
-    // Prototype of the object can otherwise be lost
   }
 
   /**
    * @param item Item to push in the addable
    */
-  push(item: T): number {
+  push(item: T): any {
     const newArrayLength = this.items.push(item)
     this.update()
     return newArrayLength

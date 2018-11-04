@@ -5,7 +5,7 @@ let referenceValue = 0
 
 it('creates and array', () => {
   const addable = new Addable<ObjWithId>(changeReferenceTo1)
-  // expect(addable).toBeInstanceOf(Array)
+  expect(addable).toBeInstanceOf(Addable)
   expect(addable.sideEffects).toBe(changeReferenceTo1)
 })
 

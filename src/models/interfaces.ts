@@ -22,6 +22,7 @@ export interface Quality extends ObjWithId{
   label: string
   information: string
   modifiers: Modifier[]
+  requirements: Requirement[]
 }
 
 export interface Requirement{
@@ -29,8 +30,8 @@ export interface Requirement{
   value: number
 }
 
-export interface Edge extends Quality {
-  requirements: Requirement[]
+export interface Edge extends Quality{
+
 }
 
 export interface Hinderance extends Quality{

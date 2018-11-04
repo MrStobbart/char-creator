@@ -1,9 +1,12 @@
 import { Qualities } from "./Qualities";
-import { Quality } from "./interfaces";
+import { Quality, Requirement, Edge } from "./interfaces";
+
+let referenceValue = 0
 
 it('creates an object', () => {
   const qualities = new Qualities<Quality>(mockFunction)
   expect(qualities).toBeInstanceOf(Qualities)
+  expect(qualities.sideEffects).toBe(mockFunction)
 })
 
 it('has the function getModifiers always returns something', () => {
@@ -21,6 +24,75 @@ it('has the function getModifiers returns an array of all modifiers', () => {
   expect(qualities.getModifiers()).toEqual(modifiers)
 })
 
+it('returns all unmet requirements', () => {
+  const edges = new Qualities<Edge>(sideEffects, checkRequirements)
+
+  const unmetRequirements = edges.push(edgeWithMetRequirements)
+  expect(unmetRequirements.length).toBe(0)
+
+  const unmetRequirements2 = edges.push(edgeWithUnmetRequirements)
+  expect(unmetRequirements2.length).toBe(1)
+  expect(unmetRequirements2).toEqual([unmetRequirement])
+
+})
+
+
+function sideEffects() {
+  referenceValue = 1
+}
+
+function checkRequirements(requirements: Requirement[]) {
+  let requirementsFulfilled = true
+  const unmetRequirements = requirements.filter((requirement) => {
+    if (requirement.value > 3) {
+      requirementsFulfilled = false
+      return true
+    }
+    return false
+  })
+
+  return requirementsFulfilled ? true : unmetRequirements
+}
+
+const edgeWithMetRequirements: Edge = {
+  id: '1',
+  modifiers: [],
+  label: 'Label',
+  information: 'information',
+  requirements: [
+    {
+      propertyId: 'fighting',
+      value: 2
+    },
+    {
+      propertyId: 'strength',
+      value: 3
+    }
+  ]
+}
+
+
+const unmetRequirement: Requirement = {
+  propertyId: 'smarts',
+  value: 4
+}
+
+const edgeWithUnmetRequirements: Edge = {
+  id: '2',
+  modifiers: [],
+  label: 'Label2',
+  information: 'information2',
+  requirements: [
+    unmetRequirement,
+    {
+      propertyId: 'perception',
+      value: 3
+    }
+  ]
+}
+
+
+
 
 function mockFunction() {
 }
@@ -35,14 +107,16 @@ const quality1: Quality = {
   id: '1',
   label: 'test',
   information: 'test',
-  modifiers: []
+  modifiers: [],
+  requirements: []
 }
 
 const quality2: Quality = {
   id: '2',
   label: 'test',
   information: 'test',
-  modifiers: [modifiers[0]]
+  modifiers: [modifiers[0]],
+  requirements: []
 }
 const quality3: Quality = {
   id: '3',
@@ -51,6 +125,7 @@ const quality3: Quality = {
   modifiers: [
     modifiers[1],
     modifiers[2],
-  ]
+  ],
+  requirements: []
 }
 
