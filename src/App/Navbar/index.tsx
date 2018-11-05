@@ -1,8 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-
-export default function Navbar(props) {
+export interface Props{
+  
+}
+export default function Navbar(props: Props) {
   
   return (
     <div>

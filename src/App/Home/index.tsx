@@ -1,6 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 
-export default function Home(props) {
+export interface Props{
+
+}
+export default function Home(props: Props) {
   return (
     <div>
       <div className="uk-card uk-card-body uk-card-default uk-width-2-3 uk-align-center">

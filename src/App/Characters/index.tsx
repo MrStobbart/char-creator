@@ -2,24 +2,29 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteCharacter } from '../actions';
-import { DeleteCharacterButton } from './components/DeleteCharacterButton/index';
+import { DeleteCharacterButton } from './DeleteCharacterButton';
+import SavageWorldsCharacter from '../../models/savageWorldsCharacter';
+import { Store } from '../../rootReducer';
 
+export interface Props{
+  characters: SavageWorldsCharacter[]
+  deleteCharacter: (characterId: string) => {} 
+}
 
-
-class CharactersPage extends React.Component{
+class CharactersPage extends React.Component<Props>{
 
   render() {
     return (
       <div uk-grid="true">
         {this.props.characters.map(character => (
-          <div className="uk-width-1-6" key={character._id}>
-            <Link to={`/charpage/${character._id}`} className="uk-position-z-index">
+          <div className="uk-width-1-6" key={character.id}>
+            <Link to={`/charpage/${character.id}`} className="uk-position-z-index">
               <div
                 className="uk-card uk-card-body uk-card-default uk-card-hover">
                 <div className="uk-card-badge">
-                  <DeleteCharacterButton characterId={character._id} deleteCharacter={this.props.deleteCharacter}/> 
+                  <DeleteCharacterButton characterId={character.id} deleteCharacter={this.props.deleteCharacter}/> 
                 </div>
-                <h4>{character.generalInformation.name !== '' ? character.generalInformation.name : 'Namenlos'}</h4>
+                <h4>{character.name !== '' ? character.name : 'Namenlos'}</h4>
                 <div>Some basic informations</div>
               </div>
             </Link>
@@ -45,14 +50,14 @@ class CharactersPage extends React.Component{
  */
 export default connect(mapStateToProps, mapDispatchToProps)(CharactersPage)
 
-function mapStateToProps(state) {
+function mapStateToProps(state: Store) {
   return {
     characters: state.app.characters
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Function) {
   return {
-    deleteCharacter: characterId => {dispatch(deleteCharacter(characterId))},
+    deleteCharacter: (characterId: string) => {dispatch(deleteCharacter(characterId))},
   }
 }

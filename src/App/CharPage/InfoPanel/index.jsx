@@ -2,9 +2,6 @@ import React from 'react';
 
 import { DisplayField } from './DisplayField';
 
-export interface Props{
-  
-}
 
 export function InfoPanel(props) {
   return (
