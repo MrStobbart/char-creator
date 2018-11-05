@@ -3,6 +3,15 @@ export interface CharCreationInformation {
   attributePoints: number
 }
 
+export interface ObjWithId {
+  id: string
+}
+
+export interface NumberedProperty extends ObjWithId{
+  label: string
+  value: number
+}
+
 /**
  * @changesProperty string id of delivered data
  */
@@ -17,9 +26,6 @@ export interface Fieldset {
   order: string[]
 }
 
-export interface ObjWithId {
-  id: string
-}
 
 export interface Quality extends ObjWithId{
   label: string
@@ -40,7 +46,5 @@ export interface Edge extends Quality{
 export interface Hinderance extends Quality{
 }
 
-export interface DeliveredData extends ObjWithId{
-  label: string
-  value: number
+export interface DeliveredData extends NumberedProperty{
 }

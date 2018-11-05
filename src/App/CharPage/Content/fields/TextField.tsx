@@ -1,12 +1,19 @@
-import React from 'react';
+import * as React from 'react';
+import { CSSProperties, ChangeEvent } from 'react';
 
-export function TextField(props){
+export interface TextFieldProps{
+  children: string
+  value: number
+  updateValue: (value: string) => {}
+}
+
+export function TextField(props: TextFieldProps){
   
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     props.updateValue(event.target.value)
   }
 
-  const style = {
+  const style: CSSProperties = {
     borderStyle: 'none',
     borderColor: '#666',
     borderBottomStyle: 'solid',

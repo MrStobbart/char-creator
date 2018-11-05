@@ -1,9 +1,18 @@
-import React from 'react';
-import Autosuggest from 'react-autosuggest';
+import * as React from 'react';
+import * as Autosuggest from 'react-autosuggest';
 import './AutocompleteField.css';
 
-export class AutocompleteField extends React.Component {
-  constructor(props) {
+export interface AutocompleteFieldProps extends Autosuggest.AutosuggestProps<string>{
+  
+}
+
+interface State{
+  value: string
+  suggestions: string[]
+}
+
+export class AutocompleteField extends React.Component<AutocompleteFieldProps, State> {
+  constructor(props: AutocompleteFieldProps) {
     super(props);
 
     this.state = {

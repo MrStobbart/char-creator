@@ -1,7 +1,11 @@
 /* eslint no-eval: 0 */
-import React from 'react';
+import * as React from 'react';
 
-export function DataField (props) {
+export interface DataFieldProps{
+  children: string
+  value: number
+}
+export function DataField (props: DataFieldProps) {
 
     return (
       <div className="">

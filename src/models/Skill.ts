@@ -1,15 +1,20 @@
-export class Skill {
+import { NumberedProperty } from './../interfaces';
 
-  constructor(label: string, attribute: string, sideEffects: Function, cheapSkill?: boolean) {
+export class Skill implements NumberedProperty {
+
+  id: string
+  label: string
+  attribute: string
+  calculationType: string
+  
+  constructor(id: string, label: string, attribute: string, sideEffects: Function, cheapSkill?: boolean) {
+    this.id = id
     this.label = label
     this.attribute = attribute
     this.sideEffects = sideEffects
     this.calculationType = cheapSkill ? 'cheapSkill' : 'skill'
     this.attribute
   }
-  label: string
-  attribute: string
-  calculationType: string
   
   // TODO Check if this is badly inperformant
   sideEffects: Function = () => { }

@@ -85,6 +85,7 @@ export default class SavageWorldsCharacter{
 
   calculateQualityPoints = () => {
     // TODO implement this
+
   }
 
 
@@ -164,53 +165,53 @@ export default class SavageWorldsCharacter{
 
   // Attributes
   attributes: Fieldset = attributesFieldset
-  agility: Attribute = new Attribute('Geschicklichkeit', this.attributeSideEffects)
-  smarts: Attribute = new Attribute('Verstand', this.attributeSideEffects)
-  spirit: Attribute = new Attribute('Willenskraft', this.attributeSideEffects)
-  vigor: Attribute = new Attribute('Konstitution', this.attributeSideEffects)
-  strength: Attribute = new Attribute('Stärke', this.attributeSideEffects)
+  agility: Attribute = new Attribute('agility', 'Geschicklichkeit', this.attributeSideEffects)
+  smarts: Attribute = new Attribute('smarts', 'Verstand', this.attributeSideEffects)
+  spirit: Attribute = new Attribute('spirit', 'Willenskraft', this.attributeSideEffects)
+  vigor: Attribute = new Attribute('vigor', 'Konstitution', this.attributeSideEffects)
+  strength: Attribute = new Attribute('strength', 'Stärke', this.attributeSideEffects)
 
   // Skills
   skills: Fieldset = skillsFieldset
   // Combat skills
-  fighting: Skill = new Skill('Kämpfen', 'agility', this.skillSideEffects)
-  schooting: Skill = new Skill('Schießen', 'agility', this.skillSideEffects)
-  throwing: Skill = new Skill('Werfen', 'agility', this.skillSideEffects)
+  fighting: Skill = new Skill('fighting', 'Kämpfen', 'agility', this.skillSideEffects)
+  schooting: Skill = new Skill('schooting', 'Schießen', 'agility', this.skillSideEffects)
+  throwing: Skill = new Skill('throwing', 'Werfen', 'agility', this.skillSideEffects)
 
   // Body skills
-  fastHands: Skill = new Skill('Fingerfertigkeit', 'agility', this.skillSideEffects)
-  stealth: Skill = new Skill('Heimlichkeit', 'agility', this.skillSideEffects)
-  climbing: Skill = new Skill('Klettern', 'strength', this.skillSideEffects, true)
-  bodyControl: Skill = new Skill('Körperbeherschung', 'agility', this.skillSideEffects)
-  crafting: Skill = new Skill('Handwerk', 'agility', this.skillSideEffects, true)   // TODO mehrere Handwerke möglich
-  riding: Skill = new Skill('Reiten', 'agility', this.skillSideEffects, true)
-  driving: Skill = new Skill('Fahrzeuge', 'agility', this.skillSideEffects, true)
-  lockpicking: Skill = new Skill('Schlösserknacken', 'agility', this.skillSideEffects)
-  swimming: Skill = new Skill('Schwimmen', 'strength', this.skillSideEffects, true)
-  perception: Skill = new Skill('Wahrnehmen', 'smarts', this.skillSideEffects)
+  fastHands: Skill = new Skill('fastHands', 'Fingerfertigkeit', 'agility', this.skillSideEffects)
+  stealth: Skill = new Skill('stealth', 'Heimlichkeit', 'agility', this.skillSideEffects)
+  climbing: Skill = new Skill('climbing', 'Klettern', 'strength', this.skillSideEffects, true)
+  bodyControl: Skill = new Skill('bodyControl', 'Körperbeherschung', 'agility', this.skillSideEffects)
+  crafting: Skill = new Skill('crafting', 'Handwerk', 'agility', this.skillSideEffects, true)   // TODO mehrere Handwerke möglich
+  riding: Skill = new Skill('riding', 'Reiten', 'agility', this.skillSideEffects, true)
+  driving: Skill = new Skill('driving', 'Fahrzeuge', 'agility', this.skillSideEffects, true)
+  lockpicking: Skill = new Skill('lockpicking', 'Schlösserknacken', 'agility', this.skillSideEffects)
+  swimming: Skill = new Skill('swimming', 'Schwimmen', 'strength', this.skillSideEffects, true)
+  perception: Skill = new Skill('perception', 'Wahrnehmen', 'smarts', this.skillSideEffects)
 
   // Social skills
-  seduction: Skill = new Skill('Betören', 'smarts', this.skillSideEffects, true)
-  intimidation: Skill = new Skill('Einschüchtern', 'spirit', this.skillSideEffects, true)
-  etiquette: Skill = new Skill('Etikette', 'smarts', this.skillSideEffects, true)
-  empathy: Skill = new Skill('Menschenkenntnis', 'smarts', this.skillSideEffects)
-  persuade: Skill = new Skill('Überreden', 'smarts', this.skillSideEffects)
-  streetwise: Skill = new Skill('Umhören', 'smarts', this.skillSideEffects)
+  seduction: Skill = new Skill('seduction', 'Betören', 'smarts', this.skillSideEffects, true)
+  intimidation: Skill = new Skill('intimidation', 'Einschüchtern', 'spirit', this.skillSideEffects, true)
+  etiquette: Skill = new Skill('etiquette', 'Etikette', 'smarts', this.skillSideEffects, true)
+  empathy: Skill = new Skill('empathy', 'Menschenkenntnis', 'smarts', this.skillSideEffects)
+  persuade: Skill = new Skill('persuade', 'Überreden', 'smarts', this.skillSideEffects)
+  streetwise: Skill = new Skill('streetwise', 'Umhören', 'smarts', this.skillSideEffects)
 
   // Nature skills
-  tracking: Skill = new Skill('Fährtensuche', 'smarts', this.skillSideEffects)
-  natureKnowledge: Skill = new Skill('Naturkunde', 'smarts', this.skillSideEffects)
-  surival: Skill = new Skill('Wildnisleben', 'spirit', this.skillSideEffects)
+  tracking: Skill = new Skill('tracking', 'Fährtensuche', 'smarts', this.skillSideEffects)
+  natureKnowledge: Skill = new Skill('natureKnowledge', 'Naturkunde', 'smarts', this.skillSideEffects)
+  surival: Skill = new Skill('surival', 'Wildnisleben', 'spirit', this.skillSideEffects)
 
   // Knowledge skills
-  alchemy: Skill = new Skill('Alchemie', 'smarts', this.skillSideEffects)
-  gambling: Skill = new Skill('Glücksspiel', 'smarts', this.skillSideEffects, true)
-  faith: Skill = new Skill('Glaube', 'spirit', this.skillSideEffects)  // TODO nur wenn arkaner Hintergrund(Wunder) gewählt wurde
-  healing: Skill = new Skill('Heilkunde', 'smarts', this.skillSideEffects)
-  arcaneKnowledge: Skill = new Skill('Magiekunde', 'smarts', this.skillSideEffects)
-  language: Skill = new Skill('Sprache', 'smarts', this.skillSideEffects, true)  // TODO mehrere Sprachen möglich
-  knowledge: Skill = new Skill('Wissen', 'smarts', this.skillSideEffects, true) // TODO mehrere Wissensfertigkeiten möglich
-  spellcasting: Skill = new Skill('Zaubern', 'smarts', this.skillSideEffects)  // Nur wenn arkaner Hintergrund(Magie) gewählt wurde
+  alchemy: Skill = new Skill('alchemy', 'Alchemie', 'smarts', this.skillSideEffects)
+  gambling: Skill = new Skill('gambling', 'Glücksspiel', 'smarts', this.skillSideEffects, true)
+  faith: Skill = new Skill('faith', 'Glaube', 'spirit', this.skillSideEffects)  // TODO nur wenn arkaner Hintergrund(Wunder) gewählt wurde
+  healing: Skill = new Skill('healing', 'Heilkunde', 'smarts', this.skillSideEffects)
+  arcaneKnowledge: Skill = new Skill('arcaneKnowledge', 'Magiekunde', 'smarts', this.skillSideEffects)
+  language: Skill = new Skill('language', 'Sprache', 'smarts', this.skillSideEffects, true)  // TODO mehrere Sprachen möglich
+  knowledge: Skill = new Skill('knowledge', 'Wissen', 'smarts', this.skillSideEffects, true) // TODO mehrere Wissensfertigkeiten möglich
+  spellcasting: Skill = new Skill('spellcasting', 'Zaubern', 'smarts', this.skillSideEffects)  // Nur wenn arkaner Hintergrund(Magie) gewählt wurde
 
   equipment: {
     weapons: []

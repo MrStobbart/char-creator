@@ -6,9 +6,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import { upsertCharacter } from '../actions';
 
 // Components
-import { Navigation } from './components/Navigation';
-import { Content } from './components/Content';
-import { InfoPanel } from './components/InfoPanel';
+import { Navigation } from './Navigation';
+import { Content } from './Content';
+import { InfoPanel } from './InfoPanel';
 import Character from '../../models/savageWorldsCharacter';
 import { Dispatch } from 'redux';
 import { Store } from '../../rootReducer';

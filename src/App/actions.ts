@@ -1,5 +1,9 @@
 import { fetchEndpoint } from '../utils/fetchEndpoint';
+import { Action, ActionCreator, Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { Store } from '../rootReducer';
 
+import Character from '../models/savageWorldsCharacter';
 
 /**
  * Get all characters
@@ -11,29 +15,27 @@ export const FETCH_CHARACTERS_FAILURE = 'FETCH_CHARACTERS_FAILURE';
 export function fetchCharactersRequest() {
   return { type: FETCH_CHARACTERS_REQUEST };
 }
-export function fetchCharactersSuccess(payload) {
+export function fetchCharactersSuccess(payload: Character) {
   return { type: FETCH_CHARACTERS_SUCCESS, payload }
 }
 export function fetchCharactersFailure(error) {
   return { type: FETCH_CHARACTERS_FAILURE, error }
 }
 
-export function fetchCharacters() {
-  return (dispatch, getState) => {
+export const fetchCharacters: ActionCreator<ThunkAction<Promise<Action>, Store, void>> = () => {
+  return async (dispatch, getState): Promise<Action> => {
     dispatch(fetchCharactersRequest());
 
     // TODO get ruleset from App store
     const endpoint = getState().app.ruleset;
-    return fetchEndpoint(`${endpoint}/characters`)
-      .then(payload => {
-        dispatch(fetchCharactersSuccess(payload));
-      })
-      .catch(err => {
-        dispatch(fetchCharactersFailure(err));
-      });
+    try {
+      const payload = await fetchEndpoint(`${endpoint}/characters`)
+      return dispatch(fetchCharactersSuccess(payload));
+    } catch (error) {
+      return dispatch(fetchCharactersFailure(error));
+    }
   }
 }
-
 
 /**
  * Delte character
@@ -45,14 +47,14 @@ export const DELETE_CHARACTER_FAILURE = 'DELETE_CHARACTER_FAILURE';
 export function deleteCharacterRequest() {
   return { type: DELETE_CHARACTER_REQUEST };
 }
-export function deleteCharacterSuccess(payload) {
-  return { type: DELETE_CHARACTER_SUCCESS, payload }
+export function deleteCharacterSuccess(payload: Character) {
+  return { type: DELETE_CHARACTER_SUCCESS }
 }
 export function deleteCharacterFailure(error) {
   return { type: DELETE_CHARACTER_FAILURE, error }
 }
 
-export function deleteCharacter(characterId) {
+export function deleteCharacter(characterId: string) {
   return (dispatch, getState) => {
     dispatch(deleteCharacterRequest());
 
@@ -77,14 +79,14 @@ export const FETCH_CHARACTER_FAILURE = 'FETCH_CHARACTER_FAILURE';
 export function fetchCharacterRequest() {
   return { type: FETCH_CHARACTER_REQUEST };
 }
-export function fetchCharacterSuccess(payload) {
+export function fetchCharacterSuccess(payload: Character) {
   return { type: FETCH_CHARACTER_SUCCESS, payload }
 }
 export function fetchCharacterFailure(error) {
   return { type: FETCH_CHARACTER_FAILURE, error }
 }
 
-export function fetchCharacter(id) {
+export function fetchCharacter(id: string) {
   return (dispatch, getState) => {
     dispatch(fetchCharacterRequest());
 
@@ -111,14 +113,14 @@ export const UPSERT_CHARACTER_FAILURE = 'UPSERT_CHARACTER_FAILURE';
 export function upsertCharacterRequest() {
   return { type: UPSERT_CHARACTER_REQUEST };
 }
-export function upsertCharacterSuccess(payload) {
+export function upsertCharacterSuccess(payload: Character) {
   return { type: UPSERT_CHARACTER_SUCCESS, payload }
 }
 export function upsertCharacterFailure(error) {
   return { type: UPSERT_CHARACTER_FAILURE, error }
 }
 
-export function upsertCharacter(character) {
+export function upsertCharacter(character: Character) {
   return (dispatch, getState) => {
     dispatch(upsertCharacterRequest());
 

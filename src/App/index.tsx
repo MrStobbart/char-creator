@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -8,11 +8,16 @@ import Navbar from './Navbar';
 import CharactersPage from './Characters';
 
 import { fetchCharacters } from './actions';
+import { Store } from '../rootReducer';
 
 
 import './index.css';
 
-class App extends Component {
+export interface Props{
+  fetchCharacters: Function
+}
+
+class App extends React.Component<Props> {
 
   componentDidMount() {
     this.props.fetchCharacters();
@@ -40,12 +45,12 @@ class App extends Component {
  */
 export default connect(mapStateToProps, mapDispatchToProps)(App)
 
-function mapStateToProps(state) {
+function mapStateToProps(state: Store) {
   return {
     ...state,
   }
 }
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Function) {
   return {
     fetchCharacters: () => { dispatch(fetchCharacters()) },
   }

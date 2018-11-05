@@ -1,11 +1,16 @@
-export class Attribute {
+import { NumberedProperty } from './../interfaces';
 
-  constructor(label: string, sideEffects: Function) {
+
+export class Attribute implements NumberedProperty {
+
+  constructor(id: string, label: string, sideEffects: Function) {
+    this.id = id
     this.label = label
     this.sideEffects = sideEffects
   }
 
   // Can't be lower than this TODO set with race
+  id: string
   defaultValue = 1;
   label: string
   private _value: number = 1

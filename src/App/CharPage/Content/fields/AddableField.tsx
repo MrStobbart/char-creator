@@ -1,20 +1,26 @@
-import React from 'react';
+import * as React from 'react';
+import { Component, MouseEvent } from 'react';
 import { AutocompleteField } from './AutocompleteField';
 
-export class AddableField extends React.Component {
+export interface AddableFieldProps{
+  addField: () => {}
+  removeField: (addableFieldId: string) => {}
+  updateValue: (addableFieldId: string, value: number) => {}
+}
+export class AddableField extends Component<AddableFieldProps> {
   
 
-  addField = (event) => {
+  addField = (event: MouseEvent) => {
     event.preventDefault();
     this.props.addField()
   }
 
-  createRemoveFieldFunction = addableFieldId => event => {
+  createRemoveFieldFunction = (addableFieldId: string) => (event: MouseEvent) => {
     event.preventDefault();
     this.props.removeField(addableFieldId);
   }
 
-  createUpdateValueFunction = addableFieldId => value => {
+  createUpdateValueFunction = (addableFieldId: string) => (value: number) => {
     this.props.updateValue(addableFieldId, value);
   }
 
