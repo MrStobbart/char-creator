@@ -1,4 +1,4 @@
-import { ObjWithId, Edge, Requirement } from './interfaces';
+import { ObjWithId, Edge, Requirement } from '../interfaces';
 
 /**
  * Array that will call the function sideEffects when a new item is pushed.

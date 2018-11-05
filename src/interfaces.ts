@@ -4,7 +4,7 @@ export interface CharCreationInformation {
 }
 
 /**
- * @changesProperty string id of either an attribute or delivered data
+ * @changesProperty string id of delivered data
  */
 export interface Modifier {
   changesProperty: string
@@ -12,6 +12,7 @@ export interface Modifier {
 }
 
 export interface Fieldset {
+  id: string
   title: string
   order: string[]
 }

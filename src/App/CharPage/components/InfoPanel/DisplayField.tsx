@@ -1,8 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
 
+// TODO is only value ok here?
+export interface Props{
+  value: number
+}
 
-export class DisplayField extends React.Component{
+export class DisplayField extends React.Component<Props>{
 
   render() {
     const classes = classNames({

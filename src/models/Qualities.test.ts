@@ -1,5 +1,5 @@
 import { Qualities } from "./Qualities";
-import { Quality, Requirement, Edge } from "./interfaces";
+import { Quality, Requirement, Edge } from "../interfaces";
 
 let referenceValue = 0
 

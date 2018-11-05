@@ -1,5 +1,5 @@
 import * as shortid from 'shortid';
-import { CharCreationInformation, Modifier, ObjWithId, Fieldset, Edge, Hinderance, Requirement, DeliveredData } from './interfaces';
+import { CharCreationInformation, Modifier, ObjWithId, Fieldset, Edge, Hinderance, Requirement, DeliveredData } from '../interfaces';
 import { Skill } from './Skill';
 import { Attribute } from './Attribute';
 import { Qualities} from './Qualities';
@@ -237,7 +237,8 @@ const fieldsets = [
   'skills',
 ]
 
-const generalInformationFieldset = {
+const generalInformationFieldset: Fieldset = {
+  id: 'generalInformation',
   title: 'Allgemeine Informationen',
   order: [
     'name',
@@ -260,7 +261,8 @@ const generalInformationFieldset = {
   ]
 }
 
-const skillsFieldset = {
+const skillsFieldset: Fieldset = {
+  id: 'skills',
   title: 'Fähigkeiten',
   order: [
     'fighting',
@@ -296,7 +298,8 @@ const skillsFieldset = {
   ]
 }
 
-const attributesFieldset = {
+const attributesFieldset: Fieldset = {
+  id: 'attributes',
   title: 'Attribute',
   order: [
     'agility',
@@ -307,7 +310,8 @@ const attributesFieldset = {
   ]
 }
 
-const deliveredDataFieldset = {
+const deliveredDataFieldset: Fieldset = {
+  id: 'deliveredData',
   title: 'Abgeleitete Werte',
   order: [
     'parry',
@@ -317,7 +321,8 @@ const deliveredDataFieldset = {
   ]
 }
 
-const qualitiesFieldset = {
+const qualitiesFieldset: Fieldset = {
+  id: 'qualities',
   title: 'Talente und Handicaps',
   order: [
     'edges',

@@ -1,5 +1,5 @@
 import { Addable } from './Addable';
-import { ObjWithId } from './interfaces';
+import { ObjWithId } from '../interfaces';
 
 let referenceValue = 0
 
