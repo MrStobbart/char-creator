@@ -13,7 +13,7 @@ import Character from '../../models/savageWorldsCharacter';
 import { Dispatch } from 'redux';
 import { Store } from '../../rootReducer';
 
-export interface Props extends RouteComponentProps<any>{
+export interface CharPageProps extends RouteComponentProps<any>{
   upsertCharacter: Function,
   characters: Character[],
 }
@@ -24,12 +24,12 @@ interface State{
 }
 
 // The charpage has its own state that will be synced with the redux state on submit. Performance reasons
-class CharPage extends React.Component<Props, State> {
+class CharPage extends React.Component<CharPageProps, State> {
 
-  constructor(props: Props) {
+  constructor(props: CharPageProps) {
     super(props);
     this.state = {
-      character: new Character(),
+      character: new Character,
       unsavedChanges: false
     }
   }
@@ -39,30 +39,27 @@ class CharPage extends React.Component<Props, State> {
   }
 
 
-  componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps(nextProps: CharPageProps) {
     this.initializeComponent(nextProps)
   }
 
-  initializeComponent(props: Props) {
+  initializeComponent(props: CharPageProps) {
     const characterId = props.match.params.characterId;
 
     if (characterId && props.characters) {
       this.loadSelectedCharacter(characterId, props);
+    } else {
+      this.setState({ character: new Character })
     }
   }
 
-  loadSelectedCharacter(characterId: string, props: Props) {
+  loadSelectedCharacter(characterId: string, props: CharPageProps) {
 
     const loadedCharacter = props.characters.find(character => character.id === characterId);
 
     // If not found there will be an endless spinner - invalid id
     if (loadedCharacter) {
-      this.setState(prevState => {
-        return {
-          ...prevState,
-          character: loadedCharacter,
-        }
-      })
+      this.setState({ character: new Character(loadedCharacter) })
     } 
   }
 
@@ -90,35 +87,31 @@ class CharPage extends React.Component<Props, State> {
     })      
   }
 
-  removeAddableField = (addableFieldId: string) => { 
-    this.setState(prevState => {
-      let newState = { ...prevState };
-      newState.character.removeSpecialField(addableFieldId)
-      newState.unsavedChanges = true;
-      return newState;
-    })  
-  }
+  // I think this can be handled locally
+  // removeAddableField = (addableFieldId: string) => { 
+  //   this.setState(prevState => {
+  //     let newState = { ...prevState };
+  //     newState.character.removeSpecialField(addableFieldId)
+  //     newState.unsavedChanges = true;
+  //     return newState;
+  //   })  
+  // }
 
-  addAddableField = () => {
-    this.setState(prevState => {
-      let newState = { ...prevState };
-      newState.character.addSpecialField()
-      newState.unsavedChanges = true;
-      return newState;
-    })
-  }
+  // addAddableField = () => {
+  //   this.setState(prevState => {
+  //     let newState = { ...prevState };
+  //     newState.character.addSpecialField()
+  //     newState.unsavedChanges = true;
+  //     return newState;
+  //   })
+  // }
 
   saveChanges = () => {
     this.props.upsertCharacter(this.state.character);
     this.props.history.push(`/charpage/${this.state.character.id}`)
-    this.setState(prevState => ({
-      ...prevState,
-      unsavedChanges: false
-    }))
+    this.setState({ unsavedChanges: false })
   }
 
-
-  
 
   render() {
     return (

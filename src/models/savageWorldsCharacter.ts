@@ -123,7 +123,13 @@ export default class SavageWorldsCharacter{
   }
 
 
-  fieldsets: string[] = fieldsets
+  fieldsets: Fieldset[] = [
+    generalInformationFieldset,
+    attributesFieldset,
+    deliveredDataFieldset,
+    qualitiesFieldset,
+    skillsFieldset
+  ]
 
   id: string = shortid.generate()
   label: string = 'A'
@@ -230,13 +236,6 @@ function calculateSkillPoints(skillValue: number, attributeValue: number, cost: 
   }
 }
 
-const fieldsets = [
-  'generalInformation',
-  'attributes',
-  'deliveredData',
-  'qualities',
-  'skills',
-]
 
 const generalInformationFieldset: Fieldset = {
   id: 'generalInformation',
