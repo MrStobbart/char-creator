@@ -75,7 +75,7 @@ class CreateCharacterPage extends React.Component<CreateCharacterProps, State> {
   createUpdateValue: CreateUpdateValue<Property> = (property: string) => (newValue: string | number) => {
     this.setState(prevState => {
       let newState = { ...prevState };
-      newState.character[property] = newValue
+      newState.character[property].value = newValue
       newState.unsavedChanges = true;
       return newState
     })
