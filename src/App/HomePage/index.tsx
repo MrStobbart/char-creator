@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-export interface Props{
+export interface HomePageProps{
 
 }
-export default function Home(props: Props) {
+export default function HomePage(props: HomePageProps) {
   return (
     <div>
       <div className="uk-card uk-card-body uk-card-default uk-width-2-3 uk-align-center">

@@ -18,24 +18,24 @@ export function fetchCharactersRequest() {
 export function fetchCharactersSuccess(payload: Character) {
   return { type: FETCH_CHARACTERS_SUCCESS, payload }
 }
-export function fetchCharactersFailure(error) {
+export function fetchCharactersFailure(error: string) {
   return { type: FETCH_CHARACTERS_FAILURE, error }
 }
 
-export const fetchCharacters: ActionCreator<ThunkAction<Promise<Action>, Store, void>> = () => {
-  return async (dispatch, getState): Promise<Action> => {
-    dispatch(fetchCharactersRequest());
+// export const fetchCharacters: ActionCreator<ThunkAction<Promise<Action>, Store, void>> = () => {
+//   return async (dispatch, getState): Promise<Action> => {
+//     dispatch(fetchCharactersRequest());
 
-    // TODO get ruleset from App store
-    const endpoint = getState().app.ruleset;
-    try {
-      const payload = await fetchEndpoint(`${endpoint}/characters`)
-      return dispatch(fetchCharactersSuccess(payload));
-    } catch (error) {
-      return dispatch(fetchCharactersFailure(error));
-    }
-  }
-}
+//     // TODO get ruleset from App store
+//     const endpoint = getState().app.ruleset;
+//     try {
+//       const payload = await fetchEndpoint(`${endpoint}/characters`)
+//       return dispatch(fetchCharactersSuccess(payload));
+//     } catch (error) {
+//       return dispatch(fetchCharactersFailure(error));
+//     }
+//   }
+// }
 
 /**
  * Delte character
@@ -50,12 +50,12 @@ export function deleteCharacterRequest() {
 export function deleteCharacterSuccess(payload: Character) {
   return { type: DELETE_CHARACTER_SUCCESS }
 }
-export function deleteCharacterFailure(error) {
+export function deleteCharacterFailure(error: string) {
   return { type: DELETE_CHARACTER_FAILURE, error }
 }
 
 export function deleteCharacter(characterId: string) {
-  return (dispatch, getState) => {
+  return (dispatch: Function, getState: Function) => {
     dispatch(deleteCharacterRequest());
 
     const endpoint = getState().app.ruleset;
@@ -82,12 +82,12 @@ export function fetchCharacterRequest() {
 export function fetchCharacterSuccess(payload: Character) {
   return { type: FETCH_CHARACTER_SUCCESS, payload }
 }
-export function fetchCharacterFailure(error) {
+export function fetchCharacterFailure(error: string) {
   return { type: FETCH_CHARACTER_FAILURE, error }
 }
 
 export function fetchCharacter(id: string) {
-  return (dispatch, getState) => {
+  return (dispatch: Function, getState: Function) => {
     dispatch(fetchCharacterRequest());
 
 
@@ -116,19 +116,19 @@ export function upsertCharacterRequest() {
 export function upsertCharacterSuccess(payload: Character) {
   return { type: UPSERT_CHARACTER_SUCCESS, payload }
 }
-export function upsertCharacterFailure(error) {
+export function upsertCharacterFailure(error: string) {
   return { type: UPSERT_CHARACTER_FAILURE, error }
 }
 
 export function upsertCharacter(character: Character) {
-  return (dispatch, getState) => {
+  return (dispatch: Function, getState: Function) => {
     dispatch(upsertCharacterRequest());
 
     // Remove id from character to allow update
     const endpoint = getState().app.ruleset;
     const body = { ...character }
-    body._id = undefined;
-    return fetchEndpoint(`${endpoint}/characters/${character._id}`, 'put', body)
+    body.id = '';
+    return fetchEndpoint(`${endpoint}/characters/${character.id}`, 'put', body)
       .then(payload => {
         dispatch(upsertCharacterSuccess(payload));
       })

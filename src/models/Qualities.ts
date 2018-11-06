@@ -1,13 +1,15 @@
 import { Addable } from './Addable';
-import { Quality, Modifier, Requirement } from '../interfaces';
+import { Quality, Modifier, Requirement, ObjWithId } from '../interfaces';
 
 
-export class Qualities<T extends Quality> extends Addable<T>{
+export class Qualities<T extends Quality> extends Addable<T> implements ObjWithId{
 
 
   checkRequirements: Function
+  id: string
+  label: string
 
-  constructor(sideEffects: Function, checkRequirements?: Function, ...items: T[]) {
+  constructor(id: string, label: string, sideEffects: Function, checkRequirements?: Function, ...items: T[]) {
     super(sideEffects, ...items)
     if (checkRequirements) {
       this.checkRequirements = checkRequirements

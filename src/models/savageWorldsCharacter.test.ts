@@ -24,23 +24,23 @@ it('calculates the toughness correctly', () => {
 
 it('calculates the available skillpoints', () => {
   const character = new Character();
-  expect(character.charCreationInformation.skillPoints).toBe(50)
+  expect(character.skillPoints.value).toBe(50)
 
   character.fighting.value = 2
-  expect(character.charCreationInformation.skillPoints).toBe(44)
+  expect(character.skillPoints.value).toBe(44)
   character.etiquette.value = 1
-  expect(character.charCreationInformation.skillPoints).toBe(43)
+  expect(character.skillPoints.value).toBe(43)
   character.riding.value = 3
-  expect(character.charCreationInformation.skillPoints).toBe(38)
+  expect(character.skillPoints.value).toBe(38)
 })
 
 it('calculates the available attribute points', () => {
   const character = new Character();
 
-  expect(character.charCreationInformation.attributePoints).toBe(5)
+  expect(character.attributePoints.value).toBe(5)
 
   character.strength.value = 3
-  expect(character.charCreationInformation.attributePoints).toBe(3)
+  expect(character.attributePoints.value).toBe(3)
 })
 
 it('generates different ids for different instances of the class', () => {

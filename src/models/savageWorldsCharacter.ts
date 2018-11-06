@@ -1,5 +1,6 @@
+import { NumberProperty, TextProperty } from './../interfaces';
 import * as shortid from 'shortid';
-import { CharCreationInformation, Modifier, ObjWithId, Fieldset, Edge, Hinderance, Requirement, DeliveredData, FieldTypes } from '../interfaces';
+import { CharCreationInformation, Modifier, ObjWithId, FieldGroup, Edge, Hinderance, Requirement, DeliveredData, FieldTypes } from '../interfaces';
 import { Skill } from './Skill';
 import { Attribute } from './Attribute';
 import { Qualities} from './Qualities';
@@ -66,7 +67,7 @@ export default class SavageWorldsCharacter{
 
   // TODO Remove modifier again while calculating skillpoints?
   calcAvailableSkillPoints = () => {
-    this.charCreationInformation.skillPoints = this.skills.order
+    this.skillPoints.value = this.skills.order
       .reduce((sum, skillName) => {
         const skill: Skill = this[skillName]
         const attribute = this[skill.attribute]
@@ -80,7 +81,7 @@ export default class SavageWorldsCharacter{
 
 
   calcAvailableAttributePoints = () => {
-    this.charCreationInformation.attributePoints = this.attributes.order.reduce((sum, attribute) => sum - this[attribute].value, 10)
+    this.attributePoints.value = this.attributes.order.reduce((sum, attribute) => sum - this[attribute].value, 10)
   }
 
   calculateQualityPoints = () => {
@@ -117,13 +118,21 @@ export default class SavageWorldsCharacter{
 
   values = ["W4 - 2", "W4", "W6", "W8", "W10", "W12"]
 
-  charCreationInformation: CharCreationInformation = {
-    skillPoints: 50,
-    attributePoints: 10
+  charCreationInformation: FieldGroup = {
+    id: 'charCreationInformation',
+    title: 'Verfügbare Punkte',
+    type: 'number',
+    order: [
+      'skillPoints',
+      'attributePoints'
+    ]
   }
 
+  skillPoints: NumberProperty = {id: 'skillPoints', label: 'Fähigkeitspunkte', value: 50}
+  attributePoints: NumberProperty = { id: 'attributePoints', label: 'Attributspunkte', value: 10}
 
-  fieldsets: Fieldset[] = [
+
+  fieldsets: FieldGroup[] = [
     generalInformationFieldset,
     attributesFieldset,
     deliveredDataFieldset,
@@ -135,33 +144,33 @@ export default class SavageWorldsCharacter{
   label: string = 'A'
   availableLevels: string[] = ['A', 'F', 'V', 'H']
 
-  qualities: Fieldset = qualitiesFieldset
+  qualities: FieldGroup = qualitiesFieldset
   // Idea, make a class for each that handles the updates automatically and have another logical group for the renderer. Then only edges.push()
-  edges: Qualities<Edge> = new Qualities<Edge>(this.qualitiesSideEffects)
-  hinderances: Qualities<Hinderance> = new Qualities<Hinderance>(this.qualitiesSideEffects)
+  edges: Qualities<Edge> = new Qualities<Edge>('edges', 'Talente', this.qualitiesSideEffects)
+  hinderances: Qualities<Hinderance> = new Qualities<Hinderance>('hinderances', 'Handicaps', this.qualitiesSideEffects)
 
   // General information
   generalInformation = generalInformationFieldset
-  name: string = ''
-  family: string = ''
-  placeOfBirth: string = ''
-  birthday: string = ''
-  age: string = ''
-  sex: string = ''
-  species: string = ''
-  size: string = ''
-  weight: string = ''
-  hairColor: string = ''
-  eyeColor: string = ''
-  culture: string = ''
-  profession: string = ''
-  title: string = ''
-  socialStatus: string = ''
-  characterisitics: string = ''
-  otherInformation: string = ''
+  name: TextProperty = {id: 'name', label: 'Name', value: ''}
+  family: TextProperty = {id: 'family', label: 'Familie', value: ''}
+  placeOfBirth: TextProperty = {id: 'placeOfBirth', label: 'Geburtsort', value: ''}
+  birthday: TextProperty = {id: 'birthday', label: 'Geburtstag', value: ''}
+  age: TextProperty = {id: 'age', label: 'Alter', value: ''}
+  sex: TextProperty = {id: 'sex', label: 'Geschlecht', value: ''}
+  species: TextProperty = {id: 'species', label: 'Spezie', value: ''}
+  size: TextProperty = {id: 'size', label: 'Größe', value: ''}
+  weight: TextProperty = {id: 'weight', label: 'Gewicht', value: ''}
+  hairColor: TextProperty = {id: 'hairColor', label: 'Haarfarbe', value: ''}
+  eyeColor: TextProperty = {id: 'eyeColor', label: 'Augenfarbe', value: ''}
+  culture: TextProperty = {id: 'culture', label: 'Kultur', value: ''}
+  profession: TextProperty = {id: 'profession', label: 'Profession', value: ''}
+  title: TextProperty = {id: 'title', label: 'Title', value: ''}
+  socialStatus: TextProperty = {id: 'socialStatus', label: 'Sozialstatus', value: ''}
+  characterisitics: TextProperty = { id: 'characterisitics', label: 'Charakteristiken', value: ''}
+  otherInformation: TextProperty = {id: 'otherInformation', label: 'Ander Informationen', value: ''}
 
   // Delivered data
-  deliveredData: Fieldset = deliveredDataFieldset
+  deliveredData: FieldGroup = deliveredDataFieldset
   private baseCharisma = 0
   private basePace = 0
   parry: DeliveredData = { id: 'parry', label: 'Parade', value: 0 }
@@ -170,7 +179,7 @@ export default class SavageWorldsCharacter{
   pace: DeliveredData = { id: 'pace', label: 'Geschwindigkeit', value: 0 }
 
   // Attributes
-  attributes: Fieldset = attributesFieldset
+  attributes: FieldGroup = attributesFieldset
   agility: Attribute = new Attribute('agility', 'Geschicklichkeit', this.attributeSideEffects)
   smarts: Attribute = new Attribute('smarts', 'Verstand', this.attributeSideEffects)
   spirit: Attribute = new Attribute('spirit', 'Willenskraft', this.attributeSideEffects)
@@ -178,7 +187,7 @@ export default class SavageWorldsCharacter{
   strength: Attribute = new Attribute('strength', 'Stärke', this.attributeSideEffects)
 
   // Skills
-  skills: Fieldset = skillsFieldset
+  skills: FieldGroup = skillsFieldset
   // Combat skills
   fighting: Skill = new Skill('fighting', 'Kämpfen', 'agility', this.skillSideEffects)
   schooting: Skill = new Skill('schooting', 'Schießen', 'agility', this.skillSideEffects)
@@ -237,10 +246,10 @@ function calculateSkillPoints(skillValue: number, attributeValue: number, cost: 
 }
 
 
-const generalInformationFieldset: Fieldset = {
+const generalInformationFieldset: FieldGroup = {
   id: 'generalInformation',
   title: 'Allgemeine Informationen',
-  type: FieldTypes.text,
+  type: 'text',
   order: [
     'name',
     'family',
@@ -262,10 +271,10 @@ const generalInformationFieldset: Fieldset = {
   ]
 }
 
-const skillsFieldset: Fieldset = {
+const skillsFieldset: FieldGroup = {
   id: 'skills',
   title: 'Fähigkeiten',
-  type: FieldTypes.number, 
+  type: 'number', 
   order: [
     'fighting',
     'schooting',
@@ -300,10 +309,10 @@ const skillsFieldset: Fieldset = {
   ]
 }
 
-const attributesFieldset: Fieldset = {
+const attributesFieldset: FieldGroup = {
   id: 'attributes',
   title: 'Attribute',
-  type: FieldTypes.number,
+  type: 'number',
   order: [
     'agility',
     'smarts',
@@ -313,10 +322,10 @@ const attributesFieldset: Fieldset = {
   ]
 }
 
-const deliveredDataFieldset: Fieldset = {
+const deliveredDataFieldset: FieldGroup = {
   id: 'deliveredData',
   title: 'Abgeleitete Werte',
-  type: FieldTypes.readonly,
+  type: 'readonly',
   order: [
     'parry',
     'charisma',
@@ -325,10 +334,10 @@ const deliveredDataFieldset: Fieldset = {
   ]
 }
 
-const qualitiesFieldset: Fieldset = {
+const qualitiesFieldset: FieldGroup = {
   id: 'qualities',
   title: 'Talente und Handicaps',
-  type: FieldTypes.addable,
+  type: 'addable',
   order: [
     'edges',
     'hinderances'

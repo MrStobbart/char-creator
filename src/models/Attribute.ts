@@ -1,7 +1,7 @@
-import { NumberedProperty } from './../interfaces';
+import { NumberProperty } from './../interfaces';
 
 
-export class Attribute implements NumberedProperty {
+export class Attribute implements NumberProperty {
 
   constructor(id: string, label: string, sideEffects: Function) {
     this.id = id

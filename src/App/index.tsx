@@ -2,25 +2,24 @@ import * as React from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import CharPageContainer from './CharPage';
-import Home from './Home';
+import CreateCharacter from './CreateCharacterPage';
+import HomePage from './HomePage';
 import Navbar from './Navbar';
-import CharactersPage from './Characters';
+import CharactersPage from './CharactersPage';
 
-import { fetchCharacters } from './actions';
 import { Store } from '../rootReducer';
 
 
 import './index.css';
 
 export interface Props{
-  fetchCharacters: Function
+  // fetchCharacters: Function
 }
 
 class App extends React.Component<Props> {
 
   componentDidMount() {
-    this.props.fetchCharacters();
+    // this.props.fetchCharacters();
   }
 
   render() {
@@ -30,8 +29,8 @@ class App extends React.Component<Props> {
           <Navbar/>
         </header>
         <main className="uk-container uk-container-expand" style={{marginTop: 12}}>
-          <Route path="/home" component={Home} /> 
-          <Route path="/charpage/:characterId?" component={CharPageContainer}/>
+          <Route path="/home" component={HomePage} /> 
+          <Route path="/charpage/:characterId?" component={CreateCharacter}/>
           <Route path="/characters" component={CharactersPage}/>
         </main>
       </div>
@@ -52,7 +51,7 @@ function mapStateToProps(state: Store) {
 }
 function mapDispatchToProps(dispatch: Function) {
   return {
-    fetchCharacters: () => { dispatch(fetchCharacters()) },
+    // fetchCharacters: () => { dispatch(fetchCharacters()) },
   }
 }
 

@@ -1,6 +1,6 @@
-import { NumberedProperty } from './../interfaces';
+import { NumberProperty } from './../interfaces';
 
-export class Skill implements NumberedProperty {
+export class Skill implements NumberProperty {
 
   id: string
   label: string

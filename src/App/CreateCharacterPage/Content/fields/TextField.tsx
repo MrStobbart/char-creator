@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { CSSProperties, ChangeEvent } from 'react';
+import { UpdateValue, TextProperty } from 'src/interfaces';
 
 export interface TextFieldProps{
   children: string
-  value: number
-  updateValue: (value: string) => {}
+  value: string
+  updateValue: UpdateValue<TextProperty>
 }
 
 export function TextField(props: TextFieldProps){

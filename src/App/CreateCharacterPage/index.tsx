@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
+import { Action, ActionCreator, Dispatch } from 'redux';
 
 // Actions
 import { upsertCharacter } from '../actions';
@@ -10,13 +11,13 @@ import { Navigation } from './Navigation';
 import { Content } from './Content';
 import { InfoPanel } from './InfoPanel';
 import Character from '../../models/savageWorldsCharacter';
-import { Dispatch } from 'redux';
 import { Store } from '../../rootReducer';
-import { Quality } from 'src/interfaces';
+import { Quality, Requirement, CreateUpdateValue, Property, AddQuality, RemoveQuality, SaveChanges } from 'src/interfaces';
+import { ThunkAction } from 'redux-thunk';
 
 
 
-export interface CharPageProps extends RouteComponentProps<any>{
+export interface CreateCharacterProps extends RouteComponentProps<any>{
   upsertCharacter: Function,
   characters: Character[],
 }
@@ -26,10 +27,14 @@ interface State{
   unsavedChanges: boolean,
 }
 
-// The charpage has its own state that will be synced with the redux state on submit. Performance reasons
-class CharPage extends React.Component<CharPageProps, State> {
+interface Addaasdf{
+  (data: string, toUpper: boolean): string
+}
 
-  constructor(props: CharPageProps) {
+// The charpage has its own state that will be synced with the redux state on submit. Performance reasons
+class CreateCharacterPage extends React.Component<CreateCharacterProps, State> {
+
+  constructor(props: CreateCharacterProps) {
     super(props);
     this.state = {
       character: new Character,
@@ -42,11 +47,11 @@ class CharPage extends React.Component<CharPageProps, State> {
   }
 
 
-  componentWillReceiveProps(nextProps: CharPageProps) {
+  componentWillReceiveProps(nextProps: CreateCharacterProps) {
     this.initializeComponent(nextProps)
   }
 
-  initializeComponent(props: CharPageProps) {
+  initializeComponent(props: CreateCharacterProps) {
     const characterId = props.match.params.characterId;
 
     if (characterId && props.characters) {
@@ -56,7 +61,7 @@ class CharPage extends React.Component<CharPageProps, State> {
     }
   }
 
-  loadSelectedCharacter(characterId: string, props: CharPageProps) {
+  loadSelectedCharacter(characterId: string, props: CreateCharacterProps) {
 
     const loadedCharacter = props.characters.find(character => character.id === characterId);
 
@@ -67,7 +72,7 @@ class CharPage extends React.Component<CharPageProps, State> {
   }
 
 
-  createSetValue = (property: string) => (newValue: string) => {
+  createUpdateValue: CreateUpdateValue<Property> = (property: string) => (newValue: string | number) => {
     this.setState(prevState => {
       let newState = { ...prevState };
       newState.character[property] = newValue
@@ -76,45 +81,25 @@ class CharPage extends React.Component<CharPageProps, State> {
     })
   }
 
-  getValue = (property: string) => {
-    return this.state.character[property]
+  addQuality: AddQuality = (addableFieldId: string, quality: Quality): Requirement[] => {
+    // TODO test if this is ok with set state and nested objects
+    // Should be ok with calling setState afterwards. Same is true for next function
+    const unmetRequirements = this.state.character[addableFieldId].push(quality)
+
+    // Set state only when quality was added
+    if (unmetRequirements.length === 0) {
+      this.setState({unsavedChanges: true})
+    }
+    return unmetRequirements
   }
 
+  removeQuality: RemoveQuality = (addableFieldId: string, qualityId: string): void => {
+    this.state.character[addableFieldId].remove[qualityId]
+    this.setState({unsavedChanges: true})
+  } 
 
-  updateAddableField = (addableFieldId: string, quality: Quality) => {
-    this.setState(prevState => {
-      let newState = { ...prevState };
-      const unmetRequirements = newState.character.hinderances.push(quality)
-      if (unmetRequirements.length > 0) {
-        newState.unsavedChanges = true;
-      } else {
-        
-      }
-      return newState;
-    })      
-  }
-
-  // I think this can be handled locally
-  // removeAddableField = (addableFieldId: string) => { 
-  //   this.setState(prevState => {
-  //     let newState = { ...prevState };
-  //     newState.character.removeSpecialField(addableFieldId)
-  //     newState.unsavedChanges = true;
-  //     return newState;
-  //   })  
-  // }
-
-  // addAddableField = () => {
-  //   this.setState(prevState => {
-  //     let newState = { ...prevState };
-  //     newState.character.addSpecialField()
-  //     newState.unsavedChanges = true;
-  //     return newState;
-  //   })
-  // }
-
-  saveChanges = () => {
-    this.props.upsertCharacter(this.state.character);
+  saveChanges: SaveChanges = () => {
+    // this.props.upsertCharacter(this.state.character);
     this.props.history.push(`/charpage/${this.state.character.id}`)
     this.setState({ unsavedChanges: false })
   }
@@ -128,13 +113,11 @@ class CharPage extends React.Component<CharPageProps, State> {
         </div>
         <div className="uk-width-2-3">
           <Content
-            availableValues={this.state.character.values}
-            createSetValue={this.createSetValue}
-            createGetValue={this.getValue}
             character={this.state.character}
-            createAddAddableField={this.addAddableField}
-            createUpdateAddableField={this.updateAddableField}
-            createRemoveAddableField={this.removeAddableField}
+            availableValues={this.state.character.values}
+            createUpdateValue={this.createUpdateValue}
+            addQuality={this.addQuality}
+            removeQuality={this.removeQuality}
           />
         </div>
         <div className="uk-width-1-6">
@@ -154,14 +137,14 @@ class CharPage extends React.Component<CharPageProps, State> {
 /**
  * CharPageContainer
  */
-export default connect(mapStateToProps, mapDispatchToProps)(CharPage)
+export default connect(mapStateToProps)(CreateCharacterPage)
 
 function mapStateToProps(state: Store) {
   return {
     characters: state.app.characters
   }
 }
-function mapDispatchToProps(dispatch: Dispatch<Function>) {
+function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {
     upsertCharacter: (character: Character) => { dispatch(upsertCharacter(character)) },
   }

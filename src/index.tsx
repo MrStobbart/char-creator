@@ -9,7 +9,7 @@ import registerServiceWorker from './utils/registerServiceWorker';
 
 import './index.css';
 
-export default ReactDOM.render(
+ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <App />

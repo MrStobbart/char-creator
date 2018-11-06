@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { MouseEvent, CSSProperties } from 'react';
+import { UpdateValue, NumberProperty } from 'src/interfaces';
 
 // TODO maybe make this properly
 export interface NumberFieldProps{
-  updateValue: (value: number) => {}
+  updateValue: UpdateValue<NumberProperty>
   value: number
   children: string
-  values: string[]
-  default: number
+  availableValues: string[]
+  default?: number
 }
 
 export function NumberField(props: NumberFieldProps) {
@@ -22,7 +23,7 @@ export function NumberField(props: NumberFieldProps) {
 
   const increase = (event: MouseEvent) => {
     event.preventDefault();
-    if (props.value + 1 >= props.values.length) {
+    if (props.value + 1 >= props.availableValues.length) {
       return;
     }
     props.updateValue(props.value ? props.value + 1 : 1);
@@ -46,7 +47,7 @@ export function NumberField(props: NumberFieldProps) {
         <input
           className="number-field uk-input uk-form-small"
           type="text"
-          value={props.value ? props.values[props.value] : ''}
+          value={props.value ? props.availableValues[props.value] : ''}
           readOnly
         />
         <button

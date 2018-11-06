@@ -24,7 +24,7 @@ class CharactersPage extends React.Component<Props>{
                 <div className="uk-card-badge">
                   <DeleteCharacterButton characterId={character.id} deleteCharacter={this.props.deleteCharacter}/> 
                 </div>
-                <h4>{character.name !== '' ? character.name : 'Namenlos'}</h4>
+                <h4>{character.name.value !== '' ? character.name : 'Namenlos'}</h4>
                 <div>Some basic informations</div>
               </div>
             </Link>

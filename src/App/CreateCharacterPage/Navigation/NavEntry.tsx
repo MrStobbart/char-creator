@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Fieldset } from 'src/interfaces';
+import { FieldGroup } from 'src/interfaces';
 
 export interface Props{
-  fieldset: Fieldset
+  fieldset: FieldGroup
 }
 
 export function NavEntry(props: Props) {
