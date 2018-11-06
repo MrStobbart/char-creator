@@ -1,14 +1,15 @@
 import * as React from 'react';
 import * as Autosuggest from 'react-autosuggest';
 import './AutocompleteField.css';
+import { Quality } from '../../../../interfaces';
 
 export interface AutocompleteFieldProps extends Autosuggest.AutosuggestProps<string>{
-  
+  selectedQualities: Quality[]
 }
 
 interface State{
-  value: string
-  suggestions: string[]
+  suggestions: Quality[]
+  
 }
 
 export class AutocompleteField extends React.Component<AutocompleteFieldProps, State> {
@@ -16,7 +17,7 @@ export class AutocompleteField extends React.Component<AutocompleteFieldProps, S
     super(props);
 
     this.state = {
-      value: '',
+      quality: null,
       suggestions: [],
     };
   }

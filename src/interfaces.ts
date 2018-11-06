@@ -20,10 +20,18 @@ export interface Modifier {
   value: number
 }
 
+export enum FieldTypes{
+  readonly = "readonly",
+  text = "text",
+  addable = "addable",
+  number = "number"
+}
+
 export interface Fieldset {
   id: string
   title: string
   order: string[]
+  type: FieldTypes
 }
 
 

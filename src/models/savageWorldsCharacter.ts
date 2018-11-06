@@ -1,5 +1,5 @@
 import * as shortid from 'shortid';
-import { CharCreationInformation, Modifier, ObjWithId, Fieldset, Edge, Hinderance, Requirement, DeliveredData } from '../interfaces';
+import { CharCreationInformation, Modifier, ObjWithId, Fieldset, Edge, Hinderance, Requirement, DeliveredData, FieldTypes } from '../interfaces';
 import { Skill } from './Skill';
 import { Attribute } from './Attribute';
 import { Qualities} from './Qualities';
@@ -240,6 +240,7 @@ function calculateSkillPoints(skillValue: number, attributeValue: number, cost: 
 const generalInformationFieldset: Fieldset = {
   id: 'generalInformation',
   title: 'Allgemeine Informationen',
+  type: FieldTypes.text,
   order: [
     'name',
     'family',
@@ -264,6 +265,7 @@ const generalInformationFieldset: Fieldset = {
 const skillsFieldset: Fieldset = {
   id: 'skills',
   title: 'Fähigkeiten',
+  type: FieldTypes.number, 
   order: [
     'fighting',
     'schooting',
@@ -301,6 +303,7 @@ const skillsFieldset: Fieldset = {
 const attributesFieldset: Fieldset = {
   id: 'attributes',
   title: 'Attribute',
+  type: FieldTypes.number,
   order: [
     'agility',
     'smarts',
@@ -313,6 +316,7 @@ const attributesFieldset: Fieldset = {
 const deliveredDataFieldset: Fieldset = {
   id: 'deliveredData',
   title: 'Abgeleitete Werte',
+  type: FieldTypes.readonly,
   order: [
     'parry',
     'charisma',
@@ -324,6 +328,7 @@ const deliveredDataFieldset: Fieldset = {
 const qualitiesFieldset: Fieldset = {
   id: 'qualities',
   title: 'Talente und Handicaps',
+  type: FieldTypes.addable,
   order: [
     'edges',
     'hinderances'

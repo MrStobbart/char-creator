@@ -12,6 +12,9 @@ import { InfoPanel } from './InfoPanel';
 import Character from '../../models/savageWorldsCharacter';
 import { Dispatch } from 'redux';
 import { Store } from '../../rootReducer';
+import { Quality } from 'src/interfaces';
+
+
 
 export interface CharPageProps extends RouteComponentProps<any>{
   upsertCharacter: Function,
@@ -78,11 +81,15 @@ class CharPage extends React.Component<CharPageProps, State> {
   }
 
 
-  updateAddableField = (addableFieldId: string, special: any) => {
+  updateAddableField = (addableFieldId: string, quality: Quality) => {
     this.setState(prevState => {
       let newState = { ...prevState };
-      newState.character.updateSpecialField(addableFieldId, special)
-      newState.unsavedChanges = true;
+      const unmetRequirements = newState.character.hinderances.push(quality)
+      if (unmetRequirements.length > 0) {
+        newState.unsavedChanges = true;
+      } else {
+        
+      }
       return newState;
     })      
   }
