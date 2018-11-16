@@ -3,15 +3,14 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteCharacter } from '../actions';
 import { DeleteCharacterButton } from './DeleteCharacterButton';
-import SavageWorldsCharacter from '../../models/savageWorldsCharacter';
+import Character from '../../models/savageWorldsCharacter';
 import { Store } from '../../rootReducer';
+import { CustomAction } from '../interfaces';
+import { ThunkDispatch } from 'redux-thunk';
 
-export interface Props{
-  characters: SavageWorldsCharacter[]
-  deleteCharacter: (characterId: string) => {} 
-}
+export interface CharactersPageProps extends PropsFromState, PropsFromDispatch{ }
 
-class CharactersPage extends React.Component<Props>{
+class CharactersPage extends React.Component<CharactersPageProps>{
 
   render() {
     return (
@@ -22,7 +21,10 @@ class CharactersPage extends React.Component<Props>{
               <div
                 className="uk-card uk-card-body uk-card-default uk-card-hover">
                 <div className="uk-card-badge">
-                  <DeleteCharacterButton characterId={character.id} deleteCharacter={this.props.deleteCharacter}/> 
+                  <DeleteCharacterButton
+                    characterId={character.id}
+                    deleteCharacter={this.props.deleteCharacter}
+                  /> 
                 </div>
                 <h4>{character.name.value !== '' ? character.name : 'Namenlos'}</h4>
                 <div>Some basic informations</div>
@@ -48,16 +50,19 @@ class CharactersPage extends React.Component<Props>{
 /**
  * CharactersPageContainer
  */
-export default connect(mapStateToProps, mapDispatchToProps)(CharactersPage)
+export default connect<PropsFromState, PropsFromDispatch, void>(mapStateToProps, mapDispatchToProps)(CharactersPage)
 
-function mapStateToProps(state: Store) {
+interface PropsFromState { characters: Character[] }
+interface PropsFromDispatch { deleteCharacter: (characterId: string) => void }
+
+function mapStateToProps(state: Store): PropsFromState {
   return {
     characters: state.app.characters
   }
 }
 
-function mapDispatchToProps(dispatch: Function) {
+function mapDispatchToProps(dispatch: ThunkDispatch<Store, any, CustomAction>): PropsFromDispatch {
   return {
-    deleteCharacter: (characterId: string) => {dispatch(deleteCharacter(characterId))},
+    deleteCharacter: (characterId: string) => dispatch(deleteCharacter(characterId)),
   }
 }

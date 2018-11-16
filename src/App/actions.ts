@@ -14,22 +14,23 @@ export const FETCH_CHARACTERS_FAILURE = 'FETCH_CHARACTERS_FAILURE';
 export function fetchCharactersRequest() {
   return { type: FETCH_CHARACTERS_REQUEST };
 }
-export function fetchCharactersSuccess(payload: Character) {
+export function fetchCharactersSuccess(payload: Character[]) {
   return { type: FETCH_CHARACTERS_SUCCESS, payload }
 }
 export function fetchCharactersFailure(error: string) {
   return { type: FETCH_CHARACTERS_FAILURE, error }
 }
 
-type FetchCharacterThunkResult = ThunkResult<Promise<CustomAction<Character>>, Character>
-export const fetchCharacters: ActionCreator<FetchCharacterThunkResult> = () => {
+type FetchCharactersThunkResult = ThunkResult<Promise<CustomAction<Character[]>>, Character[]>
+export const fetchCharacters: ActionCreator<FetchCharactersThunkResult> = () => {
   return async (dispatch, getState) => {
     dispatch(fetchCharactersRequest());
 
     // TODO get ruleset from App store
     const endpoint = getState().app.ruleset;
     try {
-      const payload: Character = await fetchEndpoint(`${endpoint}/characters`)
+      // TODO change data to characters somewhere
+      const payload: Character[] = await fetchEndpoint(`${endpoint}/characters`)
       return dispatch(fetchCharactersSuccess(payload));
     } catch (error) {
       return dispatch(fetchCharactersFailure(error));
@@ -86,19 +87,18 @@ export function fetchCharacterFailure(error: string) {
   return { type: FETCH_CHARACTER_FAILURE, error }
 }
 
-export function fetchCharacter(id: string) {
-  return (dispatch: Function, getState: Function) => {
+type FetchCharacterThunkResult = ThunkResult<Promise<CustomAction<Character>>, Character>
+export function fetchCharacter(id: string): FetchCharacterThunkResult {
+  return async (dispatch, getState) => {
     dispatch(fetchCharacterRequest());
 
-
     const endpoint = getState().app.ruleset;
-    return fetchEndpoint(`${endpoint}/characters/${id}`)
-      .then(payload => {
-        dispatch(fetchCharacterSuccess(payload));
-      })
-      .catch(err => {
-        dispatch(fetchCharacterFailure(err));
-      });
+    try {
+      const payload: Character = await fetchEndpoint(`${endpoint}/characters/${id}`)
+      return dispatch(fetchCharacterSuccess(payload));
+    } catch (error) {
+      return dispatch(fetchCharacterFailure(error));
+    }
   }
 }
 
@@ -120,21 +120,21 @@ export function upsertCharacterFailure(error: string) {
   return { type: UPSERT_CHARACTER_FAILURE, error }
 }
 
-export function upsertCharacter(character: Character) {
-  return (dispatch: Function, getState: Function) => {
+type UpsertCharacterThunkResult = ThunkResult<Promise<CustomAction<Character>>, Character>
+export function upsertCharacter(character: Character): UpsertCharacterThunkResult {
+  return async (dispatch: Function, getState: Function) => {
     dispatch(upsertCharacterRequest());
 
     // Remove id from character to allow update
     const endpoint = getState().app.ruleset;
     const body = { ...character }
     body.id = '';
-    return fetchEndpoint(`${endpoint}/characters/${character.id}`, 'put', body)
-      .then(payload => {
-        dispatch(upsertCharacterSuccess(payload));
-      })
-      .catch(err => {
-        dispatch(upsertCharacterFailure(err));
-      });
+    try {
+      const payload: Character = await fetchEndpoint(`${endpoint}/characters/${character.id}`, 'put', body)
+      return dispatch(upsertCharacterSuccess(payload))
+    } catch (error) {
+      return dispatch(upsertCharacterFailure(error));
+    }
   }
 }
 

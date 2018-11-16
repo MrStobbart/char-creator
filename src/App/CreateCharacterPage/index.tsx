@@ -132,8 +132,8 @@ class CreateCharacterPage extends React.Component<CreateCharacterProps, State> {
  */
 export default connect<PropsFromState, PropsFromDispatch, void>(mapStateToProps, mapDispatchToProps)(CreateCharacterPage)
 
-type PropsFromState = { characters: Character[] }
-type PropsFromDispatch = { upsertCharacter: (character: Character) => void }
+interface PropsFromState { characters: Character[] }
+interface PropsFromDispatch { upsertCharacter: (character: Character) => void }
 
 function mapStateToProps(state: Store): PropsFromState {
   return {

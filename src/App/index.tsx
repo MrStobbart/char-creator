@@ -12,11 +12,9 @@ import { Store } from '../rootReducer';
 
 import './index.css';
 
-export interface Props{
-  // fetchCharacters: Function
-}
+export interface AppProps extends PropsFromState, PropsFromDispatch{ }
 
-class App extends React.Component<Props> {
+class App extends React.Component<AppProps> {
 
   componentDidMount() {
     // this.props.fetchCharacters();
@@ -42,14 +40,17 @@ class App extends React.Component<Props> {
 /**
  * CharPageContainer
  */
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect<PropsFromState, PropsFromDispatch, void>(mapStateToProps, mapDispatchToProps)(App)
 
-function mapStateToProps(state: Store) {
+interface PropsFromState extends Store { }
+interface PropsFromDispatch {}
+
+function mapStateToProps(state: Store): PropsFromState {
   return {
     ...state,
   }
 }
-function mapDispatchToProps(dispatch: Function) {
+function mapDispatchToProps(dispatch: Function): PropsFromDispatch {
   return {
     // fetchCharacters: () => { dispatch(fetchCharacters()) },
   }

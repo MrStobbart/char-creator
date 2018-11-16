@@ -25,7 +25,7 @@ export interface SaveChanges{
 }
 
 
-export interface CustomAction<TPayload> extends Action<string> {
+export interface CustomAction<TPayload = void> extends Action<string> {
   payload?: TPayload
   error?: string
 }

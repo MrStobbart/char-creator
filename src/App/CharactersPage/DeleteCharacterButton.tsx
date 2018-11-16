@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export interface Props{
-  deleteCharacter: (id: string) => {}
+  deleteCharacter: (id: string) => void
   characterId: string
 }
 export class DeleteCharacterButton extends React.Component<Props>{
