@@ -3,7 +3,8 @@ import { TextField } from './fields/TextField';
 import { NumberField } from './fields/NumberField';
 import { DataField } from './fields/DataField';
 import { AddableField } from './fields/AddableField';
-import { FieldGroup, NumberProperty, DeliveredData, TextProperty, Quality, AddQuality, CreateUpdateValue, Property, RemoveQuality } from 'src/interfaces';
+import { FieldGroup, NumberProperty, DeliveredData, TextProperty, Quality, Property } from 'src/models/interfaces';
+import { CreateUpdateValue, AddQuality, RemoveQuality } from 'src/App/interfaces';
 import SavageWorldsCharacter from 'src/models/savageWorldsCharacter';
 import { Qualities } from 'src/models/Qualities';
 

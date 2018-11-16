@@ -1,4 +1,4 @@
-import { NumberProperty } from './../interfaces';
+import { NumberProperty } from './interfaces';
 
 
 export class Attribute implements NumberProperty {

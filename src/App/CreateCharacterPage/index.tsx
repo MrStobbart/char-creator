@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect, MapDispatchToPropsFactory, MapDispatchToProps } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Action, ActionCreator, Dispatch } from 'redux';
 
@@ -12,23 +12,16 @@ import { Content } from './Content';
 import { InfoPanel } from './InfoPanel';
 import Character from '../../models/savageWorldsCharacter';
 import { Store } from '../../rootReducer';
-import { Quality, Requirement, CreateUpdateValue, Property, AddQuality, RemoveQuality, SaveChanges } from 'src/interfaces';
-import { ThunkAction } from 'redux-thunk';
+import { CreateUpdateValue, AddQuality, RemoveQuality, SaveChanges } from 'src/App/interfaces';
+import { Quality, Requirement, Property } from 'src/models/interfaces';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 
-
-export interface CreateCharacterProps extends RouteComponentProps<any>{
-  upsertCharacter: Function,
-  characters: Character[],
-}
+export interface CreateCharacterProps extends RouteComponentProps<any>, PropsFromState, PropsFromDispatch{ }
 
 interface State{
   character: Character,
   unsavedChanges: boolean,
-}
-
-interface Addaasdf{
-  (data: string, toUpper: boolean): string
 }
 
 // The charpage has its own state that will be synced with the redux state on submit. Performance reasons
@@ -137,16 +130,19 @@ class CreateCharacterPage extends React.Component<CreateCharacterProps, State> {
 /**
  * CharPageContainer
  */
-export default connect(mapStateToProps)(CreateCharacterPage)
+export default connect<PropsFromState, PropsFromDispatch, void>(mapStateToProps, mapDispatchToProps)(CreateCharacterPage)
 
-function mapStateToProps(state: Store) {
+type PropsFromState = { characters: Character[] }
+type PropsFromDispatch = { upsertCharacter: (character: Character) => void }
+
+function mapStateToProps(state: Store): PropsFromState {
   return {
     characters: state.app.characters
   }
 }
-function mapDispatchToProps(dispatch: Dispatch<any>) {
+function mapDispatchToProps(dispatch: ThunkDispatch<Store, any, Action>): MapDispatchToProps<PropsFromDispatch, void> {
   return {
-    upsertCharacter: (character: Character) => { dispatch(upsertCharacter(character)) },
+    upsertCharacter: (character: Character) => dispatch(upsertCharacter(character)),
   }
 }
 

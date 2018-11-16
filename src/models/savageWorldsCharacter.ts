@@ -1,6 +1,6 @@
-import { NumberProperty, TextProperty } from './../interfaces';
+import { NumberProperty, TextProperty } from './interfaces';
 import * as shortid from 'shortid';
-import { CharCreationInformation, Modifier, ObjWithId, FieldGroup, Edge, Hinderance, Requirement, DeliveredData, FieldTypes } from '../interfaces';
+import { CharCreationInformation, Modifier, ObjWithId, FieldGroup, Edge, Hinderance, Requirement, DeliveredData, FieldTypes } from './interfaces';
 import { Skill } from './Skill';
 import { Attribute } from './Attribute';
 import { Qualities} from './Qualities';

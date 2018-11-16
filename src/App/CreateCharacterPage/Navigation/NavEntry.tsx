@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FieldGroup } from 'src/interfaces';
+import { FieldGroup } from 'src/models/interfaces';
 
 export interface Props{
   fieldset: FieldGroup

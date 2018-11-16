@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavEntry } from './NavEntry';
-import { FieldGroup } from 'src/interfaces';
+import { FieldGroup } from 'src/models/interfaces';
 
 export interface Props{
   fieldsets: FieldGroup[]

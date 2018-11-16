@@ -1,9 +1,8 @@
 import { fetchEndpoint } from '../utils/fetchEndpoint';
 import { Action, ActionCreator, Dispatch } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { Store } from '../rootReducer';
-
+import { CustomAction, ThunkResult } from 'src/App/interfaces';
 import Character from '../models/savageWorldsCharacter';
+
 
 /**
  * Get all characters
@@ -22,20 +21,21 @@ export function fetchCharactersFailure(error: string) {
   return { type: FETCH_CHARACTERS_FAILURE, error }
 }
 
-// export const fetchCharacters: ActionCreator<ThunkAction<Promise<Action>, Store, void>> = () => {
-//   return async (dispatch, getState): Promise<Action> => {
-//     dispatch(fetchCharactersRequest());
+type FetchCharacterThunkResult = ThunkResult<Promise<CustomAction<Character>>, Character>
+export const fetchCharacters: ActionCreator<FetchCharacterThunkResult> = () => {
+  return async (dispatch, getState) => {
+    dispatch(fetchCharactersRequest());
 
-//     // TODO get ruleset from App store
-//     const endpoint = getState().app.ruleset;
-//     try {
-//       const payload = await fetchEndpoint(`${endpoint}/characters`)
-//       return dispatch(fetchCharactersSuccess(payload));
-//     } catch (error) {
-//       return dispatch(fetchCharactersFailure(error));
-//     }
-//   }
-// }
+    // TODO get ruleset from App store
+    const endpoint = getState().app.ruleset;
+    try {
+      const payload: Character = await fetchEndpoint(`${endpoint}/characters`)
+      return dispatch(fetchCharactersSuccess(payload));
+    } catch (error) {
+      return dispatch(fetchCharactersFailure(error));
+    }
+  }
+}
 
 /**
  * Delte character
@@ -54,18 +54,18 @@ export function deleteCharacterFailure(error: string) {
   return { type: DELETE_CHARACTER_FAILURE, error }
 }
 
-export function deleteCharacter(characterId: string) {
-  return (dispatch: Function, getState: Function) => {
+type DeleteCharacterThunkResult = ThunkResult<Promise<CustomAction<Character>>, Character>
+export function deleteCharacter(characterId: string): DeleteCharacterThunkResult {
+  return async (dispatch, getState) => {
     dispatch(deleteCharacterRequest());
 
     const endpoint = getState().app.ruleset;
-    return fetchEndpoint(`${endpoint}/characters/${characterId}`, 'delete')
-      .then(payload => {
-        dispatch(deleteCharacterSuccess(payload));
-      })
-      .catch(err => {
-        dispatch(deleteCharacterFailure(err));
-      });
+    try {
+      const payload: Character = await fetchEndpoint(`${endpoint}/characters/${characterId}`, 'delete')
+      return dispatch(deleteCharacterSuccess(payload));
+    } catch (error) {
+      return dispatch(deleteCharacterFailure(error));
+    }
   }
 }
 

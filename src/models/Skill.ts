@@ -1,4 +1,4 @@
-import { NumberProperty } from './../interfaces';
+import { NumberProperty } from './interfaces';
 
 export class Skill implements NumberProperty {
 

@@ -1,5 +1,5 @@
 import { Addable } from './Addable';
-import { Quality, Modifier, Requirement, ObjWithId } from '../interfaces';
+import { Quality, Modifier, Requirement, ObjWithId } from './interfaces';
 
 
 export class Qualities<T extends Quality> extends Addable<T> implements ObjWithId{

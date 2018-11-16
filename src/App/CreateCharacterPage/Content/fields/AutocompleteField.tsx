@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Autosuggest from 'react-autosuggest';
 import './AutocompleteField.css';
-import { Quality } from '../../../../interfaces';
+import { Quality } from '../../../../models/interfaces';
 
 export interface AutocompleteFieldProps extends Autosuggest.AutosuggestProps<string>{
   selectedQualities: Quality[]

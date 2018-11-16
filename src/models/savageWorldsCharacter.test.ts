@@ -1,5 +1,5 @@
 import Character from './savageWorldsCharacter'
-import { Requirement, Edge, Hinderance, Modifier } from '../interfaces'
+import { Requirement, Edge, Hinderance, Modifier } from './interfaces'
 
 it('creates an object', () => {
   const character = new Character();

@@ -2,7 +2,8 @@ import * as React from 'react';
 
 import { DisplayField } from './DisplayField';
 import SavageWorldsCharacter from 'src/models/savageWorldsCharacter';
-import { SaveChanges, NumberProperty } from 'src/interfaces';
+import { NumberProperty } from 'src/models/interfaces';
+import { SaveChanges } from 'src/App/interfaces';
 
 export interface InfoPanelProps{
   character: SavageWorldsCharacter,

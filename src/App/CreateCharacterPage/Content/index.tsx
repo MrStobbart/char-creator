@@ -2,7 +2,8 @@ import * as React from 'react';
 import { FieldGroupComponent } from './FieldGroupComponent';
 import './index.css';
 import SavageWorldsCharacter from 'src/models/savageWorldsCharacter';
-import { CreateUpdateValue, Property, AddQuality, RemoveQuality } from 'src/interfaces';
+import { Property } from 'src/models/interfaces';
+import { CreateUpdateValue, AddQuality, RemoveQuality } from 'src/App/interfaces';
 
 export interface ContentProps{
   character: SavageWorldsCharacter,

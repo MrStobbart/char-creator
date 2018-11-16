@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Component, MouseEvent } from 'react';
 import { AutocompleteField } from './AutocompleteField';
-import { Quality, AddQuality, RemoveQuality } from 'src/interfaces';
+import { Quality } from 'src/models/interfaces';
+import { AddQuality, RemoveQuality } from 'src/App/interfaces';
 import { Qualities } from 'src/models/Qualities';
 
 export interface AddableFieldProps{

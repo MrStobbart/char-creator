@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { MouseEvent, CSSProperties } from 'react';
-import { UpdateValue, NumberProperty } from 'src/interfaces';
+import { NumberProperty } from 'src/models/interfaces';
+import { UpdateValue } from 'src/App/interfaces';
 
 // TODO maybe make this properly
 export interface NumberFieldProps{

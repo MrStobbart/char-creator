@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { CSSProperties, ChangeEvent } from 'react';
-import { UpdateValue, TextProperty } from 'src/interfaces';
+import { TextProperty } from 'src/models/interfaces';
+import { UpdateValue} from 'src/App/interfaces';
 
 export interface TextFieldProps{
   children: string
