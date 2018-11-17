@@ -5,7 +5,7 @@ import { deleteCharacter } from '../actions';
 import { DeleteCharacterButton } from './DeleteCharacterButton';
 import Character from '../../models/savageWorldsCharacter';
 import { Store } from '../../rootReducer';
-import { CustomAction } from '../interfaces';
+import { CharCreatorAction } from '../interfaces';
 import { ThunkDispatch } from 'redux-thunk';
 
 export interface CharactersPageProps extends PropsFromState, PropsFromDispatch{ }
@@ -61,7 +61,7 @@ function mapStateToProps(state: Store): PropsFromState {
   }
 }
 
-function mapDispatchToProps(dispatch: ThunkDispatch<Store, any, CustomAction>): PropsFromDispatch {
+function mapDispatchToProps(dispatch: ThunkDispatch<Store, any, CharCreatorAction>): PropsFromDispatch {
   return {
     deleteCharacter: (characterId: string) => dispatch(deleteCharacter(characterId)),
   }

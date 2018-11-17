@@ -4,7 +4,7 @@ const ObjectId = require('mongodb').ObjectID;
 
 const dbConnectionMiddleware = require('./middlewares/dbConnector');
 const theDarkEye = require('./data/theDarkEye/charsheet');
-const savageWorlds = require('./data/savageWorlds/charsheet');
+const savageWorldsFantasyQualities = require('./data/savageWorldsFantasy/qualities');
 
 const app = express();
 const port = 8080;
@@ -40,13 +40,12 @@ app.route('/api/thedarkeye')
     res.json(theDarkEye);
   });
 
-app.route('/api/savageworldsfantasy')
+app.route('/api/savage-worlds-fantasy/qualities')
   .get((req, res) => {
-    console.log('send this')
-    res.status(200).json(savageWorlds);
+    res.status(200).json(savageWorldsFantasyQualities);
   });
 
-app.route('/api/savageworldsfantasy/characters')
+app.route('/api/savage-worlds-fantasy/characters')
   .all((req, res, next) => {
     req.collection = req.db.collection('swFantasyCharacters')
     next();
@@ -61,7 +60,7 @@ app.route('/api/savageworldsfantasy/characters')
   
 
 // TODO add this kind of error handling to all endpoints
-app.route('/api/savageworldsfantasy/characters/:id')
+app.route('/api/savage-worlds-fantasy/characters/:id')
   .all((req, res, next) => {
     req.collection = req.db.collection('swFantasyCharacters')
     next();

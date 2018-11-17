@@ -1,6 +1,6 @@
 import { fetchEndpoint } from '../utils/fetchEndpoint';
 import { Action, ActionCreator, Dispatch } from 'redux';
-import { CustomAction, ThunkResult } from 'src/App/interfaces';
+import { CharCreatorAction, ThunkResult } from 'src/App/interfaces';
 import Character from '../models/savageWorldsCharacter';
 
 
@@ -21,7 +21,7 @@ export function fetchCharactersFailure(error: string) {
   return { type: FETCH_CHARACTERS_FAILURE, error }
 }
 
-type FetchCharactersThunkResult = ThunkResult<Promise<CustomAction<Character[]>>, Character[]>
+type FetchCharactersThunkResult = ThunkResult<Promise<CharCreatorAction<Character[]>>, Character[]>
 export const fetchCharacters: ActionCreator<FetchCharactersThunkResult> = () => {
   return async (dispatch, getState) => {
     dispatch(fetchCharactersRequest());
@@ -55,7 +55,7 @@ export function deleteCharacterFailure(error: string) {
   return { type: DELETE_CHARACTER_FAILURE, error }
 }
 
-type DeleteCharacterThunkResult = ThunkResult<Promise<CustomAction<Character>>, Character>
+type DeleteCharacterThunkResult = ThunkResult<Promise<CharCreatorAction<Character>>, Character>
 export function deleteCharacter(characterId: string): DeleteCharacterThunkResult {
   return async (dispatch, getState) => {
     dispatch(deleteCharacterRequest());
@@ -87,7 +87,7 @@ export function fetchCharacterFailure(error: string) {
   return { type: FETCH_CHARACTER_FAILURE, error }
 }
 
-type FetchCharacterThunkResult = ThunkResult<Promise<CustomAction<Character>>, Character>
+type FetchCharacterThunkResult = ThunkResult<Promise<CharCreatorAction<Character>>, Character>
 export function fetchCharacter(id: string): FetchCharacterThunkResult {
   return async (dispatch, getState) => {
     dispatch(fetchCharacterRequest());
@@ -120,7 +120,7 @@ export function upsertCharacterFailure(error: string) {
   return { type: UPSERT_CHARACTER_FAILURE, error }
 }
 
-type UpsertCharacterThunkResult = ThunkResult<Promise<CustomAction<Character>>, Character>
+type UpsertCharacterThunkResult = ThunkResult<Promise<CharCreatorAction<Character>>, Character>
 export function upsertCharacter(character: Character): UpsertCharacterThunkResult {
   return async (dispatch: Function, getState: Function) => {
     dispatch(upsertCharacterRequest());
@@ -134,6 +134,37 @@ export function upsertCharacter(character: Character): UpsertCharacterThunkResul
       return dispatch(upsertCharacterSuccess(payload))
     } catch (error) {
       return dispatch(upsertCharacterFailure(error));
+    }
+  }
+}
+
+export const FETCH_QUALITIES_REQUEST = 'FETCH_QUALITIES_REQUEST';
+export const FETCH_QUALITIES_SUCCESS = 'FETCH_QUALITIES_SUCCESS';
+export const FETCH_QUALITIES_FAILURE = 'FETCH_QUALITIES_FAILURE';
+
+export function fetchQualitiesRequest() {
+  return { type: FETCH_QUALITIES_REQUEST };
+}
+export function fetchQualitiesSuccess(payload: Character[]) {
+  return { type: FETCH_QUALITIES_SUCCESS, payload }
+}
+export function fetchQualitiesFailure(error: string) {
+  return { type: FETCH_QUALITIES_FAILURE, error }
+}
+
+type FetchQualitiesThunkResult = ThunkResult<Promise<CharCreatorAction<Character[]>>, Character[]>
+export const fetchQualities: ActionCreator<FetchQualitiesThunkResult> = () => {
+  return async (dispatch, getState) => {
+    dispatch(fetchQualitiesRequest());
+
+    // TODO get ruleset from App store
+    const endpoint = getState().app.ruleset;
+    try {
+      // TODO change data to Qualities somewhere
+      const payload: Character[] = await fetchEndpoint(`${endpoint}/Qualities`)
+      return dispatch(fetchQualitiesSuccess(payload));
+    } catch (error) {
+      return dispatch(fetchQualitiesFailure(error));
     }
   }
 }

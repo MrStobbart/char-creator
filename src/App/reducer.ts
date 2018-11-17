@@ -14,6 +14,7 @@ import {
 } from './actions';
 
 import Character from '../models/savageWorldsCharacter';
+import { CharCreatorAction } from './interfaces';
 
 
 
@@ -29,13 +30,7 @@ const initialState: AppState = {
   ruleset: 'savageworldsfantasy'
 };
 
-interface Action{
-  type: string,
-  payload: any
-  error: string
-}
-
-export function AppReducer(state = initialState, action: Action) {
+export function AppReducer(state = initialState, action: CharCreatorAction) {
   switch (action.type) { 
     case FETCH_CHARACTERS_REQUEST:
       return {

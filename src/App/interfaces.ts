@@ -25,9 +25,9 @@ export interface SaveChanges{
 }
 
 
-export interface CustomAction<TPayload = void> extends Action<string> {
+export interface CharCreatorAction<TPayload = any> extends Action<string> {
   payload?: TPayload
   error?: string
 }
 
-export type ThunkResult<TResult, TResultActionPayload> = ThunkAction<TResult, Store, void, CustomAction<TResultActionPayload>>
+export interface ThunkResult<TResult, TResultActionPayload> extends ThunkAction<TResult, Store, void, CharCreatorAction<TResultActionPayload>> {}
