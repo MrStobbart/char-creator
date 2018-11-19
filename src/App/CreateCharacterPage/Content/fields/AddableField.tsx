@@ -4,27 +4,21 @@ import { AutocompleteField } from './AutocompleteField';
 import { Quality } from 'src/models/interfaces';
 import { AddQuality, RemoveQuality, QualityData } from 'src/App/interfaces';
 import { Qualities } from 'src/models/Qualities';
-import { connect, MapDispatchToProps } from 'react-redux';
+import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
 import { Store } from 'src/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { Action } from 'redux';
 
 
-interface Props extends PropsFromState, PropsFromDispatch, AddableFieldProps { }
-
-interface AddableFieldProps{
-  removeQuality: RemoveQuality
-  addQuality: AddQuality
-  qualities: Qualities<Quality>
-}
-
+interface Props extends OwnProps, PropsFromState { }
 
 interface State{
   warning: string
 }
+
 class AddableField extends Component<Props, State> {
 
-  constructor(props: AddableFieldProps) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       warning: ''
@@ -85,17 +79,24 @@ class AddableField extends Component<Props, State> {
   }
 }
 
-export default connect<PropsFromState, PropsFromDispatch, void>(mapStateToProps, mapDispatchToProps)(AddableField)
+export default connect<PropsFromState, PropsFromDispatch, OwnProps>(mapStateToProps, mapDispatchToProps)(AddableField)
 
 interface PropsFromState {
-  qualities: QualityData
+  availableQualities: QualityData
 }
+interface OwnProps {
+  removeQuality: RemoveQuality
+  addQuality: AddQuality
+  qualities: Qualities<Quality>
+}
+
 interface PropsFromDispatch {
 }
 
-function mapStateToProps(state: Store): PropsFromState {
+function mapStateToProps(state: Store, ownProps: OwnProps): Props{
   return {
-    qualities: state.app.qualities
+    availableQualities: state.app.qualities,
+    ...ownProps
   }
 }
 function mapDispatchToProps(dispatch: ThunkDispatch<Store, any, Action>): MapDispatchToProps<PropsFromDispatch, void> {
