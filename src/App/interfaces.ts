@@ -1,4 +1,4 @@
-import { Property, Requirement, Quality } from 'src/models/interfaces';
+import { Property, Requirement, Quality, Edge, Hinderance } from 'src/models/interfaces';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { Store } from '../rootReducer';
@@ -30,4 +30,9 @@ export interface CharCreatorAction<TPayload = any> extends Action<string> {
   error?: string
 }
 
-export interface ThunkResult<TResult, TResultActionPayload> extends ThunkAction<TResult, Store, void, CharCreatorAction<TResultActionPayload>> {}
+export interface ThunkResult<TResult, TResultActionPayload> extends ThunkAction<TResult, Store, void, CharCreatorAction<TResultActionPayload>> { }
+
+export interface QualityData{
+  edges: Edge[],
+  hinderances: Hinderance[]
+}

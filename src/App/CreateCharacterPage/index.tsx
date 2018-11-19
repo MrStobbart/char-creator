@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { connect, MapDispatchToPropsFactory, MapDispatchToProps } from 'react-redux';
+import { connect, MapDispatchToProps } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
-import { Action, ActionCreator, Dispatch } from 'redux';
+import { Action } from 'redux';
 
 // Actions
-import { upsertCharacter } from '../actions';
+import { upsertCharacter, fetchQualities } from '../actions';
 
 // Components
 import { Navigation } from './Navigation';
@@ -12,9 +12,9 @@ import { Content } from './Content';
 import { InfoPanel } from './InfoPanel';
 import Character from '../../models/savageWorldsCharacter';
 import { Store } from '../../rootReducer';
-import { CreateUpdateValue, AddQuality, RemoveQuality, SaveChanges } from 'src/App/interfaces';
+import { CreateUpdateValue, AddQuality, RemoveQuality, SaveChanges, QualityData } from 'src/App/interfaces';
 import { Quality, Requirement, Property } from 'src/models/interfaces';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { ThunkDispatch } from 'redux-thunk';
 
 
 export interface CreateCharacterProps extends RouteComponentProps<any>, PropsFromState, PropsFromDispatch{ }
@@ -37,6 +37,7 @@ class CreateCharacterPage extends React.Component<CreateCharacterProps, State> {
 
   componentDidMount() {
     this.initializeComponent(this.props)
+    this.props.fetchQualities()
   }
 
 
@@ -106,6 +107,7 @@ class CreateCharacterPage extends React.Component<CreateCharacterProps, State> {
         </div>
         <div className="uk-width-2-3">
           <Content
+            qualityData={this.props.qualities}
             character={this.state.character}
             availableValues={this.state.character.values}
             createUpdateValue={this.createUpdateValue}
@@ -132,17 +134,25 @@ class CreateCharacterPage extends React.Component<CreateCharacterProps, State> {
  */
 export default connect<PropsFromState, PropsFromDispatch, void>(mapStateToProps, mapDispatchToProps)(CreateCharacterPage)
 
-interface PropsFromState { characters: Character[] }
-interface PropsFromDispatch { upsertCharacter: (character: Character) => void }
+interface PropsFromState {
+  characters: Character[],
+  qualities: QualityData
+}
+interface PropsFromDispatch {
+  upsertCharacter: (character: Character) => void,
+  fetchQualities: () => void
+}
 
 function mapStateToProps(state: Store): PropsFromState {
   return {
-    characters: state.app.characters
+    characters: state.app.characters,
+    qualities: state.app.qualities
   }
 }
 function mapDispatchToProps(dispatch: ThunkDispatch<Store, any, Action>): MapDispatchToProps<PropsFromDispatch, void> {
   return {
     upsertCharacter: (character: Character) => dispatch(upsertCharacter(character)),
+    fetchQualities: () => dispatch(fetchQualities()),
   }
 }
 

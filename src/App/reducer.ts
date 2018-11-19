@@ -11,22 +11,30 @@ import {
   UPSERT_CHARACTER_REQUEST,
   UPSERT_CHARACTER_SUCCESS,
   UPSERT_CHARACTER_FAILURE,
+  FETCH_QUALITIES_REQUEST,
+  FETCH_QUALITIES_SUCCESS,
+  FETCH_QUALITIES_FAILURE
 } from './actions';
 
 import Character from '../models/savageWorldsCharacter';
-import { CharCreatorAction } from './interfaces';
+import { CharCreatorAction, QualityData } from './interfaces';
 
 
 
 export interface AppState{
   loading: boolean,
   characters: Character[],
+  qualities: QualityData,
   ruleset: string
 }
 
 const initialState: AppState = {
   loading: false,
   characters: [],
+  qualities: {
+    edges: [],
+    hinderances: []
+  },
   ruleset: 'savageworldsfantasy'
 };
 
@@ -106,6 +114,24 @@ export function AppReducer(state = initialState, action: CharCreatorAction) {
       }
     case UPSERT_CHARACTER_FAILURE:
       console.error(action.error)
+      return {
+        ...state,
+        loading: false
+      }
+    case FETCH_QUALITIES_REQUEST:
+      return {
+        ...state,
+        loading: true
+      }
+    case FETCH_QUALITIES_SUCCESS:
+      const qualities: QualityData = action.payload
+      return {
+        ...state,
+        loading: false,
+        qualities: qualities
+      }
+    case FETCH_QUALITIES_FAILURE:
+      console.error(action.error);
       return {
         ...state,
         loading: false

@@ -1,6 +1,6 @@
 import { fetchEndpoint } from '../utils/fetchEndpoint';
 import { Action, ActionCreator, Dispatch } from 'redux';
-import { CharCreatorAction, ThunkResult } from 'src/App/interfaces';
+import { CharCreatorAction, ThunkResult, QualityData } from 'src/App/interfaces';
 import Character from '../models/savageWorldsCharacter';
 
 
@@ -145,23 +145,21 @@ export const FETCH_QUALITIES_FAILURE = 'FETCH_QUALITIES_FAILURE';
 export function fetchQualitiesRequest() {
   return { type: FETCH_QUALITIES_REQUEST };
 }
-export function fetchQualitiesSuccess(payload: Character[]) {
+export function fetchQualitiesSuccess(payload: QualityData) {
   return { type: FETCH_QUALITIES_SUCCESS, payload }
 }
 export function fetchQualitiesFailure(error: string) {
   return { type: FETCH_QUALITIES_FAILURE, error }
 }
 
-type FetchQualitiesThunkResult = ThunkResult<Promise<CharCreatorAction<Character[]>>, Character[]>
+type FetchQualitiesThunkResult = ThunkResult<Promise<CharCreatorAction<QualityData>>, QualityData>
 export const fetchQualities: ActionCreator<FetchQualitiesThunkResult> = () => {
   return async (dispatch, getState) => {
     dispatch(fetchQualitiesRequest());
 
-    // TODO get ruleset from App store
     const endpoint = getState().app.ruleset;
     try {
-      // TODO change data to Qualities somewhere
-      const payload: Character[] = await fetchEndpoint(`${endpoint}/Qualities`)
+      const payload: QualityData = await fetchEndpoint(`${endpoint}/qualities`)
       return dispatch(fetchQualitiesSuccess(payload));
     } catch (error) {
       return dispatch(fetchQualitiesFailure(error));

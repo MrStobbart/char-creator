@@ -2,19 +2,27 @@ import * as React from 'react';
 import { Component, MouseEvent } from 'react';
 import { AutocompleteField } from './AutocompleteField';
 import { Quality } from 'src/models/interfaces';
-import { AddQuality, RemoveQuality } from 'src/App/interfaces';
+import { AddQuality, RemoveQuality, QualityData } from 'src/App/interfaces';
 import { Qualities } from 'src/models/Qualities';
+import { connect, MapDispatchToProps } from 'react-redux';
+import { Store } from 'src/rootReducer';
+import { ThunkDispatch } from 'redux-thunk';
+import { Action } from 'redux';
 
-export interface AddableFieldProps{
+
+interface Props extends PropsFromState, PropsFromDispatch, AddableFieldProps { }
+
+interface AddableFieldProps{
   removeQuality: RemoveQuality
   addQuality: AddQuality
   qualities: Qualities<Quality>
 }
 
+
 interface State{
   warning: string
 }
-export class AddableField extends Component<AddableFieldProps, State> {
+class AddableField extends Component<Props, State> {
 
   constructor(props: AddableFieldProps) {
     super(props);
@@ -74,5 +82,23 @@ export class AddableField extends Component<AddableFieldProps, State> {
          
       </div>
     )
+  }
+}
+
+export default connect<PropsFromState, PropsFromDispatch, void>(mapStateToProps, mapDispatchToProps)(AddableField)
+
+interface PropsFromState {
+  qualities: QualityData
+}
+interface PropsFromDispatch {
+}
+
+function mapStateToProps(state: Store): PropsFromState {
+  return {
+    qualities: state.app.qualities
+  }
+}
+function mapDispatchToProps(dispatch: ThunkDispatch<Store, any, Action>): MapDispatchToProps<PropsFromDispatch, void> {
+  return {
   }
 }
