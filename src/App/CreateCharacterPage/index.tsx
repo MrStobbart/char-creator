@@ -107,7 +107,6 @@ class CreateCharacterPage extends React.Component<CreateCharacterProps, State> {
         </div>
         <div className="uk-width-2-3">
           <Content
-            qualityData={this.props.qualities}
             character={this.state.character}
             availableValues={this.state.character.values}
             createUpdateValue={this.createUpdateValue}

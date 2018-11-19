@@ -2,14 +2,13 @@ import * as React from 'react';
 import { TextField } from './fields/TextField';
 import { NumberField } from './fields/NumberField';
 import { DataField } from './fields/DataField';
-import { AddableField } from './fields/AddableField';
+import AddableField from './fields/AddableField';
 import { FieldGroup, NumberProperty, DeliveredData, TextProperty, Quality, Property } from 'src/models/interfaces';
 import { CreateUpdateValue, AddQuality, RemoveQuality, QualityData } from 'src/App/interfaces';
 import SavageWorldsCharacter from 'src/models/savageWorldsCharacter';
 import { Qualities } from 'src/models/Qualities';
 
 export interface FieldGroupContainerProps{
-  qualityData: QualityData
   character: SavageWorldsCharacter
   fieldset: FieldGroup,
   availableValues: string[],
@@ -67,10 +66,9 @@ export function FieldGroupComponent(props: FieldGroupContainerProps) {
     case 'addable':
       fields = props.fieldset.order.map(propertyId => {
         const qualities: Qualities<Quality> = props.character[propertyId]
-        const availableQualities: Quality[] = props.qualityData[qualities.id]
         return (
           <AddableField
-            availableQualities={availableQualities}
+            qualityId={propertyId}
             qualities={qualities}
             addQuality={props.addQuality}
             removeQuality={props.removeQuality}

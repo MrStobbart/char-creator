@@ -6,7 +6,6 @@ import { Property } from 'src/models/interfaces';
 import { CreateUpdateValue, AddQuality, RemoveQuality, QualityData } from 'src/App/interfaces';
 
 export interface ContentProps{
-  qualityData: QualityData
   character: SavageWorldsCharacter,
   availableValues: string[]
   createUpdateValue: CreateUpdateValue<Property>,
@@ -21,7 +20,6 @@ export function Content(props: ContentProps) {
       <form className="uk-form-horizontal">
         {props.character.fieldsets.map(fieldset =>
           <FieldGroupComponent
-            qualityData={props.qualityData}
             character={props.character}
             key={fieldset.id}
             fieldset={fieldset}

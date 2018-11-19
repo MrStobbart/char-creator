@@ -85,6 +85,7 @@ interface PropsFromState {
   availableQualities: QualityData
 }
 interface OwnProps {
+  qualityId: String
   removeQuality: RemoveQuality
   addQuality: AddQuality
   qualities: Qualities<Quality>
