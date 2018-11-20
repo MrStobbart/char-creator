@@ -17,12 +17,10 @@
     "start": "npm-run-all -l -p mongodb server client",
     "startWin": "npm-run-all -l -p mongodb serverWin client",
     "build": "react-scripts-ts build",
-    "mongodb": "mongod --dbpath data",
+    "mongodb": "mongod --dbpath data/db",
     "client": "react-scripts-ts start",
     "server": "cross-env NODE_ENV=development nodemon -w server server/server.js",
-    "serverWin": "cross-env NODE_ENV=development nodemon -w server server\\server.js",
     "buildserver": "cross-env NODE_ENV=production node server/server.js",
-    "buildserverWin": "cross-env NODE_ENV=production node server\\server.js",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },

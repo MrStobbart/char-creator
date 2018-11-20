@@ -24,10 +24,7 @@ app.use((req, res, next) => {
   next();
 });
 
-if (process.env.NODE_ENV === 'production') {
-  console.log('Serve the production build');
-  app.use(express.static('build'));
-}
+
 
 app.options('*', (req, res) => {
   res.status(200).send();
@@ -93,6 +90,11 @@ app.route('/api/savage-worlds-fantasy/characters/:id')
       .then(mongoRes => res.status(200).json(mongoRes.value))
       .catch(err => res.status(404).json(err))
   })
+
+if (process.env.NODE_ENV === 'production') {
+  console.log('Serve the production build');
+  app.use(express.static('build'));
+}
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
