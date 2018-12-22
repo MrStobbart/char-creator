@@ -5,6 +5,7 @@ const logger = require('morgan');
 const history = require('connect-history-api-fallback');
 const ObjectId = require('mongodb').ObjectID;
 
+const ApiError = require('./models/ApiError');
 const dbConnectionMiddleware = require('./middlewares/dbConnector');
 const theDarkEye = require('./data/theDarkEye/charsheet');
 const savageWorldsFantasyQualities = require('./data/savageWorldsFantasy/qualities');
@@ -14,7 +15,7 @@ const port = 8080;
 
 
 // Middleware: Make mongoDb db object available in req.
-app.use(dbConnectionMiddleware('mongodb://127.0.0.1:27017/charCreator'));
+app.use(dbConnectionMiddleware('mongodb://127.0.0.1:27017', 'char-reator'));
 
 // Middleware: Parse request body to json.
 const isProduction = process.env.NODE_ENV === 'production';
@@ -55,51 +56,59 @@ app.route('/api/savage-worlds-fantasy/qualities')
 
 app.route('/api/savage-worlds-fantasy/characters')
   .all((req, res, next) => {
+    console.log('asdasdas', req.db);
+
     req.collection = req.db.collection('swFantasyCharacters');
     next();
   })
 
   // Get all characters
-  .get((req, res) => {
+  .get((req, res, next) => {
     req.collection.find({}).toArray()
       .then(data => res.status(200).json(data))
-      .catch(err => res.status(400).json(err));
+      .catch(err => next(err));
   });
 
 
 // TODO add this kind of error handling to all endpoints
 app.route('/api/savage-worlds-fantasy/characters/:id')
   .all((req, res, next) => {
+    console.log('asdasdas', req.db);
     req.collection = req.db.collection('swFantasyCharacters');
     next();
   })
 
 
   // Get specific character
-  .get((req, res) => {
+  .get((req, res, next) => {
     req.collection.findOne({ _id: req.params.id })
-      .then(mongoRes => res.status(200).json(mongoRes))
-      .catch(err => res.status(404).json(err));
+      .then((mongoRes) => {
+        if (!mongoRes) {
+          next(new ApiError(404, `No character with the id ${req.params.id} found!`));
+        }
+        res.status(200).json(mongoRes);
+      })
+      .catch(err => next(err));
   })
 
 
   // Upsert character with given id
-  .put((req, res) => {
+  .put((req, res, next) => {
     req.collection.findOneAndReplace(
       { _id: req.params.id },
       req.body,
       { returnOriginal: false, upsert: true },
     )
       .then(mongoRes => res.status(200).json(mongoRes.value))
-      .catch((err) => { res.status(404).json(err); });
+      .catch(err => next(err));
   })
 
 
   // Delete character with given id
-  .delete((req, res) => {
+  .delete((req, res, next) => {
     req.collection.findOneAndDelete({ _id: req.params.id })
       .then(mongoRes => res.status(200).json(mongoRes.value))
-      .catch(err => res.status(404).json(err));
+      .catch(err => next(err));
   });
 
 
@@ -114,12 +123,20 @@ if (isProduction) {
     verbose: false,
   }));
   app.use(staticFileMiddleware);
+  app.use((err, req, res, next) => {
+    console.log(err);
+    if (err instanceof ApiError) {
+      return res.status(err.statusCode).json({ message: err.message });
+    }
+    return res.status(500).json({ message: 'An unkown error occured!' });
+  });
 } else {
   app.use((err, req, res, next) => {
     console.log(err);
-    const apiError = new ApiError('unknown', err.message);
-    apiError.stack = err.stack;
-    sendError(res, err.status || 500, apiError);
+    if (err instanceof ApiError) {
+      return res.status(err.statusCode).json({ message: err.message });
+    }
+    return res.status(500).json({ message: err.message, stack: err.stack });
   });
 }
 
