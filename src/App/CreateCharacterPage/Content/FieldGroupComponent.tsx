@@ -8,7 +8,7 @@ import { CreateUpdateValue, AddQuality, RemoveQuality, QualityData } from 'src/A
 import SavageWorldsCharacter from 'src/models/savageWorldsCharacter';
 import { Qualities } from 'src/models/Qualities';
 
-export interface FieldGroupContainerProps{
+export interface FieldGroupContainerProps {
   character: SavageWorldsCharacter
   fieldset: FieldGroup,
   availableValues: string[],
@@ -37,7 +37,7 @@ export function FieldGroupComponent(props: FieldGroupContainerProps) {
       })
       break;
     case 'readonly':
-      fields =  props.fieldset.order.map(propertyId => {
+      fields = props.fieldset.order.map(propertyId => {
         const property: DeliveredData = props.character[propertyId]
         return (
           <DataField
@@ -68,6 +68,7 @@ export function FieldGroupComponent(props: FieldGroupContainerProps) {
         const qualities: Qualities<Quality> = props.character[propertyId]
         return (
           <AddableField
+            key={propertyId}
             qualityId={propertyId}
             qualities={qualities}
             addQuality={props.addQuality}

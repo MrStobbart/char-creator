@@ -21,7 +21,7 @@ import { CharCreatorAction, QualityData } from './interfaces';
 
 
 
-export interface AppState{
+export interface AppState {
   loading: boolean,
   characters: Character[],
   qualities: QualityData,
@@ -39,7 +39,7 @@ const initialState: AppState = {
 };
 
 export function AppReducer(state = initialState, action: CharCreatorAction) {
-  switch (action.type) { 
+  switch (action.type) {
     case FETCH_CHARACTERS_REQUEST:
       return {
         ...state,
@@ -96,7 +96,7 @@ export function AppReducer(state = initialState, action: CharCreatorAction) {
         loading: true
       }
     case UPSERT_CHARACTER_SUCCESS:
-      
+
       let newCharacters = [...state.characters];
       const index = state.characters.findIndex(character => character.id === action.payload.id)
 
