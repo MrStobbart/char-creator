@@ -17,7 +17,7 @@ import {
 } from './actions';
 
 import Character from '../models/savageWorldsCharacter';
-import { CharCreatorAction, QualityData } from './interfaces';
+import { AppAction, QualityData } from './interfaces';
 
 
 
@@ -35,10 +35,10 @@ const initialState: AppState = {
     edges: [],
     hinderances: []
   },
-  ruleset: 'savageworldsfantasy'
+  ruleset: 'savage-worlds-fantasy'
 };
 
-export function AppReducer(state = initialState, action: CharCreatorAction) {
+export function AppReducer(state = initialState, action: AppAction) {
   switch (action.type) {
     case FETCH_CHARACTERS_REQUEST:
       return {
@@ -65,7 +65,7 @@ export function AppReducer(state = initialState, action: CharCreatorAction) {
     case DELETE_CHARACTER_SUCCESS:
       return {
         ...state,
-        characters: state.characters.filter(character => character.id !== action.payload.id),
+        characters: state.characters.filter(character => character.id !== action.payload),
         loading: false
       }
     case DELETE_CHARACTER_FAILURE:
@@ -82,7 +82,7 @@ export function AppReducer(state = initialState, action: CharCreatorAction) {
     case FETCH_CHARACTER_SUCCESS:
       return {
         ...state,
-        character: action.payload,
+        characters: state.characters.concat(action.payload),
         loading: false
       }
     case FETCH_CHARACTER_FAILURE:

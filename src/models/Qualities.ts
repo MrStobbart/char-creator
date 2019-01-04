@@ -2,7 +2,7 @@ import { Addable } from './Addable';
 import { Quality, Modifier, Requirement, ObjWithId } from './interfaces';
 
 
-export class Qualities<T extends Quality> extends Addable<T> implements ObjWithId{
+export class Qualities<T extends Quality> extends Addable<T> implements ObjWithId {
 
 
   checkRequirements: Function
@@ -28,18 +28,18 @@ export class Qualities<T extends Quality> extends Addable<T> implements ObjWithI
         return unmetRequirements
       }
     }
-    
+
     super.push(item)
     return []
 
   }
 
-  
+
   getModifiers = (): Modifier[] => {
 
-    if (this.items.length > 0) {
-      const modifiers = this.items.map(quality => quality.modifiers)
-      return modifiers.reduce((sum, curr) => sum.concat(curr) )
+    if (this.value.length > 0) {
+      const modifiers = this.value.map(quality => quality.modifiers)
+      return modifiers.reduce((sum, curr) => sum.concat(curr))
     }
     return []
   }

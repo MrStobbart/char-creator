@@ -56,8 +56,6 @@ app.route('/api/savage-worlds-fantasy/qualities')
 
 app.route('/api/savage-worlds-fantasy/characters')
   .all((req, res, next) => {
-    console.log('asdasdas', req.db);
-
     req.collection = req.db.collection('swFantasyCharacters');
     next();
   })
@@ -73,7 +71,7 @@ app.route('/api/savage-worlds-fantasy/characters')
 // TODO add this kind of error handling to all endpoints
 app.route('/api/savage-worlds-fantasy/characters/:id')
   .all((req, res, next) => {
-    console.log('asdasdas', req.db);
+    // console.log('asdasdas', req.db);
     req.collection = req.db.collection('swFantasyCharacters');
     next();
   })
@@ -107,7 +105,7 @@ app.route('/api/savage-worlds-fantasy/characters/:id')
   // Delete character with given id
   .delete((req, res, next) => {
     req.collection.findOneAndDelete({ _id: req.params.id })
-      .then(mongoRes => res.status(200).json(mongoRes.value))
+      .then(mongoRes => res.status(200).json(mongoRes._id))
       .catch(err => next(err));
   });
 

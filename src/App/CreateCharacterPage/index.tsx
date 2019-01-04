@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Action } from 'redux';
 
 // Actions
-import { upsertCharacter, fetchQualities } from '../actions';
+import { upsertCharacter, fetchQualities, fetchCharacter } from '../actions';
 
 // Components
 import { Navigation } from './Navigation';
@@ -12,16 +12,17 @@ import { Content } from './Content';
 import { InfoPanel } from './InfoPanel';
 import Character from '../../models/savageWorldsCharacter';
 import { Store } from '../../rootReducer';
-import { CreateUpdateValue, AddQuality, RemoveQuality, SaveChanges, QualityData } from 'src/App/interfaces';
+import { CreateUpdateValue, AddQuality, RemoveQuality, SaveChanges, QualityData, AppAction } from 'src/App/interfaces';
 import { Quality, Requirement, Property } from 'src/models/interfaces';
 import { ThunkDispatch } from 'redux-thunk';
 
 
-export interface CreateCharacterProps extends RouteComponentProps<any>, PropsFromState, PropsFromDispatch{ }
+export interface CreateCharacterProps extends RouteComponentProps<any>, PropsFromState, PropsFromDispatch { }
 
-interface State{
+interface State {
   character: Character,
   unsavedChanges: boolean,
+  loading: boolean
 }
 
 // The charpage has its own state that will be synced with the redux state on submit. Performance reasons
@@ -30,8 +31,9 @@ class CreateCharacterPage extends React.Component<CreateCharacterProps, State> {
   constructor(props: CreateCharacterProps) {
     super(props);
     this.state = {
-      character: new Character,
-      unsavedChanges: false
+      character: new Character(),
+      unsavedChanges: false,
+      loading: false
     }
   }
 
@@ -47,22 +49,31 @@ class CreateCharacterPage extends React.Component<CreateCharacterProps, State> {
 
   initializeComponent(props: CreateCharacterProps) {
     const characterId = props.match.params.characterId;
-
-    if (characterId && props.characters) {
+    if (characterId) {
       this.loadSelectedCharacter(characterId, props);
     } else {
-      this.setState({ character: new Character })
+      this.setState({ character: new Character() })
     }
   }
 
   loadSelectedCharacter(characterId: string, props: CreateCharacterProps) {
+    // TODO nothing is found here
+    console.log('characters', props.characters);
 
-    const loadedCharacter = props.characters.find(character => character.id === characterId);
+    const selectedCharacter = props.characters.find(character => character.id === characterId);
+    console.log('selected char: ', selectedCharacter);
 
-    // If not found there will be an endless spinner - invalid id
-    if (loadedCharacter) {
-      this.setState({ character: new Character(loadedCharacter) })
-    } 
+    if (!selectedCharacter) {
+      if (!this.state.loading) {
+        this.setState({ loading: true })
+        props.fetchCharacter(characterId)
+      }
+    } else {
+      console.log('set character: ', selectedCharacter);
+
+      this.setState({ character: selectedCharacter })
+      this.setState({ loading: false })
+    }
   }
 
 
@@ -82,18 +93,18 @@ class CreateCharacterPage extends React.Component<CreateCharacterProps, State> {
 
     // Set state only when quality was added
     if (unmetRequirements.length === 0) {
-      this.setState({unsavedChanges: true})
+      this.setState({ unsavedChanges: true })
     }
     return unmetRequirements
   }
 
   removeQuality: RemoveQuality = (addableFieldId: string, qualityId: string): void => {
     this.state.character[addableFieldId].remove[qualityId]
-    this.setState({unsavedChanges: true})
-  } 
+    this.setState({ unsavedChanges: true })
+  }
 
   saveChanges: SaveChanges = () => {
-    // this.props.upsertCharacter(this.state.character);
+    this.props.upsertCharacter(this.state.character);
     this.props.history.push(`/charpage/${this.state.character.id}`)
     this.setState({ unsavedChanges: false })
   }
@@ -140,6 +151,7 @@ interface PropsFromState {
 interface PropsFromDispatch {
   upsertCharacter: (character: Character) => void,
   fetchQualities: () => void
+  fetchCharacter: (id: string) => void
 }
 
 function mapStateToProps(state: Store): PropsFromState {
@@ -148,10 +160,11 @@ function mapStateToProps(state: Store): PropsFromState {
     qualities: state.app.qualities
   }
 }
-function mapDispatchToProps(dispatch: ThunkDispatch<Store, any, Action>): MapDispatchToProps<PropsFromDispatch, void> {
+function mapDispatchToProps(dispatch: ThunkDispatch<Store, any, AppAction>): PropsFromDispatch {
   return {
     upsertCharacter: (character: Character) => dispatch(upsertCharacter(character)),
     fetchQualities: () => dispatch(fetchQualities()),
+    fetchCharacter: (id) => dispatch(fetchCharacter(id)),
   }
 }
 

@@ -4,7 +4,7 @@ import { NumberProperty } from 'src/models/interfaces';
 import { UpdateValue } from 'src/App/interfaces';
 
 // TODO maybe make this properly
-export interface NumberFieldProps{
+interface NumberFieldProps {
   updateValue: UpdateValue<NumberProperty>
   value: number
   children: string
@@ -16,7 +16,7 @@ export function NumberField(props: NumberFieldProps) {
 
   const decrease = (event: MouseEvent) => {
     event.preventDefault();
-    if (props.value === 0 || props.default === props.value) {
+    if (props.value === 0 || props.default === props.value) {
       return
     }
     props.updateValue(props.value - 1)

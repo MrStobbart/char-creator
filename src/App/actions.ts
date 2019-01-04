@@ -1,7 +1,8 @@
 import { fetchEndpoint } from '../utils/fetchEndpoint';
 import { Action, ActionCreator, Dispatch } from 'redux';
-import { CharCreatorAction, ThunkResult, QualityData } from 'src/App/interfaces';
+import { AppAction, ThunkResult, QualityData } from 'src/App/interfaces';
 import Character from '../models/savageWorldsCharacter';
+import { CharProperty, CharData } from 'src/models/interfaces';
 
 
 /**
@@ -21,7 +22,7 @@ export function fetchCharactersFailure(error: string) {
   return { type: FETCH_CHARACTERS_FAILURE, error }
 }
 
-type FetchCharactersThunkResult = ThunkResult<Promise<CharCreatorAction<Character[]>>, Character[]>
+type FetchCharactersThunkResult = ThunkResult<Promise<AppAction<Character[]>>, Character[]>
 export const fetchCharacters: ActionCreator<FetchCharactersThunkResult> = () => {
   return async (dispatch, getState) => {
     dispatch(fetchCharactersRequest());
@@ -30,8 +31,12 @@ export const fetchCharacters: ActionCreator<FetchCharactersThunkResult> = () => 
     const endpoint = getState().app.ruleset;
     try {
       // TODO change data to characters somewhere
-      const payload: Character[] = await fetchEndpoint(`${endpoint}/characters`)
-      return dispatch(fetchCharactersSuccess(payload));
+      const payload: CharData[] = await fetchEndpoint(`${endpoint}/characters`)
+      const timeName = 'Creating all character instances.'
+      console.time(timeName)
+      const characters = payload.map(characterData => new Character(characterData))
+      console.timeEnd(timeName)
+      return dispatch(fetchCharactersSuccess(characters));
     } catch (error) {
       return dispatch(fetchCharactersFailure(error));
     }
@@ -48,22 +53,23 @@ export const DELETE_CHARACTER_FAILURE = 'DELETE_CHARACTER_FAILURE';
 export function deleteCharacterRequest() {
   return { type: DELETE_CHARACTER_REQUEST };
 }
-export function deleteCharacterSuccess(payload: Character) {
-  return { type: DELETE_CHARACTER_SUCCESS }
+export function deleteCharacterSuccess(characterId: string) {
+  return { type: DELETE_CHARACTER_SUCCESS, payload: characterId }
 }
 export function deleteCharacterFailure(error: string) {
   return { type: DELETE_CHARACTER_FAILURE, error }
 }
 
-type DeleteCharacterThunkResult = ThunkResult<Promise<CharCreatorAction<Character>>, Character>
+type DeleteCharacterThunkResult = ThunkResult<Promise<AppAction<string>>, string>
 export function deleteCharacter(characterId: string): DeleteCharacterThunkResult {
   return async (dispatch, getState) => {
     dispatch(deleteCharacterRequest());
 
     const endpoint = getState().app.ruleset;
     try {
-      const payload: Character = await fetchEndpoint(`${endpoint}/characters/${characterId}`, 'delete')
-      return dispatch(deleteCharacterSuccess(payload));
+      await fetchEndpoint(`${endpoint}/characters/${characterId}`, 'delete')
+      // TODO error handling here
+      return dispatch(deleteCharacterSuccess(characterId));
     } catch (error) {
       return dispatch(deleteCharacterFailure(error));
     }
@@ -87,15 +93,20 @@ export function fetchCharacterFailure(error: string) {
   return { type: FETCH_CHARACTER_FAILURE, error }
 }
 
-type FetchCharacterThunkResult = ThunkResult<Promise<CharCreatorAction<Character>>, Character>
+type FetchCharacterThunkResult = ThunkResult<Promise<AppAction<Character>>, Character>
 export function fetchCharacter(id: string): FetchCharacterThunkResult {
+
   return async (dispatch, getState) => {
+    // TODO is not being reached
+    console.log('fetch character');
     dispatch(fetchCharacterRequest());
 
     const endpoint = getState().app.ruleset;
     try {
-      const payload: Character = await fetchEndpoint(`${endpoint}/characters/${id}`)
-      return dispatch(fetchCharacterSuccess(payload));
+      const characterData: CharData = await fetchEndpoint(`${endpoint}/characters/${id}`)
+      console.log('character', characterData);
+      const character = new Character(characterData)
+      return dispatch(fetchCharacterSuccess(character));
     } catch (error) {
       return dispatch(fetchCharacterFailure(error));
     }
@@ -120,15 +131,15 @@ export function upsertCharacterFailure(error: string) {
   return { type: UPSERT_CHARACTER_FAILURE, error }
 }
 
-type UpsertCharacterThunkResult = ThunkResult<Promise<CharCreatorAction<Character>>, Character>
+type UpsertCharacterThunkResult = ThunkResult<Promise<AppAction<Character>>, Character>
 export function upsertCharacter(character: Character): UpsertCharacterThunkResult {
   return async (dispatch: Function, getState: Function) => {
     dispatch(upsertCharacterRequest());
 
     // Remove id from character to allow update
     const endpoint = getState().app.ruleset;
-    const body = { ...character }
-    body.id = '';
+    const body = character.getJson()
+    console.log(body);
     try {
       const payload: Character = await fetchEndpoint(`${endpoint}/characters/${character.id}`, 'put', body)
       return dispatch(upsertCharacterSuccess(payload))
@@ -152,7 +163,7 @@ export function fetchQualitiesFailure(error: string) {
   return { type: FETCH_QUALITIES_FAILURE, error }
 }
 
-type FetchQualitiesThunkResult = ThunkResult<Promise<CharCreatorAction<QualityData>>, QualityData>
+type FetchQualitiesThunkResult = ThunkResult<Promise<AppAction<QualityData>>, QualityData>
 export const fetchQualities: ActionCreator<FetchQualitiesThunkResult> = () => {
   return async (dispatch, getState) => {
     dispatch(fetchQualitiesRequest());

@@ -11,7 +11,7 @@ export function fetchEndpoint<T1= any, T2 = any>(endpoint: string, method = 'get
   })
     .then(res => {
       if (!res.ok) {
-        throw res.statusText; 
+        throw res.statusText;
       }
       return res;
     })

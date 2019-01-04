@@ -4,35 +4,35 @@ import { ThunkAction } from 'redux-thunk';
 import { Store } from '../rootReducer';
 
 
-export interface CreateUpdateValue<T extends Property>{
+export interface CreateUpdateValue<T extends Property> {
   (property: string): UpdateValue<T>
 }
 
-export interface UpdateValue<T extends Property>{
+export interface UpdateValue<T extends Property> {
   (newValue: T["value"]): void
 }
 
-export interface AddQuality{
+export interface AddQuality {
   (addableFieldId: string, quality: Quality): Requirement[]
 }
 
-export interface RemoveQuality{
+export interface RemoveQuality {
   (addableFieldId: string, qualityId: string): void
 }
 
-export interface SaveChanges{
+export interface SaveChanges {
   (): void
 }
 
 
-export interface CharCreatorAction<TPayload = any> extends Action<string> {
+export interface AppAction<TPayload = any> extends Action<string> {
   payload?: TPayload
   error?: string
 }
 
-export interface ThunkResult<TResult, TResultActionPayload> extends ThunkAction<TResult, Store, void, CharCreatorAction<TResultActionPayload>> { }
+export interface ThunkResult<TResult, TResultActionPayload> extends ThunkAction<TResult, Store, void, AppAction<TResultActionPayload>> { }
 
-export interface QualityData{
+export interface QualityData {
   edges: Edge[],
   hinderances: Hinderance[]
 }

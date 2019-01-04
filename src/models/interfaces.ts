@@ -7,18 +7,27 @@ export interface ObjWithId {
   id: string
 }
 
-export interface Property extends ObjWithId{
+export interface Property extends ObjWithId {
   label: string
   value: number | string
 }
 
-export interface NumberProperty extends Property{
+export interface NumberProperty extends Property {
   value: number
   default?: number
 }
 
 export interface TextProperty extends Property {
   value: string
+}
+
+export interface CharProperty extends ObjWithId {
+  value: number | string
+}
+
+export interface CharData {
+  _id: string,
+  data: CharProperty[]
 }
 
 /**
@@ -39,25 +48,25 @@ export interface FieldGroup {
 }
 
 
-export interface Quality extends ObjWithId{
+export interface Quality extends ObjWithId {
   label: string
   information: string
   modifiers: Modifier[]
   requirements: Requirement[]
 }
 
-export interface Requirement{
+export interface Requirement {
   propertyId: string
   value: number
 }
 
-export interface Edge extends Quality{
+export interface Edge extends Quality {
 
 }
 
-export interface Hinderance extends Quality{
+export interface Hinderance extends Quality {
 }
 
-export interface DeliveredData extends NumberProperty{
+export interface DeliveredData extends NumberProperty {
 }
 

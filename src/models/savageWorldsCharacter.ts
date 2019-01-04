@@ -1,21 +1,21 @@
-import { NumberProperty, TextProperty } from './interfaces';
+import { NumberProperty, TextProperty, CharProperty, CharData } from './interfaces';
 import * as shortid from 'shortid';
 import { CharCreationInformation, Modifier, ObjWithId, FieldGroup, Edge, Hinderance, Requirement, DeliveredData, FieldTypes } from './interfaces';
 import { Skill } from './Skill';
 import { Attribute } from './Attribute';
-import { Qualities} from './Qualities';
+import { Qualities } from './Qualities';
 
-export default class SavageWorldsCharacter{
+export default class SavageWorldsCharacter {
 
-  constructor(json?: any) {
+  constructor(charProperties?: CharData) {
 
-    if (json) {
-      this.loadCharacterData(json)
+    if (charProperties) {
+      this.loadJson(charProperties)
     }
 
     this.init()
   }
-  
+
   // initial calculation
   init = () => {
     this.calcAvailableSkillPoints()
@@ -23,13 +23,52 @@ export default class SavageWorldsCharacter{
     this.calcDeliveredData()
   }
 
-  
-  loadCharacterData = (json: any) => {
-    // TODO load the character data from json into the class
+
+  loadJson = (charProperties: CharData) => {
+    console.log('load json', charProperties);
+
+    // TODO edges / hinderances not loaded properly 
+    this.id = charProperties._id
+    charProperties.data.forEach(charProperty => {
+      if (this[charProperty.id]) {
+        this[charProperty.id].value = charProperty.value
+      } else {
+        console.error(`Property ${charProperty.id} not found.`);
+      }
+    })
+    console.log('Name is ' + this.name);
+
   }
 
-
-
+  getJson(): CharData {
+    // TODO edges / hinderances not saved properly 
+    // All char properties that should be saved (not delivered data)
+    const charPropsFlat = this.fieldsets.reduce((sum: string[], current) => {
+      if (current.id === 'deliveredData') {
+        return sum
+      }
+      return sum.concat(current.order)
+    }, [])
+    // Savabe char property obejct (JsonProperty)
+    const charPropsForDb: CharProperty[] = charPropsFlat.map(propertyId => {
+      const propertyValue: number | string = this[propertyId].value
+      return {
+        id: propertyId,
+        value: propertyValue
+      }
+    })
+    // Remove Empty elements 
+    const charPropsForDbNotEmpty = charPropsForDb.filter(charProp => {
+      if (charProp.value === '' || charProp.value === 0) {
+        return false
+      }
+      return true
+    })
+    return {
+      _id: this.id,
+      data: charPropsForDbNotEmpty
+    }
+  }
   /**
    * This function calculates the remaining skill and attribute points and applies modifiers when parameter set to true.
    * @param modifiersChanged Lets the function know if the modifiers should be re calculated
@@ -42,7 +81,7 @@ export default class SavageWorldsCharacter{
 
   attributeSideEffects = (effectsAttributePoints: boolean = false) => {
     this.calcDeliveredData()
-    if(effectsAttributePoints) this.calcAvailableAttributePoints()
+    if (effectsAttributePoints) this.calcAvailableAttributePoints()
   }
 
   qualitiesSideEffects = () => {
@@ -91,7 +130,7 @@ export default class SavageWorldsCharacter{
 
 
   private appliedModifiers: Modifier[] = []
-  
+
   getAllModifiers = (): Modifier[] => {
     const edgeModifiers = this.edges.getModifiers()
     const hinderanceModifiers = this.hinderances.getModifiers()
@@ -128,8 +167,8 @@ export default class SavageWorldsCharacter{
     ]
   }
 
-  skillPoints: NumberProperty = {id: 'skillPoints', label: 'Fähigkeitspunkte', value: 50}
-  attributePoints: NumberProperty = { id: 'attributePoints', label: 'Attributspunkte', value: 10}
+  skillPoints: NumberProperty = { id: 'skillPoints', label: 'Fähigkeitspunkte', value: 50 }
+  attributePoints: NumberProperty = { id: 'attributePoints', label: 'Attributspunkte', value: 10 }
 
 
   fieldsets: FieldGroup[] = [
@@ -151,23 +190,23 @@ export default class SavageWorldsCharacter{
 
   // General information
   generalInformation = generalInformationFieldset
-  name: TextProperty = {id: 'name', label: 'Name', value: ''}
-  family: TextProperty = {id: 'family', label: 'Familie', value: ''}
-  placeOfBirth: TextProperty = {id: 'placeOfBirth', label: 'Geburtsort', value: ''}
-  birthday: TextProperty = {id: 'birthday', label: 'Geburtstag', value: ''}
-  age: TextProperty = {id: 'age', label: 'Alter', value: ''}
-  sex: TextProperty = {id: 'sex', label: 'Geschlecht', value: ''}
-  species: TextProperty = {id: 'species', label: 'Spezie', value: ''}
-  size: TextProperty = {id: 'size', label: 'Größe', value: ''}
-  weight: TextProperty = {id: 'weight', label: 'Gewicht', value: ''}
-  hairColor: TextProperty = {id: 'hairColor', label: 'Haarfarbe', value: ''}
-  eyeColor: TextProperty = {id: 'eyeColor', label: 'Augenfarbe', value: ''}
-  culture: TextProperty = {id: 'culture', label: 'Kultur', value: ''}
-  profession: TextProperty = {id: 'profession', label: 'Profession', value: ''}
-  title: TextProperty = {id: 'title', label: 'Title', value: ''}
-  socialStatus: TextProperty = {id: 'socialStatus', label: 'Sozialstatus', value: ''}
-  characterisitics: TextProperty = { id: 'characterisitics', label: 'Charakteristiken', value: ''}
-  otherInformation: TextProperty = {id: 'otherInformation', label: 'Ander Informationen', value: ''}
+  name: TextProperty = { id: 'name', label: 'Name', value: '' }
+  family: TextProperty = { id: 'family', label: 'Familie', value: '' }
+  placeOfBirth: TextProperty = { id: 'placeOfBirth', label: 'Geburtsort', value: '' }
+  birthday: TextProperty = { id: 'birthday', label: 'Geburtstag', value: '' }
+  age: TextProperty = { id: 'age', label: 'Alter', value: '' }
+  sex: TextProperty = { id: 'sex', label: 'Geschlecht', value: '' }
+  species: TextProperty = { id: 'species', label: 'Spezie', value: '' }
+  size: TextProperty = { id: 'size', label: 'Größe', value: '' }
+  weight: TextProperty = { id: 'weight', label: 'Gewicht', value: '' }
+  hairColor: TextProperty = { id: 'hairColor', label: 'Haarfarbe', value: '' }
+  eyeColor: TextProperty = { id: 'eyeColor', label: 'Augenfarbe', value: '' }
+  culture: TextProperty = { id: 'culture', label: 'Kultur', value: '' }
+  profession: TextProperty = { id: 'profession', label: 'Profession', value: '' }
+  title: TextProperty = { id: 'title', label: 'Title', value: '' }
+  socialStatus: TextProperty = { id: 'socialStatus', label: 'Sozialstatus', value: '' }
+  characterisitics: TextProperty = { id: 'characterisitics', label: 'Charakteristiken', value: '' }
+  otherInformation: TextProperty = { id: 'otherInformation', label: 'Ander Informationen', value: '' }
 
   // Delivered data
   deliveredData: FieldGroup = deliveredDataFieldset
@@ -274,7 +313,7 @@ const generalInformationFieldset: FieldGroup = {
 const skillsFieldset: FieldGroup = {
   id: 'skills',
   title: 'Fähigkeiten',
-  type: 'number', 
+  type: 'number',
   order: [
     'fighting',
     'schooting',
