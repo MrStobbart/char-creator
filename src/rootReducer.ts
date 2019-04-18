@@ -6,12 +6,11 @@ import { routerReducer, RouterState } from 'react-router-redux';
 import { AppReducer, AppState } from './App/reducer';
 
 export interface Store {
-  app: AppState,
-  routing: Reducer<RouterState>
+  app: AppState;
+  routing: Reducer<RouterState>;
 }
-
 
 export default combineReducers({
   routing: routerReducer,
   app: AppReducer,
-})
+});

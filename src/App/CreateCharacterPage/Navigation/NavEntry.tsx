@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { FieldGroup } from 'src/models/interfaces';
+import { FieldGroup } from '../../../models/interfaces';
 
-export interface Props{
-  fieldset: FieldGroup
+export interface Props {
+  fieldset: FieldGroup;
 }
 
 export function NavEntry(props: Props) {
   return (
     <li>
-      <a href={`#${props.fieldset.id}`} uk-scroll="true">
+      <a href={`#${props.fieldset.id}`} uk-scroll='true'>
         {props.fieldset.title}
       </a>
     </li>
-  )
+  );
 }

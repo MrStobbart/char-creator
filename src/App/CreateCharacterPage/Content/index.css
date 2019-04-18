@@ -10,7 +10,7 @@ label {
   margin-top: 5px !important;
 }
 
-.number-field{
+.number-field {
   width: 56px;
   text-align: center;
   border-style: none;
@@ -18,5 +18,3 @@ label {
   display: inline-block;
   vertical-align: middle;
 }
-
-

@@ -3,28 +3,24 @@ import * as Autosuggest from 'react-autosuggest';
 import './AutocompleteField.css';
 import { Quality } from '../../../../models/interfaces';
 
-export interface AutocompleteFieldProps extends Autosuggest.AutosuggestProps<string>{
-  selectedQualities: Quality[]
+export interface AutocompleteFieldProps extends Autosuggest.AutosuggestProps<string> {
+  selectedQualities: Quality[];
 }
 
-interface State{
-  suggestions: Quality[]
-  
+interface State {
+  suggestions: Quality[];
 }
 
 export class AutocompleteField extends React.Component<AutocompleteFieldProps, State> {
   // constructor(props: AutocompleteFieldProps) {
   //   super(props);
-
   //   this.state = {
   //     quality: null,
   //     suggestions: [],
   //   };
   // }
-
   // componentDidMount() {
-
-  //   // // Set field value if already in char data 
+  //   // // Set field value if already in char data
   //   // if (this.props.selectedField) {
   //   //   this.setState(prevState => {
   //   //     return {
@@ -34,33 +30,27 @@ export class AutocompleteField extends React.Component<AutocompleteFieldProps, S
   //   //   })
   //   // }
   // }
-
   // onChange = (event, { newValue, method }) => {
   //   console.log('newValue', newValue, this.props, this.state)
   //   this.setState({
   //     value: newValue
   //   });
   // };
-
   // onSuggestionsFetchRequested = ({ value }) => {
   //   this.setState({
   //     suggestions: this.getSuggestions(value)
   //   });
   // };
-
   // onSuggestionsClearRequested = () => {
   //   this.setState({
   //     suggestions: []
   //   });
   // };
-
   // getSuggestions = (value) => {
   //   const selectableGroups = this.props.selectableGroups
-
   //   if (value === '') {
   //     return selectableGroups;
   //   }
-
   //   return selectableGroups
   //     .map(selectableGroup => {
   //       return {
@@ -70,48 +60,39 @@ export class AutocompleteField extends React.Component<AutocompleteFieldProps, S
   //     })
   //     .filter(selectableGroup => selectableGroup.selectables.length > 0);
   // }
-
   // getSuggestionValue = (suggestion) => {
   //   return suggestion.label;
   // }
-
   // onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
   //   this.props.updateValue(suggestion);
   // }
-
   // renderSuggestion = (suggestion) => {
   //   return (
   //     <span>{suggestion.label}</span>
   //   );
   // }
-
   // renderSectionTitle = (selectableGroup) => {
   //   return (
   //     <strong>{selectableGroup.label}</strong>
   //   );
   // }
-
   // getSectionSuggestions = (selectableGroup) => {
   //   return selectableGroup.selectables;
   // }
-
   // shouldRenderSuggestions = (value) => {
   //   return true;
   // }
-  
   // renderInputComponent = inputProps => (
   //   <div>
   //     <input {...inputProps} className="uk-input"/>
   //   </div>
   // );
-
   // render() {
   //   const inputProps = {
   //     placeholder: this.props.placeholder,
   //     value: this.state.value,
   //     onChange: this.onChange
   //   };
-
   //   return (
   //     <Autosuggest
   //       multiSection={true}
@@ -131,5 +112,3 @@ export class AutocompleteField extends React.Component<AutocompleteFieldProps, S
   //   );
   // }
 }
-
-

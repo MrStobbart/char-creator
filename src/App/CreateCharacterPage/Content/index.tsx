@@ -1,24 +1,23 @@
 import * as React from 'react';
 import { FieldGroupComponent } from './FieldGroupComponent';
 import './index.css';
-import SavageWorldsCharacter from 'src/models/savageWorldsCharacter';
-import { Property } from 'src/models/interfaces';
-import { CreateUpdateValue, AddQuality, RemoveQuality, QualityData } from 'src/App/interfaces';
+import SavageWorldsCharacter from '../../../models/savageWorldsCharacter';
+import { Property } from '../../../models/interfaces';
+import { CreateUpdateValue, AddQuality, RemoveQuality, QualityData } from '../../interfaces';
 
-export interface ContentProps{
-  character: SavageWorldsCharacter,
-  availableValues: string[]
-  createUpdateValue: CreateUpdateValue<Property>,
-  addQuality: AddQuality
-  removeQuality: RemoveQuality
+export interface ContentProps {
+  character: SavageWorldsCharacter;
+  availableValues: string[];
+  createUpdateValue: CreateUpdateValue<Property>;
+  addQuality: AddQuality;
+  removeQuality: RemoveQuality;
 }
 
 export function Content(props: ContentProps) {
-
   return (
-    <div className="uk-card uk-card-default uk-card-body">
-      <form className="uk-form-horizontal">
-        {props.character.fieldsets.map(fieldset =>
+    <div className='uk-card uk-card-default uk-card-body'>
+      <form className='uk-form-horizontal'>
+        {props.character.fieldsets.map(fieldset => (
           <FieldGroupComponent
             character={props.character}
             key={fieldset.id}
@@ -28,9 +27,8 @@ export function Content(props: ContentProps) {
             addQuality={props.addQuality}
             removeQuality={props.removeQuality}
           />
-        )}
+        ))}
       </form>
     </div>
-  )
-  
+  );
 }

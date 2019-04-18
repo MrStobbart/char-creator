@@ -9,13 +9,11 @@ import CharactersPage from './CharactersPage';
 
 import { Store } from '../rootReducer';
 
-
 import './index.css';
 
-export interface AppProps extends PropsFromState, PropsFromDispatch{ }
+export interface AppProps extends PropsFromState, PropsFromDispatch {}
 
 class App extends React.Component<AppProps> {
-
   componentDidMount() {
     // this.props.fetchCharacters();
   }
@@ -24,37 +22,36 @@ class App extends React.Component<AppProps> {
     return (
       <div>
         <header>
-          <Navbar/>
+          <Navbar />
         </header>
-        <main className="uk-container uk-container-expand" style={{marginTop: 12}}>
-          <Route path="/home" component={HomePage} /> 
-          <Route path="/charpage/:characterId?" component={CreateCharacter}/>
-          <Route path="/characters" component={CharactersPage}/>
+        <main className='uk-container uk-container-expand' style={{ marginTop: 12 }}>
+          <Route path='/home' component={HomePage} />
+          <Route path='/charpage/:characterId?' component={CreateCharacter} />
+          <Route path='/characters' component={CharactersPage} />
         </main>
       </div>
     );
   }
 }
 
-
 /**
  * CharPageContainer
  */
-export default connect<PropsFromState, PropsFromDispatch, void>(mapStateToProps, mapDispatchToProps)(App)
+export default connect<PropsFromState, PropsFromDispatch, void>(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
 
-interface PropsFromState extends Store { }
+interface PropsFromState extends Store {}
 interface PropsFromDispatch {}
 
 function mapStateToProps(state: Store): PropsFromState {
   return {
     ...state,
-  }
+  };
 }
 function mapDispatchToProps(dispatch: Function): PropsFromDispatch {
   return {
     // fetchCharacters: () => { dispatch(fetchCharacters()) },
-  }
+  };
 }
-
-
-
