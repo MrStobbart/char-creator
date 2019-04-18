@@ -1,18 +1,21 @@
 import { Addable } from './Addable';
 import { Quality, Modifier, Requirement, ObjWithId } from './interfaces';
 
-
 export class Qualities<T extends Quality> extends Addable<T> implements ObjWithId {
+  checkRequirements: Function;
+  id: string;
+  label: string;
 
-
-  checkRequirements: Function
-  id: string
-  label: string
-
-  constructor(id: string, label: string, sideEffects: Function, checkRequirements?: Function, ...items: T[]) {
-    super(sideEffects, ...items)
+  constructor(
+    id: string,
+    label: string,
+    sideEffects: Function,
+    checkRequirements?: Function,
+    ...items: T[]
+  ) {
+    super(sideEffects, ...items);
     if (checkRequirements) {
-      this.checkRequirements = checkRequirements
+      this.checkRequirements = checkRequirements;
     }
   }
 
@@ -21,27 +24,23 @@ export class Qualities<T extends Quality> extends Addable<T> implements ObjWithI
    * @returns A list of all unmet requirements that is empy if requirements were met
    */
   push(item: T): Requirement[] {
-    let unmetRequirements = []
+    let unmetRequirements = [];
     if (this.checkRequirements) {
-      unmetRequirements = this.checkRequirements(item.requirements)
+      unmetRequirements = this.checkRequirements(item.requirements);
       if (unmetRequirements.length > 0) {
-        return unmetRequirements
+        return unmetRequirements;
       }
     }
 
-    super.push(item)
-    return []
-
+    super.push(item);
+    return [];
   }
-
 
   getModifiers = (): Modifier[] => {
-
-    if (this.value.length > 0) {
-      const modifiers = this.value.map(quality => quality.modifiers)
-      return modifiers.reduce((sum, curr) => sum.concat(curr))
+    if (this.items.length > 0) {
+      const modifiers = this.items.map(quality => quality.modifiers);
+      return modifiers.reduce((sum, curr) => sum.concat(curr));
     }
-    return []
-  }
-
+    return [];
+  };
 }

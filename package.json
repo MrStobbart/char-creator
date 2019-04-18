@@ -16,13 +16,13 @@
   "scripts": {
     "start": "npm-run-all -l -p mongodb server client",
     "startWin": "npm-run-all -l -p mongodb serverWin client",
-    "build": "react-scripts-ts build",
+    "build": "react-scripts build",
     "mongodb": "mongod --dbpath data/db",
-    "client": "react-scripts-ts start",
+    "client": "react-scripts start",
     "server": "cross-env NODE_ENV=development nodemon -w server server/server.js",
     "buildserver": "cross-env NODE_ENV=production node server/server.js",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -38,7 +38,7 @@
     "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^5.0.0-alpha.8",
-    "react-scripts-ts": "^4.0.8",
+    "react-scripts": "^2.1.8",
     "react-select": "^2.1.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
@@ -46,11 +46,11 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.6",
-    "@types/jest": "^23.3.9",
-    "@types/node": "^10.12.1",
-    "@types/react": "^16.4.18",
+    "@types/jest": "^23.3.14",
+    "@types/node": "^10.14.4",
+    "@types/react": "^16.8.13",
     "@types/react-autosuggest": "^9.3.6",
-    "@types/react-dom": "^16.0.9",
+    "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^6.0.9",
     "@types/react-router-dom": "^4.3.1",
     "@types/react-router-redux": "^5.0.16",
@@ -59,7 +59,6 @@
     "cross-env": "^5.2.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
-    "eslint": "^5.6.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "nodemon": "^1.18.5",
@@ -67,7 +66,7 @@
     "react-test-renderer": "^16.6.0",
     "request": "^2.88.0",
     "request-animation-frame": "^0.1.1",
-    "typescript": "^3.1.4"
+    "typescript": "^3.4.3"
   },
   "browserslist": [
     ">0.2%",
