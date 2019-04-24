@@ -4,12 +4,12 @@ import { ObjWithId, Edge, Requirement } from './interfaces';
  * Array that will call the function sideEffects when a new item is pushed.
  */
 export class Addable<T extends ObjWithId> {
-  protected value: T[] = [];
-  length: number = this.value.length;
+  protected items: T[] = [];
+  length: number = this.items.length;
   sideEffects: Function = () => {};
 
   constructor(sideEffects: Function, ...items: T[]) {
-    this.value.push(...items);
+    this.items.push(...items);
     this.sideEffects = sideEffects;
   }
 
@@ -17,7 +17,7 @@ export class Addable<T extends ObjWithId> {
    * @param item Item to push in the addable
    */
   push(item: T): any {
-    const newArrayLength = this.value.push(item);
+    const newArrayLength = this.items.push(item);
     this.update();
     return newArrayLength;
   }
@@ -26,20 +26,20 @@ export class Addable<T extends ObjWithId> {
    * @param id Id of object to remove from the addable
    */
   remove(id: string) {
-    const index = this.value.findIndex(item => item.id === id);
-    this.value.splice(index, 1);
+    const index = this.items.findIndex(item => item.id === id);
+    this.items.splice(index, 1);
     this.update();
   }
 
   map(callbackFn: (item: T, index: number, array: T[]) => any): T[] {
     // TODO check if object should be copied here to not change the originals accedentially
-    return this.value.map(callbackFn);
+    return this.items.map(callbackFn);
   }
 
   protected update() {
     if (this.sideEffects) {
       this.sideEffects();
     }
-    this.length = this.value.length;
+    this.length = this.items.length;
   }
 }

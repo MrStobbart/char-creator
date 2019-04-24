@@ -2,7 +2,7 @@ import { Addable } from './Addable';
 import { Quality, Modifier, Requirement, ObjWithId } from './interfaces';
 
 export class Qualities<T extends Quality> extends Addable<T> implements ObjWithId {
-  checkRequirements: Function;
+  checkRequirements!: Function;
   id: string;
   label: string;
 
@@ -14,6 +14,8 @@ export class Qualities<T extends Quality> extends Addable<T> implements ObjWithI
     ...items: T[]
   ) {
     super(sideEffects, ...items);
+    this.id = id;
+    this.label = label;
     if (checkRequirements) {
       this.checkRequirements = checkRequirements;
     }
