@@ -38,10 +38,11 @@
     "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^5.0.0-alpha.8",
-    "react-scripts": "^2.1.8",
+    "react-scripts": "^3.0.0",
     "react-select": "^2.1.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "reinspect": "^1.0.0",
     "shortid": "^2.2.13"
   },
   "devDependencies": {
