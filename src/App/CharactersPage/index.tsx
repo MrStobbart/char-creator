@@ -21,6 +21,8 @@ export default function CharactersPage(props: CharactersPageProps) {
   }, [appState.characters.length]);
 
   const createDeleteCharacter = (characterId: string) => () => {
+    console.log('Delete characteer');
+
     deleteCharacter(dispatch, appState, characterId);
   };
 

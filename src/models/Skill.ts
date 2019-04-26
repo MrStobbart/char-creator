@@ -18,7 +18,7 @@ export class Skill implements NumberProperty {
     this.attribute = attribute;
     this.sideEffects = sideEffects;
     this.calculationType = cheapSkill ? 'cheapSkill' : 'skill';
-    this.attribute;
+    this.attribute = attribute;
   }
 
   // TODO Check if this is badly inperformant

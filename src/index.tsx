@@ -6,11 +6,14 @@ import registerServiceWorker from './utils/registerServiceWorker';
 
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
+import { StateInspector, useReducer, useState } from 'reinspect';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <StateInspector name='App'>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StateInspector>,
   document.getElementById('root') as HTMLElement
   // Alternative would have been the following:
   // document.getElementById('root')!
