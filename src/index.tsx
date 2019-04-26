@@ -6,7 +6,7 @@ import registerServiceWorker from './utils/registerServiceWorker';
 
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
-import { StateInspector, useReducer, useState } from 'reinspect';
+import { StateInspector } from 'reinspect';
 
 ReactDOM.render(
   <StateInspector name='App'>

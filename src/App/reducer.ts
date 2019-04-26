@@ -1,6 +1,5 @@
 import Character from '../models/savageWorldsCharacter';
 import { QualityData } from './interfaces';
-import { createContext } from 'react';
 
 export type AppAction =
   | { type: 'setRules'; rules: string }

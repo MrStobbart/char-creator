@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { MouseEvent } from 'react';
 import { Quality } from '../../../../models/interfaces';
-import { AddQuality, RemoveQuality, QualityData } from '../../../../App/interfaces';
+import { AddQuality, RemoveQuality } from '../../../../App/interfaces';
 import { Qualities } from '../../../../models/Qualities';
-import { useAppState } from '../../../appStateHook';
 
 export interface AddableFieldProps {
   qualityId: String;
@@ -14,14 +13,13 @@ export interface AddableFieldProps {
 
 export const AddableField = (props: AddableFieldProps) => {
   const [warning, updateWarning] = useState<string>();
-  const [appState, dispatch] = useAppState();
 
   const createRemoveQuality = (qualityId: string) => (event: MouseEvent) => {
     event.preventDefault();
     props.removeQuality(props.qualities.id, qualityId);
   };
 
-  const createAddQuality = (addableFieldId: string) => (value: number) => {};
+  // const createAddQuality = (addableFieldId: string) => (value: number) => {};
 
   return (
     <div>

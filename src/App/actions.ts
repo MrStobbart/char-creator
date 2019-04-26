@@ -43,9 +43,8 @@ export const fetchCharacter = async (
   const endpoint = state.rules;
   try {
     const characterData: CharData = await fetchEndpoint(`${endpoint}/characters/${characterId}`);
-    console.log('character', characterData);
     const character = new Character(characterData);
-    return dispatch({ type: 'deleteCharacter', id: characterId });
+    return dispatch({ type: 'upsertCharacter', character });
   } catch (error) {
     console.error(error);
   }
@@ -60,11 +59,7 @@ export const upsertCharacter = async (
   const body = character.getJson();
   console.log(body);
   try {
-    const payload: Character = await fetchEndpoint(
-      `${endpoint}/characters/${character.id}`,
-      'put',
-      body
-    );
+    await fetchEndpoint(`${endpoint}/characters/${character.id}`, 'put', body);
     return dispatch({ type: 'upsertCharacter', character });
   } catch (error) {
     console.error(error);
