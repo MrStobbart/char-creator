@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TextField } from './fields/TextField';
 import { NumberField } from './fields/NumberField';
 import { DataField } from './fields/DataField';
-import AddableField from './fields/AddableField';
+import { AddableField } from './fields/AddableField';
 import {
   FieldGroup,
   NumberProperty,

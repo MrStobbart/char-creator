@@ -7,7 +7,7 @@ import { CharacterInformation } from './CharacterInformation';
 
 interface CharacterTileProps {
   character: Character;
-  deleteCharacter: (characterId: string) => void;
+  deleteCharacter: () => void;
 }
 export function CharacterTile(props: CharacterTileProps) {
   const character = props.character;
@@ -16,10 +16,7 @@ export function CharacterTile(props: CharacterTileProps) {
       <Link to={`/charpage/${character.id}`} className='uk-position-z-index'>
         <div className='uk-card uk-card-body uk-card-default uk-card-hover'>
           <div className='uk-card-badge'>
-            <DeleteCharacterButton
-              characterId={character.id}
-              deleteCharacter={props.deleteCharacter}
-            />
+            <DeleteCharacterButton deleteCharacter={props.deleteCharacter} />
           </div>
           <CharacterName name={character.name.value} />
           <CharacterInformation />

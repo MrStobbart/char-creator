@@ -1,20 +1,20 @@
 import * as React from 'react';
 
 export interface Props {
-  deleteCharacter: (id: string) => void
-  characterId: string
+  deleteCharacter: () => void;
 }
-export class DeleteCharacterButton extends React.Component<Props>{
-
-
-  handleClick = (event: React.MouseEvent) => {
+export function DeleteCharacterButton(props: Props) {
+  const handleClick = (event: React.MouseEvent) => {
     event.preventDefault();
-    this.props.deleteCharacter(this.props.characterId)
-  }
+    props.deleteCharacter();
+  };
 
-  render() {
-    return (
-      <button uk-close="true" className="uk-close-large" style={{ zIndex: 100 }} onClick={this.handleClick}></button>
-    )
-  }
+  return (
+    <button
+      uk-close='true'
+      className='uk-close-large'
+      style={{ zIndex: 100 }}
+      onClick={handleClick}
+    />
+  );
 }

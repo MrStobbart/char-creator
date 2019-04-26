@@ -1,137 +1,65 @@
-import {
-  FETCH_CHARACTERS_REQUEST,
-  FETCH_CHARACTERS_SUCCESS,
-  FETCH_CHARACTERS_FAILURE,
-  DELETE_CHARACTER_REQUEST,
-  DELETE_CHARACTER_SUCCESS,
-  DELETE_CHARACTER_FAILURE,
-  FETCH_CHARACTER_REQUEST,
-  FETCH_CHARACTER_SUCCESS,
-  FETCH_CHARACTER_FAILURE,
-  UPSERT_CHARACTER_REQUEST,
-  UPSERT_CHARACTER_SUCCESS,
-  UPSERT_CHARACTER_FAILURE,
-  FETCH_QUALITIES_REQUEST,
-  FETCH_QUALITIES_SUCCESS,
-  FETCH_QUALITIES_FAILURE,
-} from './actions';
-
 import Character from '../models/savageWorldsCharacter';
-import { AppAction, QualityData } from './interfaces';
+import { QualityData } from './interfaces';
+import { createContext } from 'react';
+
+export type AppAction =
+  | { type: 'setRules'; rules: string }
+  | { type: 'setCharacters'; characters: Character[] }
+  | { type: 'upsertCharacter'; character: Character }
+  | { type: 'deleteCharacter'; id: string }
+  | { type: 'setQualities'; qualities: QualityData };
 
 export interface AppState {
-  loading: boolean;
   characters: Character[];
   qualities: QualityData;
-  ruleset: string;
+  rules: string;
 }
 
-const initialState: AppState = {
-  loading: false,
+export const initialState: AppState = {
   characters: [],
   qualities: {
     edges: [],
-    hinderances: [],
+    hindrances: [],
   },
-  ruleset: 'savage-worlds-fantasy',
+  rules: 'savage-worlds-fantasy',
 };
 
-export function AppReducer(state = initialState, action: AppAction) {
+export function appReducer(state: AppState, action: AppAction) {
   switch (action.type) {
-    case FETCH_CHARACTERS_REQUEST:
+    case 'setRules':
       return {
         ...state,
-        loading: true,
+        rules: action.rules,
       };
-    case FETCH_CHARACTERS_SUCCESS:
+    case 'setCharacters':
       return {
         ...state,
-        characters: action.payload,
-        loading: false,
+        characters: action.characters,
       };
-    case FETCH_CHARACTERS_FAILURE:
-      console.error(action.error);
-      return {
-        ...state,
-        loading: false,
-      };
-    case DELETE_CHARACTER_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
-    case DELETE_CHARACTER_SUCCESS:
-      return {
-        ...state,
-        characters: state.characters.filter(character => character.id !== action.payload),
-        loading: false,
-      };
-    case DELETE_CHARACTER_FAILURE:
-      console.error(action.error);
-      return {
-        ...state,
-        loading: false,
-      };
-    case FETCH_CHARACTER_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
-    case FETCH_CHARACTER_SUCCESS:
-      return {
-        ...state,
-        characters: state.characters.concat(action.payload),
-        loading: false,
-      };
-    case FETCH_CHARACTER_FAILURE:
-      return {
-        ...state,
-        loading: false,
-      };
-    case UPSERT_CHARACTER_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
-    case UPSERT_CHARACTER_SUCCESS:
+    case 'upsertCharacter':
       let newCharacters = [...state.characters];
-      const index = state.characters.findIndex(character => character.id === action.payload.id);
+      const index = state.characters.findIndex(character => character.id === action.character.id);
 
       if (index === -1) {
         // Inserted
-        newCharacters.push(action.payload);
+        newCharacters.push(action.character);
       } else {
         // Updated
-        newCharacters[index] = action.payload;
+        newCharacters[index] = action.character;
       }
       return {
         ...state,
         characters: newCharacters,
-        loading: false,
       };
-    case UPSERT_CHARACTER_FAILURE:
-      console.error(action.error);
+    case 'deleteCharacter':
       return {
         ...state,
-        loading: false,
+        characters: state.characters.filter(character => character.id !== action.id),
       };
-    case FETCH_QUALITIES_REQUEST:
+    case 'setQualities':
       return {
         ...state,
-        loading: true,
-      };
-    case FETCH_QUALITIES_SUCCESS:
-      const qualities: QualityData = action.payload;
-      return {
-        ...state,
-        loading: false,
-        qualities: qualities,
-      };
-    case FETCH_QUALITIES_FAILURE:
-      console.error(action.error);
-      return {
-        ...state,
-        loading: false,
+        qualities: action.qualities,
       };
     default:
       return state;

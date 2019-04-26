@@ -1,71 +1,46 @@
-import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteCharacter, fetchCharacters } from '../actions';
 import { DeleteCharacterButton } from './DeleteCharacterButton';
-import { Store } from '../../rootReducer';
 import { AppAction } from '../interfaces';
 import { ThunkDispatch } from 'redux-thunk';
 import Character from '../../models/savageWorldsCharacter';
 import { CharacterTile } from './CharacterTile';
+import React, { useEffect } from 'react';
+import { useAppState } from '../appStateHook';
 
-export interface CharactersPageProps extends PropsFromState, PropsFromDispatch { }
+export interface CharactersPageProps {}
 
-class CharactersPage extends React.Component<CharactersPageProps>{
-
-  componentDidMount() {
-    if (this.props.characters.length === 0) {
-      this.props.fetchCharacters()
+export default function CharactersPage(props: CharactersPageProps) {
+  const [appState, dispatch] = useAppState();
+  useEffect(() => {
+    if (appState.characters.length === 0) {
+      fetchCharacters(dispatch, appState);
     }
-  }
+    // TODO Does this work with length?
+  }, [appState.characters.length]);
 
-  render() {
-    console.log('characters in characters page', this.props.characters);
+  const createDeleteCharacter = (characterId: string) => () => {
+    deleteCharacter(dispatch, appState, characterId);
+  };
 
-    return (
-      <div uk-grid="true">
-        {this.props.characters.map(character => (
-          <CharacterTile
-            key={character.id}
-            character={character}
-            deleteCharacter={this.props.deleteCharacter}
-          />
-        ))}
-        <div className="uk-width-1-6">
-          <Link to={`/charpage`}>
-            <div
-              className="uk-card uk-card-body uk-card-default uk-card-hover">
-              <h4>Neuer Charakter</h4>
-              <div>Erstelle einen neuen Character</div>
-            </div>
-          </Link>
-        </div>
+  return (
+    <div uk-grid='true'>
+      {appState.characters.map(character => (
+        <CharacterTile
+          key={character.id}
+          character={character}
+          deleteCharacter={createDeleteCharacter(character.id)}
+        />
+      ))}
+      <div className='uk-width-1-6'>
+        <Link to={`/charpage`}>
+          <div className='uk-card uk-card-body uk-card-default uk-card-hover'>
+            <h4>Neuer Charakter</h4>
+            <div>Erstelle einen neuen Character</div>
+          </div>
+        </Link>
       </div>
-    )
-  }
-}
-
-
-/**
- * CharactersPageContainer
- */
-export default connect<PropsFromState, PropsFromDispatch, void>(mapStateToProps, mapDispatchToProps)(CharactersPage)
-
-interface PropsFromState { characters: Character[] }
-interface PropsFromDispatch {
-  deleteCharacter: (characterId: string) => void,
-  fetchCharacters: () => void
-}
-
-function mapStateToProps(state: Store): PropsFromState {
-  return {
-    characters: state.app.characters
-  }
-}
-
-function mapDispatchToProps(dispatch: ThunkDispatch<Store, any, AppAction>): PropsFromDispatch {
-  return {
-    deleteCharacter: (characterId: string) => dispatch(deleteCharacter(characterId)),
-    fetchCharacters: () => dispatch(fetchCharacters())
-  }
+    </div>
+  );
 }
