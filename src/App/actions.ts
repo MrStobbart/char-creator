@@ -1,5 +1,5 @@
 import { fetchEndpoint } from '../utils/fetchEndpoint';
-import { QualityData } from '../App/interfaces';
+import { QualityData, ApiResponse } from '../App/interfaces';
 import Character from '../models/savageWorldsCharacter';
 import { CharData } from '../models/interfaces';
 import { Dispatch } from 'react';
@@ -9,7 +9,8 @@ export const fetchCharacters = async (dispatch: Dispatch<AppAction>, state: AppS
   const endpoint = state.rules;
   try {
     // TODO change data to characters somewhere
-    const payload: CharData[] = await fetchEndpoint(`${endpoint}/characters`);
+    const response: ApiResponse = await fetchEndpoint(`${endpoint}/characters`);
+    const payload: CharData[] = response.data;
     const timeName = 'Creating all character instances.';
     console.time(timeName);
     const characters = payload.map(characterData => new Character(characterData));
@@ -42,10 +43,10 @@ export const fetchCharacter = async (
 ) => {
   const endpoint = state.rules;
   try {
-    const characterData: CharData = await fetchEndpoint(`${endpoint}/characters/${characterId}`);
-    console.log('character', characterData);
+    const response: ApiResponse = await fetchEndpoint(`${endpoint}/characters/${characterId}`);
+    const characterData: CharData = response.data;
     const character = new Character(characterData);
-    return dispatch({ type: 'deleteCharacter', id: characterId });
+    return dispatch({ type: 'upsertCharacter', character });
   } catch (error) {
     console.error(error);
   }
@@ -60,11 +61,7 @@ export const upsertCharacter = async (
   const body = character.getJson();
   console.log(body);
   try {
-    const payload: Character = await fetchEndpoint(
-      `${endpoint}/characters/${character.id}`,
-      'put',
-      body
-    );
+    await fetchEndpoint(`${endpoint}/characters/${character.id}`, 'put', body);
     return dispatch({ type: 'upsertCharacter', character });
   } catch (error) {
     console.error(error);
@@ -74,7 +71,8 @@ export const upsertCharacter = async (
 export const fetchQualities = async (dispatch: Dispatch<AppAction>, state: AppState) => {
   const endpoint = state.rules;
   try {
-    const payload: QualityData = await fetchEndpoint(`${endpoint}/qualities`);
+    const response: ApiResponse = await fetchEndpoint(`${endpoint}/qualities`);
+    const payload: QualityData = response.data;
     return dispatch({ type: 'setQualities', qualities: payload });
   } catch (error) {
     console.error(error);

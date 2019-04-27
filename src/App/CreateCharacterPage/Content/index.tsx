@@ -3,7 +3,7 @@ import { FieldGroupComponent } from './FieldGroupComponent';
 import './index.css';
 import SavageWorldsCharacter from '../../../models/savageWorldsCharacter';
 import { Property } from '../../../models/interfaces';
-import { CreateUpdateValue, AddQuality, RemoveQuality, QualityData } from '../../interfaces';
+import { CreateUpdateValue, AddQuality, RemoveQuality } from '../../interfaces';
 
 export interface ContentProps {
   character: SavageWorldsCharacter;

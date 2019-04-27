@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useState as useReinspectState } from 'reinspect';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -21,19 +21,13 @@ const CreateCharacterPage = (props: CreateCharacterProps) => {
 
   // Must be nested so it can be shallow copied (shallow copy for instance of character class is not possible)
   const [state, setState] = useReinspectState(
-    () => ({ character: new Character() }),
+    { character: new Character() },
     'creatCharacterState'
   );
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // TODO can I move this out of this function?
-    const characterId = props.match.params.characterId;
-    if (characterId) {
-      loadSelectedCharacter(characterId);
-    }
-  }, [props.match.params.characterId]);
+  const characterId = props.match.params.characterId;
 
   const loadSelectedCharacter = (characterId: string) => {
     const selectedCharacter = appState.characters.find(character => character.id === characterId);
@@ -48,6 +42,12 @@ const CreateCharacterPage = (props: CreateCharacterProps) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (characterId) {
+      loadSelectedCharacter(characterId);
+    }
+  }, [characterId]);
 
   const createUpdateValue: CreateUpdateValue<Property> = (property: string) => (
     newValue: string | number

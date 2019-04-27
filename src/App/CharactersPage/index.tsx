@@ -1,10 +1,5 @@
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { deleteCharacter, fetchCharacters } from '../actions';
-import { DeleteCharacterButton } from './DeleteCharacterButton';
-import { AppAction } from '../interfaces';
-import { ThunkDispatch } from 'redux-thunk';
-import Character from '../../models/savageWorldsCharacter';
 import { CharacterTile } from './CharacterTile';
 import React, { useEffect } from 'react';
 import { useAppState } from '../appStateHook';
@@ -13,12 +8,13 @@ export interface CharactersPageProps {}
 
 export default function CharactersPage(props: CharactersPageProps) {
   const [appState, dispatch] = useAppState();
+  const numberOfCharacters = appState.characters.length;
   useEffect(() => {
-    if (appState.characters.length === 0) {
+    if (numberOfCharacters === 0) {
       fetchCharacters(dispatch, appState);
     }
     // TODO Does this work with length?
-  }, [appState.characters.length]);
+  }, [numberOfCharacters]);
 
   const createDeleteCharacter = (characterId: string) => () => {
     console.log('Delete characteer');

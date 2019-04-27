@@ -11,7 +11,7 @@ import {
   Quality,
   Property,
 } from '../../../models/interfaces';
-import { CreateUpdateValue, AddQuality, RemoveQuality, QualityData } from '../../interfaces';
+import { CreateUpdateValue, AddQuality, RemoveQuality } from '../../interfaces';
 import SavageWorldsCharacter from '../../../models/savageWorldsCharacter';
 import { Qualities } from '../../../models/Qualities';
 
@@ -78,6 +78,8 @@ export function FieldGroupComponent(props: FieldGroupContainerProps) {
           />
         );
       });
+      break;
+    default:
       break;
   }
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
 
 import CreateCharacter from './CreateCharacterPage';
@@ -7,8 +7,7 @@ import Navbar from './Navbar';
 import CharactersPage from './CharactersPage';
 
 import './index.css';
-import { StateProvider, useAppState } from './appStateHook';
-import { appReducer } from './reducer';
+import { StateProvider } from './appStateHook';
 
 export interface AppProps {}
 export default function App(props: AppProps) {
