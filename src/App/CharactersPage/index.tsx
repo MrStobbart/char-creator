@@ -8,12 +8,13 @@ export interface CharactersPageProps {}
 
 export default function CharactersPage(props: CharactersPageProps) {
   const [appState, dispatch] = useAppState();
+  const numberOfCharacters = appState.characters.length;
   useEffect(() => {
-    if (appState.characters.length === 0) {
+    if (numberOfCharacters === 0) {
       fetchCharacters(dispatch, appState);
     }
     // TODO Does this work with length?
-  }, [appState.characters.length, appState, dispatch]);
+  }, [numberOfCharacters]);
 
   const createDeleteCharacter = (characterId: string) => () => {
     console.log('Delete characteer');

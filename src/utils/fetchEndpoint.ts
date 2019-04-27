@@ -18,6 +18,10 @@ export function fetchEndpoint<T1 = any, T2 = any>(
       return res;
     })
     .then(res => res.json())
+    .then(json => {
+      console.log('Response', json);
+      return json;
+    })
     .catch(err => {
       const message = `An error occured while fetching ${API_URL}/${endpoint}:\n${err}`;
       console.error(message);

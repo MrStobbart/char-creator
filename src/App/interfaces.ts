@@ -23,3 +23,8 @@ export interface QualityData {
   edges: Edge[];
   hindrances: Hinderance[];
 }
+
+export interface ApiResponse {
+  status: 'success' | 'fail';
+  data: any;
+}
