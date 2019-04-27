@@ -1,6 +1,4 @@
 import { Property, Requirement, Quality, Edge, Hinderance } from '../models/interfaces';
-import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
 
 export interface CreateUpdateValue<T extends Property> {
   (property: string): UpdateValue<T>;
@@ -21,12 +19,6 @@ export interface RemoveQuality {
 export interface SaveChanges {
   (): void;
 }
-
-export interface AppAction<TPayload = any> extends Action<string> {
-  payload?: TPayload;
-  error?: string;
-}
-
 export interface QualityData {
   edges: Edge[];
   hindrances: Hinderance[];

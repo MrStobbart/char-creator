@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useState as useReinspectState } from 'reinspect';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -27,26 +27,27 @@ const CreateCharacterPage = (props: CreateCharacterProps) => {
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const loadSelectedCharacter = (characterId: string) => {
-      const selectedCharacter = appState.characters.find(character => character.id === characterId);
+  const characterId = props.match.params.characterId;
 
-      if (selectedCharacter) {
-        setState({ character: selectedCharacter });
-        setLoading(false);
-      } else {
-        if (!loading) {
-          setLoading(true);
-          fetchCharacter(dispatch, appState, characterId);
-        }
+  const loadSelectedCharacter = (characterId: string) => {
+    const selectedCharacter = appState.characters.find(character => character.id === characterId);
+
+    if (selectedCharacter) {
+      setState({ character: selectedCharacter });
+      setLoading(false);
+    } else {
+      if (!loading) {
+        setLoading(true);
+        fetchCharacter(dispatch, appState, characterId);
       }
-    };
-    // TODO can I move this out of this function?
-    const characterId = props.match.params.characterId;
+    }
+  };
+
+  useEffect(() => {
     if (characterId) {
       loadSelectedCharacter(characterId);
     }
-  }, [props.match.params.characterId]);
+  }, [characterId]);
 
   const createUpdateValue: CreateUpdateValue<Property> = (property: string) => (
     newValue: string | number

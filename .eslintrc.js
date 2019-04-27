@@ -1,21 +1,13 @@
+// This file is only used by the IDE and not by the compiler atm
 module.exports = {
-    root: true,
-    env: {
-        node: true,
-    },
-    extends: [
-        'airbnb',
-    ],
-    rules: {
-        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        indent: ['warn', 2],
-        'no-unused-vars': 'off',
-        'no-underscore-dangle': 'off',
-        'func-names': 'off',
-        'no-shadow': 'off',
-        'max-len': ['warn', { code: 120 }],
-        'no-irregular-whitespace': 'warn',
-        'prefer-destructuring': 'off'
-    },
+  root: true,
+  env: {
+    node: true,
+  },
+  extends: ['react-app'],
+  rules: {
+    indent: ['warn', 2],
+    'max-len': ['warn', { code: 120 }],
+    'no-use-before-define': ['off', { functions: false, classes: false, variables: false }],
+  },
 };
