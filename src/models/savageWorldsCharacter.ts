@@ -1,4 +1,4 @@
-import { NumberProperty, TextProperty, CharProperty, CharData } from './interfaces';
+import { NumberProperty, TextProperty, CharProperty, CharData, Property } from './interfaces';
 import * as shortid from 'shortid';
 import {
   CharCreationInformation,
@@ -17,7 +17,7 @@ import { Qualities } from './Qualities';
 
 export default class SavageWorldsCharacter {
   // Index signature for dynamic property access
-  [key: string]: CharProperty | any;
+  [key: string]: Property | any;
   [key: number]: undefined;
 
   constructor(charProperties?: CharData) {

@@ -19,10 +19,11 @@
     "build": "react-scripts build",
     "mongodb": "mongod --dbpath data/db",
     "client": "react-scripts start",
-    "server": "cross-env NODE_ENV=development nodemon -w server server/server.js",
-    "buildserver": "cross-env NODE_ENV=production node server/server.js",
+    "server": "cross-env NODE_ENV=development nodemon -w src/server/server.js",
+    "buildserver": "cross-env NODE_ENV=production node src/server/server.js",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "parseRules": "ts-node --project tsconfig.node.json src/server/data/extractRules.ts"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -39,7 +40,8 @@
     "react-scripts": "^3.0.0",
     "react-select": "^2.1.1",
     "reinspect": "^1.0.0",
-    "shortid": "^2.2.13"
+    "shortid": "^2.2.13",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.6",
@@ -51,6 +53,7 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/react-select": "^2.0.6",
     "@types/shortid": "0.0.29",
+    "@types/xml2js": "^0.4.4",
     "cross-env": "^5.2.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
