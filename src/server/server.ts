@@ -7,15 +7,13 @@ import logger from 'morgan';
 import history from 'connect-history-api-fallback';
 import dbConnectionMiddleware from './middlewares/dbConnector';
 import { Db, Collection } from 'mongodb';
-
-const theDarkEye = require('./data/theDarkEye/charsheet');
-const savageWorldsFantasyQualities = require('./data/savageWorldsFantasy/qualities');
+import savageWorldsFantasyQualities from './data/savageWorldsFantasy/qualities';
 
 const app = express();
 const port = 8080;
 
 // Middleware: Make mongoDb db object available in req.
-app.use(dbConnectionMiddleware('mongodb://127.0.0.1:27017', 'char-reator'));
+app.use(dbConnectionMiddleware('mongodb://127.0.0.1:27017', 'char-creator'));
 
 declare global {
   namespace Express {
@@ -26,7 +24,6 @@ declare global {
   }
 }
 
-// Middleware: Parse request body to json.
 const isProduction = process.env.NODE_ENV === 'production';
 
 if (!isProduction) {
@@ -35,26 +32,11 @@ if (!isProduction) {
   app.use(logger('dev'));
 }
 
+// Middleware: Parse request body to json.
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// // This is not needed in production
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//   next();
-// });
-
-// app.options('*', (req, res) => {
-//   res.status(200).send();
-// });
-
 app.route('/api/users');
-
-app.route('/api/thedarkeye').get((req, res) => {
-  res.json(new ApiResponse('success', theDarkEye));
-});
 
 app.route('/api/savage-worlds-fantasy/qualities').get((req, res) => {
   res.status(200).json(new ApiResponse('success', savageWorldsFantasyQualities));
