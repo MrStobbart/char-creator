@@ -1,12 +1,14 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface HomePageProps {}
 export default function HomePage(props: HomePageProps) {
+  const [t] = useTranslation();
   return (
     <div>
       <div className='uk-card uk-card-body uk-card-default uk-width-2-3 uk-align-center'>
         <div style={{ textAlign: 'center' }}>
-          This website can be used to create characters
+          {t('Willkommen zum Char Creator!')}
           <hr className='uk-divider-icon uk-margin-top' />
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
           invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et

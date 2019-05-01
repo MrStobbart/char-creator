@@ -5,6 +5,7 @@ import App from './App';
 import registerServiceWorker from './utils/registerServiceWorker';
 
 import './index.css';
+import './i18n';
 import { BrowserRouter } from 'react-router-dom';
 import { StateInspector } from 'reinspect';
 
