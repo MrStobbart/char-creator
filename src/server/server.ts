@@ -1,13 +1,13 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const logger = require('morgan');
-const history = require('connect-history-api-fallback');
-const ObjectId = require('mongodb').ObjectID;
+import { ApiResponse } from './models/ApiResponse';
+import { ApiError } from './models/ApiError';
+import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import logger from 'morgan';
+import history from 'connect-history-api-fallback';
+import dbConnectionMiddleware from './middlewares/dbConnector';
+import { Db, Collection } from 'mongodb';
 
-const ApiError = require('./models/ApiError');
-const ApiResponse = require('./models/ApiResponse');
-const dbConnectionMiddleware = require('./middlewares/dbConnector');
 const theDarkEye = require('./data/theDarkEye/charsheet');
 const savageWorldsFantasyQualities = require('./data/savageWorldsFantasy/qualities');
 
@@ -16,6 +16,15 @@ const port = 8080;
 
 // Middleware: Make mongoDb db object available in req.
 app.use(dbConnectionMiddleware('mongodb://127.0.0.1:27017', 'char-reator'));
+
+declare global {
+  namespace Express {
+    interface Request {
+      db: Db;
+      collection: Collection;
+    }
+  }
+}
 
 // Middleware: Parse request body to json.
 const isProduction = process.env.NODE_ENV === 'production';
@@ -101,7 +110,9 @@ app
   .delete((req, res, next) => {
     req.collection
       .findOneAndDelete({ _id: req.params.id })
-      .then(mongoRes => res.status(200).json(new ApiResponse('success', { characterId: mongoRes._id })))
+      .then(mongoRes =>
+        res.status(200).json(new ApiResponse('success', { characterId: req.params.id }))
+      )
       .catch(err => next(err));
   });
 
@@ -118,15 +129,15 @@ if (isProduction) {
     })
   );
   app.use(staticFileMiddleware);
-  app.use((err, req, res, next) => {
+  app.use((err: ApiError, req: Request, res: Response, next: NextFunction) => {
     console.log(err);
     if (err instanceof ApiError) {
       return res.status(err.statusCode).json({ status: 'error', message: err.message });
     }
-    return res.status(500).json({ status: 'error', message: 'An unkown error occured!' });
+    return res.status(500).json({ status: 'error', message: 'An unknown error occurred!' });
   });
 } else {
-  app.use((err, req, res, next) => {
+  app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.log(err);
     if (err instanceof ApiError) {
       return res.status(err.statusCode).json({ status: 'error', message: err.message });

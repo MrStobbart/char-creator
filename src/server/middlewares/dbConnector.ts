@@ -1,14 +1,15 @@
-const MongoClient = require('mongodb').MongoClient;
+import MongoDb, { MongoClientOptions } from 'mongodb';
+import { Request, Response, NextFunction } from 'express';
+const MongoClient = MongoDb.MongoClient;
 
-
-function createConnection(url, options) {
+function createConnection(url: string, options: MongoClientOptions) {
   options.useNewUrlParser = true; // eslint-disable-line
   return MongoClient.connect(url, options)
-    .then((db) => {
+    .then(db => {
       console.log('Mongo Connection established!');
       return db;
     })
-    .catch((err) => {
+    .catch(err => {
       const message = `Could not connect to MongoDB!\n
       lease make sure Mongodb is installed and running!\n
       Mongo url: ${url}\nError obj: ${JSON.stringify(err, null, 2)}`;
@@ -16,27 +17,27 @@ function createConnection(url, options) {
     });
 }
 
-module.exports = function (url, databaseName, options) {
+export default function(url: string, databaseName: string, options: MongoClientOptions = {}) {
   if (typeof url !== 'string') {
     throw new TypeError('Expected uri to be a string');
   }
+  const property = 'db';
 
-  options = options || {}; // eslint-disable-line 
-  const property = options.property || 'db';
+  let connection: Promise<void | MongoDb.MongoClient> | undefined = createConnection(url, options);
 
-  let connection = createConnection(url, options);
-
-  return (req, res, next) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     if (!connection) {
       connection = createConnection(url, options);
     }
 
     connection
-      .then((client) => {
-        req[property] = client.db(databaseName);
+      .then(client => {
+        if (client instanceof MongoClient) {
+          req.db = client.db(databaseName);
+        }
         next();
       })
-      .catch((err) => {
+      .catch(err => {
         const message = `Error while applying connector middleware on request: ${req.originalUrl}\n
         Error obj: ${JSON.stringify(err, null, 2)}`;
         console.log(message);
@@ -44,4 +45,4 @@ module.exports = function (url, databaseName, options) {
         next(err);
       });
   };
-};
+}
