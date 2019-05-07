@@ -48,6 +48,46 @@ interface FodtSection extends FodtElement {
   'table:table': FodtTable[];
 }
 
+interface EdgesGroup {
+  id: string;
+  label: string;
+  selectables: Edge[];
+}
+
+interface Edge {
+  id: string; // = title
+  requirements: string[];
+  description: string;
+}
+
+function createRequirementsArrayFromString(requirements: string = ''): string[] {
+  // TODO make this better
+  const requirementsArr = requirements.split(',');
+  return requirementsArr.map(requirement => requirement.trim());
+}
+
+function readEdgesFromTable(table: FodtTable): Edge[] | undefined {
+  const edges: Edge[] = [];
+  for (let i = 0; i < table['table:table-row'].length; i++) {
+    const tableRow = table['table:table-row'][i];
+    const id = tableRow['table:table-cell'][0]['text:p'][0]._;
+    const description = tableRow['table:table-cell'][2]['text:p'][0]._ || '';
+    if (!id) {
+      console.error('ERROR: Id is missing');
+      continue;
+    }
+    const requirementsString = tableRow['table:table-cell'][1]['text:p'][0]._;
+    const requirements = createRequirementsArrayFromString(requirementsString);
+    const edge: Edge = {
+      id: id.trim(),
+      requirements,
+      description: description.trim(),
+    };
+    edges.push(edge);
+  }
+  return edges;
+}
+
 const parser = new Parser();
 readFile(filePath, (err, data) => {
   if (err) {
@@ -60,44 +100,36 @@ readFile(filePath, (err, data) => {
     }
     // console.dir(document);
     const edges: Property[] = [];
-    const sections: FodtSection[] =
-      document['office:document']['office:body'][0]['office:text'][0]['text:section'];
+    const sections: FodtSection[] = document['office:document']['office:body'][0]['office:text'][0]['text:section'];
 
-    const sectionOtherTables = sections.find(section => section.$['text:name']! === 'Other')!;
+    const sectionOtherTables = sections.find(section => section.$['text:name'] === 'Other');
 
-    console.log(
-      sectionOtherTables['table:table'][0]['table:table-row'][0]['table:table-cell'][0]['text:p'][0]
-        ._
-    );
+    if (sectionOtherTables === undefined) {
+      throw Error('Parsing error: Section other not found');
+    }
 
-    // const edgesTables = [
-    //   'tableBackgroundEdges',
-    //   'tableGeneralEdges',
-    //   'tableRangedEdges',
-    //   'tableCloseCombarEdges',
-    //   'tableLeaderEdges',
-    //   'tableSocialEdges',
-    //   'tableMagicEdges',
-    //   'tableExpertEdges',
-    // ];
-    // sectionOtherTables.forEach(table => {
-    //   const tableName = table['$']['table:name'];
-    //   if (edgesTables.includes(tableName)) {
-    //     console.log(table);
-    //     console.log('tableColumn:', table['table:table-column']);
-    //     console.log('tableRow:', table['table:table-row']);
-    //     console.log('tableCell:', table['table:table-row'][0]['table:table-cell']);
-    //     const tableCells = table['table:table-row'][1]['table:table-cell'];
-    //     tableCells.forEach((tableCell, index) => {
-    //       console.log(`tableCell ${index}:`, tableCell['text:p']);
-    //     });
-    //   }
-    // });
+    const tables = sectionOtherTables['table:table'];
+    for (let i = 0; i < tables.length; i++) {
+      const table = tables[i];
+
+      const edgesTables = [
+        'tableBackgroundEdges',
+        'tableGeneralEdges',
+        'tableRangedEdges',
+        'tableCloseCombarEdges',
+        'tableLeaderEdges',
+        'tableSocialEdges',
+        'tableMagicEdges',
+        'tableExpertEdges',
+      ];
+      const tableName = table.$['table:name'] || '';
+      const isEdgeTable = edgesTables.includes(tableName);
+      if (isEdgeTable) {
+        const edges = readEdgesFromTable(table);
+      }
+    }
+    console.log(edges);
 
     console.log('Done');
   });
 });
-
-// function createEdgesEntry(tableRow) {
-//   const tableCells = tableRow['table:table-cell'];
-// }
