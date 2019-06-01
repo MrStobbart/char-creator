@@ -16,7 +16,8 @@
     "noEmit": true,
     "jsx": "preserve",
     "importHelpers": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "downlevelIteration": true
   },
   "include": ["src"]
 }

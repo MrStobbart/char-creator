@@ -32,6 +32,10 @@ if (!isProduction) {
   app.use(logger('dev'));
 }
 
+const hallo = 'sdasd';
+
+const array = [...hallo];
+
 // Middleware: Parse request body to json.
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -92,9 +96,7 @@ app
   .delete((req, res, next) => {
     req.collection
       .findOneAndDelete({ _id: req.params.id })
-      .then(mongoRes =>
-        res.status(200).json(new ApiResponse('success', { characterId: req.params.id }))
-      )
+      .then(mongoRes => res.status(200).json(new ApiResponse('success', { characterId: req.params.id })))
       .catch(err => next(err));
   });
 
@@ -108,7 +110,7 @@ if (isProduction) {
     history({
       disableDotRule: true,
       verbose: false,
-    })
+    }),
   );
   app.use(staticFileMiddleware);
   app.use((err: ApiError, req: Request, res: Response, next: NextFunction) => {
