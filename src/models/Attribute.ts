@@ -1,30 +1,30 @@
 import { NumberProperty } from './interfaces';
 
 export class Attribute implements NumberProperty {
-  constructor(id: string, label: string, sideEffects: Function) {
+  public constructor(id: string, label: string, sideEffects: Function) {
     this.id = id;
     this.label = label;
     this.sideEffects = sideEffects;
   }
 
   // Can't be lower than this TODO set with race
-  id: string;
-  defaultValue = 1;
-  label: string;
+  public id: string;
+  public defaultValue = 1;
+  public label: string;
   private _value: number = 1;
-  sideEffects: Function = () => {};
+  public sideEffects: Function = () => {};
 
-  get value(): number {
+  public get value(): number {
     return this._value;
   }
-  set value(value: number) {
+  public set value(value: number) {
     if (value >= this.defaultValue) {
       this._value = value;
       this.sideEffects(true);
     }
   }
 
-  setValueFromModifier(value: number) {
+  public setValueFromModifier(value: number) {
     this._value = value;
     this.sideEffects();
   }

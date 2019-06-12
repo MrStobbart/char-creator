@@ -3,6 +3,14 @@ import { ObjWithId } from './interfaces';
 
 let referenceValue = 0;
 
+function changeReferenceTo1() {
+  referenceValue = 1;
+}
+
+function changeReferenceTo2() {
+  referenceValue = 2;
+}
+
 it('creates and array', () => {
   const addable = new Addable<ObjWithId>(changeReferenceTo1);
   expect(addable).toBeInstanceOf(Addable);
@@ -59,11 +67,3 @@ it('allows the second and third parameter for the mapping function', () => {
   expect(mappedAddable[1]).toBe('id2, index1, length3');
   expect(mappedAddable[2]).toBe('id3, index2, length3');
 });
-
-function changeReferenceTo1() {
-  referenceValue = 1;
-}
-
-function changeReferenceTo2() {
-  referenceValue = 2;
-}

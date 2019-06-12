@@ -1,6 +1,56 @@
 import Character from './savageWorldsCharacter';
 import { Requirement, Edge, Hinderance, Modifier } from './interfaces';
 
+const modifiers: Modifier[] = [
+  { changesProperty: 'toughness', value: 2 },
+  { changesProperty: 'parry', value: 1 },
+  { changesProperty: 'pace', value: 1 },
+];
+
+const unmetRequirement: Requirement = {
+  propertyId: 'smarts',
+  value: 4,
+};
+
+const edgeWithMetRequirements: Edge = {
+  id: '1',
+  modifiers: [modifiers[0], modifiers[1]],
+  label: 'Label',
+  information: 'information',
+  requirements: [
+    {
+      propertyId: 'fighting',
+      value: 2,
+    },
+    {
+      propertyId: 'strength',
+      value: 3,
+    },
+  ],
+};
+
+const edgeWithUnmetRequirements: Edge = {
+  id: '2',
+  modifiers: [modifiers[2]],
+  label: 'Label2',
+  information: 'information2',
+  requirements: [
+    unmetRequirement,
+    {
+      propertyId: 'perception',
+      value: 3,
+    },
+  ],
+};
+
+const hinderance: Hinderance = {
+  id: 'hinderance',
+  label: 'Hinderance',
+  information: 'Lorem Ipsum',
+  modifiers: modifiers,
+  requirements: [],
+};
+
 it('creates an object', () => {
   const character = new Character();
   expect(character).toBeInstanceOf(Character);
@@ -141,53 +191,3 @@ xit('applies modifiers on the character', () => {
 xit('calculates the available edge points', () => {
   const character = new Character();
 });
-
-const modifiers: Modifier[] = [
-  { changesProperty: 'toughness', value: 2 },
-  { changesProperty: 'parry', value: 1 },
-  { changesProperty: 'pace', value: 1 },
-];
-
-const unmetRequirement: Requirement = {
-  propertyId: 'smarts',
-  value: 4,
-};
-
-const edgeWithMetRequirements: Edge = {
-  id: '1',
-  modifiers: [modifiers[0], modifiers[1]],
-  label: 'Label',
-  information: 'information',
-  requirements: [
-    {
-      propertyId: 'fighting',
-      value: 2,
-    },
-    {
-      propertyId: 'strength',
-      value: 3,
-    },
-  ],
-};
-
-const edgeWithUnmetRequirements: Edge = {
-  id: '2',
-  modifiers: [modifiers[2]],
-  label: 'Label2',
-  information: 'information2',
-  requirements: [
-    unmetRequirement,
-    {
-      propertyId: 'perception',
-      value: 3,
-    },
-  ],
-};
-
-const hinderance: Hinderance = {
-  id: 'hinderance',
-  label: 'Hinderance',
-  information: 'Lorem Ipsum',
-  modifiers: modifiers,
-  requirements: [],
-};

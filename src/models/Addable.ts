@@ -5,10 +5,10 @@ import { ObjWithId } from './interfaces';
  */
 export class Addable<T extends ObjWithId> {
   protected items: T[] = [];
-  length: number = this.items.length;
-  sideEffects: Function = () => {};
+  public length: number = this.items.length;
+  public sideEffects: Function = () => {};
 
-  constructor(sideEffects: Function, ...items: T[]) {
+  public constructor(sideEffects: Function, ...items: T[]) {
     this.items.push(...items);
     this.sideEffects = sideEffects;
   }
@@ -16,7 +16,7 @@ export class Addable<T extends ObjWithId> {
   /**
    * @param item Item to push in the addable
    */
-  push(item: T): any {
+  public push(item: T): any {
     const newArrayLength = this.items.push(item);
     this.update();
     return newArrayLength;
@@ -25,13 +25,13 @@ export class Addable<T extends ObjWithId> {
   /**
    * @param id Id of object to remove from the addable
    */
-  remove(id: string) {
+  public remove(id: string) {
     const index = this.items.findIndex(item => item.id === id);
     this.items.splice(index, 1);
     this.update();
   }
 
-  map(callbackFn: (item: T, index: number, array: T[]) => any): T[] {
+  public map(callbackFn: (item: T, index: number, array: T[]) => any): T[] {
     // TODO check if object should be copied here to not change the originals accedentially
     return this.items.map(callbackFn);
   }

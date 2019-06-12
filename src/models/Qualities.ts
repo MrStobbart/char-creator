@@ -2,11 +2,11 @@ import { Addable } from './Addable';
 import { Quality, Modifier, Requirement, ObjWithId } from './interfaces';
 
 export class Qualities<T extends Quality> extends Addable<T> implements ObjWithId {
-  checkRequirements!: Function;
-  id: string;
-  label: string;
+  public checkRequirements!: Function;
+  public id: string;
+  public label: string;
 
-  constructor(id: string, label: string, sideEffects: Function, checkRequirements?: Function, ...items: T[]) {
+  public constructor(id: string, label: string, sideEffects: Function, checkRequirements?: Function, ...items: T[]) {
     super(sideEffects, ...items);
     this.id = id;
     this.label = label;
@@ -19,7 +19,7 @@ export class Qualities<T extends Quality> extends Addable<T> implements ObjWithI
    * @param item Edge to add to the addable
    * @returns A list of all unmet requirements that is empy if requirements were met
    */
-  push(item: T): Requirement[] {
+  public push(item: T): Requirement[] {
     let unmetRequirements = [];
     if (this.checkRequirements) {
       unmetRequirements = this.checkRequirements(item.requirements);
@@ -32,7 +32,7 @@ export class Qualities<T extends Quality> extends Addable<T> implements ObjWithI
     return [];
   }
 
-  getModifiers = (): Modifier[] => {
+  public getModifiers = (): Modifier[] => {
     if (this.items.length > 0) {
       const modifiers = this.items.map(quality => quality.modifiers);
       return modifiers.reduce((sum, curr) => sum.concat(curr));
