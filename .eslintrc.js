@@ -32,5 +32,7 @@ module.exports = {
         allowExpressions: true,
       },
     ],
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-namespace': 'off'
   },
 };
