@@ -4,18 +4,17 @@ import classNames from 'classnames';
 // TODO is only value ok here?
 export interface Props {
   value: number;
+  children: React.ReactNode;
 }
 
-export class DisplayField extends React.Component<Props> {
-  render() {
-    const classes = classNames({
-      'uk-margin uk-alert': true,
-      'uk-alert-danger': this.props.value < 0,
-    });
-    return (
-      <div className={classes}>
-        {this.props.children}: {this.props.value}
-      </div>
-    );
-  }
+export function DisplayField(props: Props) {
+  const classes = classNames({
+    'uk-margin uk-alert': true,
+    'uk-alert-danger': props.value < 0,
+  });
+  return (
+    <div className={classes}>
+      {props.children}: {props.value}
+    </div>
+  );
 }

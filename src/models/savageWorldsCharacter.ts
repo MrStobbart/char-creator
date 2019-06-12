@@ -58,7 +58,7 @@ export default class SavageWorldsCharacter {
     console.log('Name is ' + this.name);
   };
 
-  protected getJson(): CharData {
+  public getJson(): CharData {
     // TODO edges / hinderances not saved properly
     // All char properties that should be saved (not delivered data)
     const charPropsFlat = this.fieldsets.reduce((sum: string[], current) => {

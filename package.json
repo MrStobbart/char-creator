@@ -14,7 +14,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test"
+      "pre-commit": "npm run testOnce"
     }
   },
   "private": true,
@@ -26,10 +26,11 @@
     "server": "cross-env NODE_ENV=development nodemon --watch 'src/server/*' --exec 'ts-node' '--project' 'tsconfig.node.json' src/server/server.ts",
     "buildServer": "cross-env NODE_ENV=production ts-node --project tsconfig.node.json src/server/server.ts",
     "test": "react-scripts test --env=jsdom",
+    "testOnce": "react-scripts test --env=jsdom --watchAll=false",
     "eject": "react-scripts eject",
     "parseRules": "ts-node --project tsconfig.node.json src/server/data/extractRules.ts",
-    "lint": "eslint . --ext .ts",
-    "fix": "eslint . --ext .ts --fix"
+    "lint": "eslint . --ext .ts --ext .tsx",
+    "fix": "eslint . --ext .ts --ext .tsx --fix"
   },
   "dependencies": {
     "@types/react-table": "^6.8.3",

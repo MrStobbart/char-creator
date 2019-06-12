@@ -14,7 +14,7 @@ export default function CharactersPage(props: CharactersPageProps) {
       fetchCharacters(dispatch, appState);
     }
     // TODO Does this work with length?
-  }, [numberOfCharacters]);
+  }, [appState, dispatch, numberOfCharacters]);
 
   const createDeleteCharacter = (characterId: string) => () => {
     console.log('Delete characteer');
@@ -23,17 +23,13 @@ export default function CharactersPage(props: CharactersPageProps) {
   };
 
   return (
-    <div uk-grid='true'>
+    <div uk-grid="true">
       {appState.characters.map(character => (
-        <CharacterTile
-          key={character.id}
-          character={character}
-          deleteCharacter={createDeleteCharacter(character.id)}
-        />
+        <CharacterTile key={character.id} character={character} deleteCharacter={createDeleteCharacter(character.id)} />
       ))}
-      <div className='uk-width-1-6'>
+      <div className="uk-width-1-6">
         <Link to={`/charpage`}>
-          <div className='uk-card uk-card-body uk-card-default uk-card-hover'>
+          <div className="uk-card uk-card-body uk-card-default uk-card-hover">
             <h4>Neuer Charakter</h4>
             <div>Erstelle einen neuen Character</div>
           </div>

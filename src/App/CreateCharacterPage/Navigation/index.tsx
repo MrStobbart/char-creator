@@ -7,13 +7,11 @@ export interface Props {
 }
 
 export function Navigation(props: Props) {
-  const fieldsets = props.fieldsets.map(fieldset => (
-    <NavEntry key={fieldset.id} fieldset={fieldset} />
-  ));
+  const fieldsets = props.fieldsets.map(fieldset => <NavEntry key={fieldset.id} fieldset={fieldset} />);
 
   return (
-    <div uk-sticky='offset: 20' className='uk-card uk-card-default uk-card-body'>
-      <ul className='uk-nav uk-nav-default'>{fieldsets}</ul>
+    <div uk-sticky="offset: 20" className="uk-card uk-card-default uk-card-body">
+      <ul className="uk-nav uk-nav-default">{fieldsets}</ul>
     </div>
   );
 }

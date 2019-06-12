@@ -16,10 +16,10 @@ export default function App(props: AppProps) {
       <header>
         <Navbar />
       </header>
-      <main className='uk-container uk-container-expand' style={{ marginTop: 12 }}>
-        <Route path='/home' component={HomePage} />
-        <Route path='/charpage/:characterId?' component={CreateCharacter} />
-        <Route path='/characters' component={CharactersPage} />
+      <main className="uk-container uk-container-expand" style={{ marginTop: 12 }}>
+        <Route path="/home" component={HomePage} />
+        <Route path="/charpage/:characterId?" component={CreateCharacter} />
+        <Route path="/characters" component={CharactersPage} />
       </main>
     </StateProvider>
   );

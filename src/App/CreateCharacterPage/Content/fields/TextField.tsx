@@ -22,15 +22,15 @@ export function TextField(props: TextFieldProps) {
   };
 
   return (
-    <div className=''>
-      <label className='uk-form-label' htmlFor='name'>
+    <div className="">
+      <label className="uk-form-label" htmlFor="name">
         {props.children}
       </label>
-      <div className='uk-form-controls'>
+      <div className="uk-form-controls">
         <input
-          className='uk-input uk-form-small'
+          className="uk-input uk-form-small"
           style={style}
-          type='text'
+          type="text"
           value={props.value}
           onChange={handleChange}
         />

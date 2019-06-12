@@ -36,25 +36,25 @@ export function NumberField(props: NumberFieldProps) {
 
   return (
     <div>
-      <label className='uk-form-label' htmlFor='name'>
+      <label className="uk-form-label" htmlFor="name">
         {props.children}
       </label>
-      <div className='uk-form-controls'>
+      <div className="uk-form-controls">
         <button
-          className='uk-icon-button'
-          uk-icon='icon: minus; ratio: 0.7'
+          className="uk-icon-button"
+          uk-icon="icon: minus; ratio: 0.7"
           onClick={decrease}
           style={changeButtonStyle}
         />
         <input
-          className='number-field uk-input uk-form-small'
-          type='text'
+          className="number-field uk-input uk-form-small"
+          type="text"
           value={props.value ? props.availableValues[props.value] : ''}
           readOnly
         />
         <button
-          className='uk-icon-button change-button'
-          uk-icon='icon: plus; ratio: 0.7'
+          className="uk-icon-button change-button"
+          uk-icon="icon: plus; ratio: 0.7"
           onClick={increase}
           style={changeButtonStyle}
         />

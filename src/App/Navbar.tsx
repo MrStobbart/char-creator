@@ -5,23 +5,23 @@ export interface NavbarProps {}
 export default function Navbar(props: NavbarProps) {
   return (
     <div>
-      <nav uk-navbar='true' className='uk-navbar-container'>
-        <div className='uk-navbar-center'>
-          <ul className='uk-navbar-nav'>
+      <nav uk-navbar="true" className="uk-navbar-container">
+        <div className="uk-navbar-center">
+          <ul className="uk-navbar-nav">
             <li>
-              <Link to='/home'>Home</Link>
+              <Link to="/home">Home</Link>
             </li>
             <li>
-              <Link to='/charpage'>Create Character</Link>
+              <Link to="/charpage">Create Character</Link>
             </li>
             <li>
-              <Link to='/characters'>View Characters</Link>
+              <Link to="/characters">View Characters</Link>
             </li>
             <li>
-              <Link to='/home'>Switch Ruleset</Link>
+              <Link to="/home">Switch Ruleset</Link>
             </li>
             <li>
-              <Link to='/home'>Login</Link>
+              <Link to="/home">Login</Link>
             </li>
           </ul>
         </div>

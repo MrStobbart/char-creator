@@ -13,7 +13,7 @@ export interface InfoPanelProps {
 
 export function InfoPanel(props: InfoPanelProps) {
   return (
-    <div uk-sticky='offset: 20' className='uk-card uk-card-default uk-card-body'>
+    <div uk-sticky="offset: 20" className="uk-card uk-card-default uk-card-body">
       {props.character.charCreationInformation.order.map(propertyId => {
         const property: NumberProperty = props.character[propertyId];
         return (
@@ -22,19 +22,18 @@ export function InfoPanel(props: InfoPanelProps) {
           </DisplayField>
         );
       })}
-      <div className='uk-margin'>
+      <div className="uk-margin">
         <button
-          className='uk-button uk-button-default uk-button-small'
+          className="uk-button uk-button-default uk-button-small"
           onClick={props.saveChanges}
           // TODO proper color here
-          style={{ background: props.unsavedChanges ? 'red' : 'green' }}>
+          style={{ background: props.unsavedChanges ? 'red' : 'green' }}
+        >
           {props.unsavedChanges ? 'Unsaved changes' : 'Everything saved'}
         </button>
       </div>
-      <div className='uk-margin'>
-        <button className='uk-button uk-button-default uk-button-small'>
-          Finish char creation
-        </button>
+      <div className="uk-margin">
+        <button className="uk-button uk-button-default uk-button-small">Finish char creation</button>
       </div>
     </div>
   );

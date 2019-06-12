@@ -15,8 +15,8 @@ export interface ContentProps {
 
 export function Content(props: ContentProps) {
   return (
-    <div className='uk-card uk-card-default uk-card-body'>
-      <form className='uk-form-horizontal'>
+    <div className="uk-card uk-card-default uk-card-body">
+      <form className="uk-form-horizontal">
         {props.character.fieldsets.map(fieldset => (
           <FieldGroupComponent
             character={props.character}

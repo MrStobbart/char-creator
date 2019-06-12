@@ -3,14 +3,7 @@ import { TextField } from './fields/TextField';
 import { NumberField } from './fields/NumberField';
 import { DataField } from './fields/DataField';
 import { AddableField } from './fields/AddableField';
-import {
-  FieldGroup,
-  NumberProperty,
-  DeliveredData,
-  TextProperty,
-  Quality,
-  Property,
-} from '../../../models/interfaces';
+import { FieldGroup, NumberProperty, DeliveredData, TextProperty, Quality, Property } from '../../../models/interfaces';
 import { CreateUpdateValue, AddQuality, RemoveQuality } from '../../interfaces';
 import SavageWorldsCharacter from '../../../models/savageWorldsCharacter';
 import { Qualities } from '../../../models/Qualities';
@@ -36,7 +29,8 @@ export function FieldGroupComponent(props: FieldGroupContainerProps) {
             value={property.value}
             availableValues={props.availableValues}
             updateValue={props.createUpdateValue(propertyId)}
-            default={property.default}>
+            default={property.default}
+          >
             {property.label}
           </NumberField>
         );
@@ -56,10 +50,7 @@ export function FieldGroupComponent(props: FieldGroupContainerProps) {
       fields = props.fieldset.order.map(propertyId => {
         const property: TextProperty = props.character[propertyId];
         return (
-          <TextField
-            key={property.id}
-            value={property.value}
-            updateValue={props.createUpdateValue(propertyId)}>
+          <TextField key={property.id} value={property.value} updateValue={props.createUpdateValue(propertyId)}>
             {property.label}
           </TextField>
         );
@@ -86,7 +77,7 @@ export function FieldGroupComponent(props: FieldGroupContainerProps) {
   return (
     <fieldset id={props.fieldset.id} style={{ padding: '1em 2em 1em', borderWidth: 1 }}>
       <legend style={{ fontSize: '1.2em' }}>{props.fieldset.title}</legend>
-      <div uk-grid='true'>{fields}</div>
+      <div uk-grid="true">{fields}</div>
     </fieldset>
   );
 }

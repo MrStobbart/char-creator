@@ -9,12 +9,5 @@ export function DeleteCharacterButton(props: Props) {
     props.deleteCharacter();
   };
 
-  return (
-    <button
-      uk-close='true'
-      className='uk-close-large'
-      style={{ zIndex: 100 }}
-      onClick={handleClick}
-    />
-  );
+  return <button uk-close="true" className="uk-close-large" style={{ zIndex: 100 }} onClick={handleClick} />;
 }
