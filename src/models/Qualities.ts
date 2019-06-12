@@ -6,13 +6,7 @@ export class Qualities<T extends Quality> extends Addable<T> implements ObjWithI
   id: string;
   label: string;
 
-  constructor(
-    id: string,
-    label: string,
-    sideEffects: Function,
-    checkRequirements?: Function,
-    ...items: T[]
-  ) {
+  constructor(id: string, label: string, sideEffects: Function, checkRequirements?: Function, ...items: T[]) {
     super(sideEffects, ...items);
     this.id = id;
     this.label = label;

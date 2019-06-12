@@ -1,20 +1,18 @@
 import { ApiResponse } from './models/ApiResponse';
 import { ApiError } from './models/ApiError';
-import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import logger from 'morgan';
+import morgan from 'morgan';
 import history from 'connect-history-api-fallback';
 import dbConnectionMiddleware from './middlewares/dbConnector';
 import { Db, Collection } from 'mongodb';
-import savageWorldsFantasyQualities from './data/savageWorldsFantasy/qualities';
+import logger, { LoggerStream } from './helpers/winston';
 
 const app = express();
 const port = 8080;
 
-// Middleware: Make mongoDb db object available in req.
-app.use(dbConnectionMiddleware('mongodb://127.0.0.1:27017', 'char-creator'));
-
+/* eslint-disable */
 declare global {
   namespace Express {
     interface Request {
@@ -23,18 +21,18 @@ declare global {
     }
   }
 }
+/* eslint-enable */
+
+// Middleware: Make mongoDb db object available in req.
+app.use(dbConnectionMiddleware('mongodb://127.0.0.1:27017', 'char-creator'));
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 if (!isProduction) {
   app.use(cors());
-  // Log every request made to the console
-  app.use(logger('dev'));
 }
 
-const hallo = 'sdasd';
-
-const array = [...hallo];
+app.use(morgan('dev', { stream: new LoggerStream() }));
 
 // Middleware: Parse request body to json.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,9 +40,7 @@ app.use(bodyParser.json());
 
 app.route('/api/users');
 
-app.route('/api/savage-worlds-fantasy/qualities').get((req, res) => {
-  res.status(200).json(new ApiResponse('success', savageWorldsFantasyQualities));
-});
+app.route('/api/savage-worlds-fantasy/qualities').get((req, res) => {});
 
 app
   .route('/api/savage-worlds-fantasy/characters')
@@ -66,7 +62,6 @@ app
 app
   .route('/api/savage-worlds-fantasy/characters/:id')
   .all((req, res, next) => {
-    // console.log('asdasdas', req.db);
     req.collection = req.db.collection('swFantasyCharacters');
     next();
   })
@@ -102,7 +97,7 @@ app
 
 if (isProduction) {
   // Serve dist files in production mode
-  console.log('Serve the production build');
+  logger.info('Serve the production build');
 
   const staticFileMiddleware = express.static('dist');
   app.use(staticFileMiddleware);
@@ -114,7 +109,7 @@ if (isProduction) {
   );
   app.use(staticFileMiddleware);
   app.use((err: ApiError, req: Request, res: Response, next: NextFunction) => {
-    console.log(err);
+    logger.error(err);
     if (err instanceof ApiError) {
       return res.status(err.statusCode).json({ status: 'error', message: err.message });
     }
@@ -122,7 +117,7 @@ if (isProduction) {
   });
 } else {
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.log(err);
+    logger.error(err);
     if (err instanceof ApiError) {
       return res.status(err.statusCode).json({ status: 'error', message: err.message });
     }
@@ -131,5 +126,5 @@ if (isProduction) {
 }
 
 app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
+  logger.info(`Server started on port ${port}`);
 });

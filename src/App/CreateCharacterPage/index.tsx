@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useState as useReinspectState } from 'reinspect';
 import { RouteComponentProps } from 'react-router-dom';
 
 // Actions
@@ -20,38 +19,36 @@ const CreateCharacterPage = (props: CreateCharacterProps) => {
   const [appState, dispatch] = useAppState();
 
   // Must be nested so it can be shallow copied (shallow copy for instance of character class is not possible)
-  const [state, setState] = useReinspectState(
-    { character: new Character() },
-    'creatCharacterState'
-  );
+  const [state, setState] = useState({ character: new Character() });
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const characterId = props.match.params.characterId;
 
-  const loadSelectedCharacter = (characterId: string) => {
-    const selectedCharacter = appState.characters.find(character => character.id === characterId);
+  const loadSelectedCharacter = useCallback(
+    (characterId: string) => {
+      const selectedCharacter = appState.characters.find(character => character.id === characterId);
 
-    if (selectedCharacter) {
-      setState({ character: selectedCharacter });
-      setLoading(false);
-    } else {
-      if (!loading) {
-        setLoading(true);
-        fetchCharacter(dispatch, appState, characterId);
+      if (selectedCharacter) {
+        setState({ character: selectedCharacter });
+        setLoading(false);
+      } else {
+        if (!loading) {
+          setLoading(true);
+          fetchCharacter(dispatch, appState, characterId);
+        }
       }
-    }
-  };
+    },
+    [appState, dispatch, loading],
+  );
 
   useEffect(() => {
     if (characterId) {
       loadSelectedCharacter(characterId);
     }
-  }, [characterId]);
+  }, [characterId, loadSelectedCharacter]);
 
-  const createUpdateValue: CreateUpdateValue<Property> = (property: string) => (
-    newValue: string | number
-  ) => {
+  const createUpdateValue: CreateUpdateValue<Property> = (property: string) => (newValue: string | number) => {
     const newState = { ...state };
     newState.character[property].value = newValue;
     setState(newState);
@@ -84,11 +81,11 @@ const CreateCharacterPage = (props: CreateCharacterProps) => {
   console.log(state);
 
   return (
-    <div uk-grid='true'>
-      <div className='uk-width-1-6'>
+    <div uk-grid="true">
+      <div className="uk-width-1-6">
         <Navigation fieldsets={state.character.fieldsets} />
       </div>
-      <div className='uk-width-2-3'>
+      <div className="uk-width-2-3">
         <Content
           character={state.character}
           availableValues={state.character.values}
@@ -97,12 +94,8 @@ const CreateCharacterPage = (props: CreateCharacterProps) => {
           removeQuality={removeQuality}
         />
       </div>
-      <div className='uk-width-1-6'>
-        <InfoPanel
-          character={state.character}
-          saveChanges={saveChanges}
-          unsavedChanges={unsavedChanges}
-        />
+      <div className="uk-width-1-6">
+        <InfoPanel character={state.character} saveChanges={saveChanges} unsavedChanges={unsavedChanges} />
       </div>
     </div>
   );

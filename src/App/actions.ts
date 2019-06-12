@@ -21,11 +21,7 @@ export const fetchCharacters = async (dispatch: Dispatch<AppAction>, state: AppS
   }
 };
 
-export const deleteCharacter = async (
-  dispatch: Dispatch<AppAction>,
-  state: AppState,
-  characterId: string
-) => {
+export const deleteCharacter = async (dispatch: Dispatch<AppAction>, state: AppState, characterId: string) => {
   const endpoint = state.rules;
   try {
     await fetchEndpoint(`${endpoint}/characters/${characterId}`, 'delete');
@@ -36,11 +32,7 @@ export const deleteCharacter = async (
   }
 };
 
-export const fetchCharacter = async (
-  dispatch: Dispatch<AppAction>,
-  state: AppState,
-  characterId: string
-) => {
+export const fetchCharacter = async (dispatch: Dispatch<AppAction>, state: AppState, characterId: string) => {
   const endpoint = state.rules;
   try {
     const response: ApiResponse = await fetchEndpoint(`${endpoint}/characters/${characterId}`);
@@ -52,11 +44,7 @@ export const fetchCharacter = async (
   }
 };
 
-export const upsertCharacter = async (
-  state: AppState,
-  dispatch: Dispatch<AppAction>,
-  character: Character
-) => {
+export const upsertCharacter = async (state: AppState, dispatch: Dispatch<AppAction>, character: Character) => {
   const endpoint = state.rules;
   const body = character.getJson();
   console.log(body);

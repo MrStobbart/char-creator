@@ -104,19 +104,19 @@ export default class SavageWorldsCharacter {
 
     const parryModifer = modifiers.reduce(
       (sum, modifier) => (modifier.changesProperty === 'parry' ? sum + modifier.value : sum),
-      0
+      0,
     );
     const toughnessModifer = modifiers.reduce(
       (sum, modifier) => (modifier.changesProperty === 'toughness' ? sum + modifier.value : sum),
-      0
+      0,
     );
     const paceModifer = modifiers.reduce(
       (sum, modifier) => (modifier.changesProperty === 'pace' ? sum + modifier.value : sum),
-      0
+      0,
     );
     const charismaModifer = modifiers.reduce(
       (sum, modifier) => (modifier.changesProperty === 'charisma' ? sum + modifier.value : sum),
-      0
+      0,
     );
 
     this.parry.value = (this.fighting.value * 2 + 2) / 2 + 2 + parryModifer;
@@ -139,10 +139,7 @@ export default class SavageWorldsCharacter {
   };
 
   calcAvailableAttributePoints = () => {
-    this.attributePoints.value = this.attributes.order.reduce(
-      (sum, attribute) => sum - this[attribute].value,
-      10
-    );
+    this.attributePoints.value = this.attributes.order.reduce((sum, attribute) => sum - this[attribute].value, 10);
   };
 
   calculateQualityPoints = () => {
@@ -201,11 +198,7 @@ export default class SavageWorldsCharacter {
   qualities: FieldGroup = qualitiesFieldset;
   // Idea, make a class for each that handles the updates automatically and have another logical group for the renderer. Then only edges.push()
   edges: Qualities<Edge> = new Qualities<Edge>('edges', 'Talente', this.qualitiesSideEffects);
-  hinderances: Qualities<Hinderance> = new Qualities<Hinderance>(
-    'hinderances',
-    'Handicaps',
-    this.qualitiesSideEffects
-  );
+  hinderances: Qualities<Hinderance> = new Qualities<Hinderance>('hinderances', 'Handicaps', this.qualitiesSideEffects);
 
   // General information
   generalInformation = generalInformationFieldset;
@@ -259,33 +252,17 @@ export default class SavageWorldsCharacter {
   fastHands: Skill = new Skill('fastHands', 'Fingerfertigkeit', 'agility', this.skillSideEffects);
   stealth: Skill = new Skill('stealth', 'Heimlichkeit', 'agility', this.skillSideEffects);
   climbing: Skill = new Skill('climbing', 'Klettern', 'strength', this.skillSideEffects, true);
-  bodyControl: Skill = new Skill(
-    'bodyControl',
-    'Körperbeherschung',
-    'agility',
-    this.skillSideEffects
-  );
+  bodyControl: Skill = new Skill('bodyControl', 'Körperbeherschung', 'agility', this.skillSideEffects);
   crafting: Skill = new Skill('crafting', 'Handwerk', 'agility', this.skillSideEffects, true); // TODO mehrere Handwerke möglich
   riding: Skill = new Skill('riding', 'Reiten', 'agility', this.skillSideEffects, true);
   driving: Skill = new Skill('driving', 'Fahrzeuge', 'agility', this.skillSideEffects, true);
-  lockpicking: Skill = new Skill(
-    'lockpicking',
-    'Schlösserknacken',
-    'agility',
-    this.skillSideEffects
-  );
+  lockpicking: Skill = new Skill('lockpicking', 'Schlösserknacken', 'agility', this.skillSideEffects);
   swimming: Skill = new Skill('swimming', 'Schwimmen', 'strength', this.skillSideEffects, true);
   perception: Skill = new Skill('perception', 'Wahrnehmen', 'smarts', this.skillSideEffects);
 
   // Social skills
   seduction: Skill = new Skill('seduction', 'Betören', 'smarts', this.skillSideEffects, true);
-  intimidation: Skill = new Skill(
-    'intimidation',
-    'Einschüchtern',
-    'spirit',
-    this.skillSideEffects,
-    true
-  );
+  intimidation: Skill = new Skill('intimidation', 'Einschüchtern', 'spirit', this.skillSideEffects, true);
   etiquette: Skill = new Skill('etiquette', 'Etikette', 'smarts', this.skillSideEffects, true);
   empathy: Skill = new Skill('empathy', 'Menschenkenntnis', 'smarts', this.skillSideEffects);
   persuade: Skill = new Skill('persuade', 'Überreden', 'smarts', this.skillSideEffects);
@@ -293,12 +270,7 @@ export default class SavageWorldsCharacter {
 
   // Nature skills
   tracking: Skill = new Skill('tracking', 'Fährtensuche', 'smarts', this.skillSideEffects);
-  natureKnowledge: Skill = new Skill(
-    'natureKnowledge',
-    'Naturkunde',
-    'smarts',
-    this.skillSideEffects
-  );
+  natureKnowledge: Skill = new Skill('natureKnowledge', 'Naturkunde', 'smarts', this.skillSideEffects);
   surival: Skill = new Skill('surival', 'Wildnisleben', 'spirit', this.skillSideEffects);
 
   // Knowledge skills
@@ -306,12 +278,7 @@ export default class SavageWorldsCharacter {
   gambling: Skill = new Skill('gambling', 'Glücksspiel', 'smarts', this.skillSideEffects, true);
   faith: Skill = new Skill('faith', 'Glaube', 'spirit', this.skillSideEffects); // TODO nur wenn arkaner Hintergrund(Wunder) gewählt wurde
   healing: Skill = new Skill('healing', 'Heilkunde', 'smarts', this.skillSideEffects);
-  arcaneKnowledge: Skill = new Skill(
-    'arcaneKnowledge',
-    'Magiekunde',
-    'smarts',
-    this.skillSideEffects
-  );
+  arcaneKnowledge: Skill = new Skill('arcaneKnowledge', 'Magiekunde', 'smarts', this.skillSideEffects);
   language: Skill = new Skill('language', 'Sprache', 'smarts', this.skillSideEffects, true); // TODO mehrere Sprachen möglich
   knowledge: Skill = new Skill('knowledge', 'Wissen', 'smarts', this.skillSideEffects, true); // TODO mehrere Wissensfertigkeiten möglich
   spellcasting: Skill = new Skill('spellcasting', 'Zaubern', 'smarts', this.skillSideEffects); // Nur wenn arkaner Hintergrund(Magie) gewählt wurde

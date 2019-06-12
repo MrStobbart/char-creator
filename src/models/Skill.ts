@@ -6,13 +6,7 @@ export class Skill implements NumberProperty {
   attribute: string;
   calculationType: string;
 
-  constructor(
-    id: string,
-    label: string,
-    attribute: string,
-    sideEffects: Function,
-    cheapSkill?: boolean
-  ) {
+  constructor(id: string, label: string, attribute: string, sideEffects: Function, cheapSkill?: boolean) {
     this.id = id;
     this.label = label;
     this.attribute = attribute;
