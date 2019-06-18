@@ -29,8 +29,8 @@
     "testOnce": "react-scripts test --env=jsdom --watchAll=false",
     "eject": "react-scripts eject",
     "parseRules": "ts-node --project tsconfig.node.json src/server/data/extractRules.ts",
-    "lint": "eslint . --ext .ts --ext .tsx",
-    "fix": "eslint . --ext .ts --ext .tsx --fix"
+    "lint": "eslint . --ext .ts,.tsx",
+    "fix": "eslint . --ext .ts,.tsx --fix"
   },
   "dependencies": {
     "@types/react-table": "^6.8.3",
