@@ -25,3 +25,5 @@ yarn-error.log*
 *.fodt
 
 app.log
+
+.env
