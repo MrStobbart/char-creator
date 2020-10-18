@@ -1,4 +1,4 @@
-interface RuleLocation {
+export interface RuleLocation {
   fileUrl: string;
   data: { title: string; tableHeaders: string[] }[];
 }

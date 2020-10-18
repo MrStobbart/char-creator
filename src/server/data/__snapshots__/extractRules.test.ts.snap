@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parseTableForGivenHeader returns the object with the data from the table 1`] = `
+Array [
+  Object {
+    "headers": Array [
+      "Talent",
+      "Anforderungen",
+      "Beschreibung",
+      "Wirkung",
+    ],
+    "json": Array [
+      Object {
+        "Anforderungen": "Anfänger, Einschüchtern W8",
+        "Beschreibung": "Solche mit einem herben Verstand können das Ego eines Gegners mit einer einzigen Anmerkung oder einer Geste zerstören. Der Charakter kann verspotten Proben wiederholen.",
+        "Talent": "Demütigung",
+        "Wirkung": "Provozieren wiederholbar",
+      },
+    ],
+  },
+]
+`;
+
+exports[`parseTableForGivenHeader returns the object with the data from the table 2`] = `
+Array [
+  Object {
+    "headers": Array [
+      "Fertigkeitsstufe",
+      "Würfel",
+      "Bedeutung",
+    ],
+    "json": Array [
+      Object {
+        "Bedeutung": "Ahnungslos",
+        "Fertigkeitsstufe": "Nicht vorhanden",
+        "Würfel": "W4-1",
+      },
+      Object {
+        "Bedeutung": "Anfänger",
+        "Fertigkeitsstufe": "1",
+        "Würfel": "W4",
+      },
+      Object {
+        "Bedeutung": "Ausgebildet",
+        "Fertigkeitsstufe": "2",
+        "Würfel": "W6",
+      },
+      Object {
+        "Bedeutung": "Kompetent",
+        "Fertigkeitsstufe": "3",
+        "Würfel": "W8",
+      },
+      Object {
+        "Bedeutung": "Herausragend",
+        "Fertigkeitsstufe": "4",
+        "Würfel": "W10",
+      },
+      Object {
+        "Bedeutung": "Profi",
+        "Fertigkeitsstufe": "5",
+        "Würfel": "W12",
+      },
+      Object {
+        "Bedeutung": "Legendär",
+        "Fertigkeitsstufe": "6",
+        "Würfel": "WildDie W8",
+      },
+      Object {
+        "Bedeutung": "",
+        "Fertigkeitsstufe": "7",
+        "Würfel": "WildDie W10",
+      },
+      Object {
+        "Bedeutung": "",
+        "Fertigkeitsstufe": "8",
+        "Würfel": "WildDie W12",
+      },
+    ],
+  },
+]
+`;

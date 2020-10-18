@@ -1,36 +1,81 @@
-import fetch from 'node-fetch';
 import { ruleLocations } from './ruleLocations';
 import { config } from '../helpers/config';
+import logger from '../helpers/winston';
+import axios from 'axios';
+import mdtable2json from 'mdtable2json';
 
-const getRules = async (ruleSetName: string) => {
-  const ruleLocation = ruleLocations[ruleSetName];
-  if (!ruleLocation) throw new Error(`No rule set with the name ${ruleSetName} found`);
+interface GitHubResponse {
+  type: string;
+  encoding: string;
+  size: number;
+  name: string;
+  path: string;
+  content: string;
+  sha: string;
+  url: string;
+  git_url: string;
+  html_url: string;
+  download_url: string;
+  _links: {
+    git: string;
+    self: string;
+    html: string;
+  };
+}
 
-  const response = await fetch(ruleLocation.fileUrl, {
-    headers: {
-      Authorization: `token ${config.githubToken}`,
-    },
-  });
-  const ruleFile = await response.json();
-  return Buffer.from(ruleFile.content, 'base64').toString();
+interface GitHubErrorResponse {
+  message: string;
+}
+
+const getRulesFromGithub = async (fileUrl: string) => {
+  try {
+    const response = await axios.get<GitHubResponse & GitHubErrorResponse>(fileUrl, {
+      headers: {
+        Authorization: `token ${config.githubToken}`,
+      },
+    });
+
+    return Buffer.from(response.data.content, 'base64').toString();
+  } catch (error) {
+    logger.error(`Could not fetch and parse rule file from GitHub: ${error.message}`);
+    throw error;
+  }
 };
 
-const getTableExtract = (ruleFile: string, tableHeader: string) => {
+export const getTableEndIndex = (ruleFile: string, startIndex: number): number => {
+  const nextHashIndex = ruleFile.substring(startIndex).indexOf('#', 15);
+
+  const fixedNextHashIndex = nextHashIndex === -1 ? ruleFile.length : nextHashIndex;
+
+  if (ruleFile.charAt(fixedNextHashIndex - 1) === '(') {
+    return getTableEndIndex(ruleFile, fixedNextHashIndex + 15);
+  }
+
+  return fixedNextHashIndex + startIndex;
+};
+
+export const parseTableForGivenHeader = (ruleFile: string, tableHeader: string) => {
   const tableHeaderIndex = ruleFile.indexOf(tableHeader);
 
   if (tableHeaderIndex === -1) throw new Error(`Table header '${tableHeader}' does not exist in rule file.`);
 
   const tableEndIndex = getTableEndIndex(ruleFile, tableHeaderIndex);
 
-  ruleFile.substring(tableHeaderIndex, tableEndIndex);
+  const tableExcerpt = ruleFile.substring(tableHeaderIndex, tableEndIndex);
+  const fixedTableExcerpt = tableExcerpt.replace(/[*]/g, '');
+
+  return mdtable2json.getTables(fixedTableExcerpt);
 };
 
-const getTableEndIndex = (ruleFile: string, startIndex: number): number => {
-  const nextHashIndex = ruleFile.substring(startIndex).indexOf('#');
-  if (ruleFile.charAt(nextHashIndex - 1) === '(') {
-    return getTableEndIndex(ruleFile, nextHashIndex + 10); // a header can have a lot of hashtags
-  }
-  return nextHashIndex;
+export const parseMarkdownTable = (tableExcerpt: string) => {};
+
+const getRules = async (ruleSetName: string) => {
+  const ruleLocation = ruleLocations[ruleSetName];
+  if (!ruleLocation) throw new Error(`No rule set with the name ${ruleSetName} found`);
+
+  const rules = await getRulesFromGithub(ruleLocation.fileUrl);
+
+  const tableExtract = parseTableForGivenHeader(rules, '#### Hintergrundtalente');
 };
 
 getRules('savageRun');
