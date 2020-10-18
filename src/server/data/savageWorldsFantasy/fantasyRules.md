@@ -8,6 +8,15 @@ Changes are automatically rendered as you type.
 * Allows you to escape or skip HTML (try toggling the checkboxes above)
 * If you escape or skip the HTML, no `dangerouslySetInnerHTML` is used! Yay!
 
+This is a very nice editor! 
+
+```javascript
+const toast = 'asd';
+
+```
+
+
+
 ## HTML block below
 
 <blockquote>
@@ -30,11 +39,13 @@ Pretty neat, eh?
 
 ## Tables?
 
-| Feature   | Support |
-| --------- | ------- |
-| tables    | ✔       |
-| alignment | ✔       |
-| wewt      | ✔       |
+| Feature            | Support       |
+| :----------------- | :------------ |
+| tables             | ✔             |
+| alignment          | ✔             |
+| wewt               | ✔             |
+| This is quite cool | Or maybe not? |
+|                    |               |
 
 ## More info?
 

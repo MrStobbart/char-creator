@@ -80,7 +80,7 @@ export default class SavageWorldsCharacter {
       if (charProp.value === '' || charProp.value === 0) {
         return false;
       }
-      return true;
+      throw new Error();
     });
     return {
       _id: this.id,
