@@ -1,4 +1,3 @@
-import { ApiResponse } from './models/ApiResponse';
 import { ApiError } from './models/ApiError';
 import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
@@ -6,8 +5,9 @@ import cors from 'cors';
 import morgan from 'morgan';
 import history from 'connect-history-api-fallback';
 import dbConnectionMiddleware from './helpers/dbConnector';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Db, Collection } from 'mongodb';
-import logger, { LoggerStream } from './helpers/winston';
+import logger, { MorganLoggerStream } from './helpers/winston';
 
 const app = express();
 const port = 8080;
@@ -32,7 +32,7 @@ if (!isProduction) {
   app.use(cors());
 }
 
-app.use(morgan('dev', { stream: new LoggerStream() }));
+app.use(morgan('dev', { stream: new MorganLoggerStream() }));
 
 // Middleware: Parse request body to json.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -40,7 +40,9 @@ app.use(bodyParser.json());
 
 app.route('/api/users');
 
-app.get('/api/savage-worlds-fantasy/qualities', (req, res) => {});
+app.get('/api/savage-worlds-fantasy/qualities', (req, res) => {
+  throw new Error('TODO Not implemented yet');
+});
 
 if (isProduction) {
   // Serve dist files in production mode

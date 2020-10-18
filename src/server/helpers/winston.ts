@@ -50,11 +50,11 @@ if (process.env.NODE_ENV !== 'production') {
   logger.debug('Logging initialized at debug level');
 }
 
-export class LoggerStream {
+export default logger;
+
+export class MorganLoggerStream {
   public write(message: string) {
     // Log morgan logs at info level without last new line
     logger.info(message.substring(0, message.lastIndexOf('\n')));
   }
 }
-
-export default logger;
