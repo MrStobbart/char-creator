@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parseTableForGivenHeader parses the correct table when there is a link in the table 1`] = `
+Object {
+  "headers": Array [
+    "Talent",
+    "Anforderungen",
+    "Beschreibung",
+    "Wirkung",
+  ],
+  "json": Array [
+    Object {
+      "Anforderungen": "Fortgeschritten, AH, Zaubern W8, nur einmal pro Rang",
+      "Beschreibung": " Der Charakter erreicht die höheren Sphären der Magie seiner gewählten Profession. Er erhält jedes Mal wenn er dieses Talent wählt einen der folgenden Boni:",
+      "Talent": "Initiation",
+      "Wirkung": "Verschiedenes",
+    },
+    Object {
+      "Anforderungen": "Anfänger, AH(Magier), Beschwören W8",
+      "Beschreibung": " Auf die Beschwörung von Geistern erhält der Charakter einen Bonus von +2 auf die Beschwören Probe.",
+      "Talent": "Beschwörer",
+      "Wirkung": "+2 auf Bewschören",
+    },
+    Object {
+      "Anforderungen": "Veteran, Beschwörer, Beschwören W10",
+      "Beschreibung": " Der Beschwörer hat einen Pakt mit der Geisterwelt abgeschlossen und kann nun mehrere Geister gleichzeitig kontrollieren. Sein neues Limit beträgt nun seine Willenskraft.",
+      "Talent": "Geisterpakt",
+      "Wirkung": "Doppel so viele Geister",
+    },
+    Object {
+      "Anforderungen": "Veteran, Beschwörer, Beschwören W8, Willenskraft W8",
+      "Beschreibung": " Der Beschwörer erhält einen Bonus von +2 um dem Entzug von Beschwörungen zu Widerstehen.",
+      "Talent": "Ausdauernder Beschwörer",
+      "Wirkung": "+2 zum Entzug von Beschwören widerstehen",
+    },
+    Object {
+      "Anforderungen": "Fortgeschritten, Zaubern W8)",
+      "Beschreibung": " Der Charakter erhält einen Bonus von +1 zum Entzug widerstehen",
+      "Talent": "Magische Ausdauer",
+      "Wirkung": "+1 zum Entzug widerstehen",
+    },
+    Object {
+      "Anforderungen": "Veteran, Zaubern W10",
+      "Beschreibung": " Der Charakter erhält einen Bonus von +2 zum Entzug widerstehen.",
+      "Talent": "Stärkere magische Ausdauer",
+      "Wirkung": "+2 zum Entzug widerstehen",
+    },
+    Object {
+      "Anforderungen": "Anfänger, AH(Adept)",
+      "Beschreibung": " Der Adept kann zusätzlich die Fertigkeit Zaubern erlernen, allerdings nicht über Fertigkeitspunkte, sondern er muss einen Ki-Punkt aufgeben um seine Stufe in Zaubern um einen Würfeltyp zu erhöhen (er muss diesen Wüfeltyp immer noch mit aufstiegen bezahlen. Der Adept erhält zusätzlich eine Macht die er nur über die Fertigkeit Zaubern wirken kann. Der Adept kann das Talent „Neue Mächte“ wählen. ",
+      "Talent": "Magieradept",
+      "Wirkung": "Verschiedenes",
+    },
+    Object {
+      "Anforderungen": "Anfänger, Arkaner Hintergrund (Magier)",
+      "Beschreibung": " Ein arkaner Charaktertyp kann zwei neue Mächte erlernen, indem er dieses Talent auswählt. Er darf nur zwischen den Kräften wählen, die seinem arkanen Hintergrund normalerweise zur Verfügung stehen. Hier kann es je nach Setting Unterschiede geben.",
+      "Talent": "Neue Mächte",
+      "Wirkung": "2 neue Mächte",
+    },
+    Object {
+      "Anforderungen": "Anfänger, AH(Magier)",
+      "Beschreibung": " Der Charakter kann Hintergrundstrahlung in einem Umkreis gleich seines Zauber-Würfels beseitigen. Der Vorgang ist ein Ritual das eine Stunde dauert.",
+      "Talent": "Reinigung",
+      "Wirkung": "Verschiedenes",
+    },
+    Object {
+      "Anforderungen": "Fortgeschritten, Beschwörer",
+      "Beschreibung": " Der Charakter hat eine bessere Kontrolle über seine Geister. Entweder weil er sie gnadenlos dominiert oder weil er freundschaftlich mit ihnen umgeht. Daher wird der Modifikator für die Anzahl der Geister die er hält um 1 gesenkt. Das Talent kann mehrmals gewählt werden, aber nur einmal pro Rang. (Siehe Beschwören, Abschnitt Kontrolle)",
+      "Talent": "Verbesserte Kontrolle",
+      "Wirkung": "Verschiedenes",
+    },
+    Object {
+      "Anforderungen": "Anfänger, AH(Magier), Zaubern W8",
+      "Beschreibung": " Dein Charakter kann den Entzug von einer Zauber um 1 erhöhen um die Ausprägung zu ändern.",
+      "Talent": "Meisterhafter Magier",
+      "Wirkung": "Verschiedenes",
+    },
+  ],
+}
+`;
+
+exports[`parseTableForGivenHeader returns the object with the data from the table 1`] = `
+Object {
+  "headers": Array [
+    "Talent",
+    "Anforderungen",
+    "Beschreibung",
+    "Wirkung",
+  ],
+  "json": Array [
+    Object {
+      "Anforderungen": "Anfänger, Einschüchtern W8",
+      "Beschreibung": "Solche mit einem herben Verstand können das Ego eines Gegners mit einer einzigen Anmerkung oder einer Geste zerstören. Der Charakter kann verspotten Proben wiederholen.",
+      "Talent": "Demütigung",
+      "Wirkung": "Provozieren wiederholbar",
+    },
+  ],
+}
+`;
+
+exports[`parseTableForGivenHeader returns the object with the data from the table 2`] = `
+Object {
+  "headers": Array [
+    "Fertigkeitsstufe",
+    "Würfel",
+    "Bedeutung",
+  ],
+  "json": Array [
+    Object {
+      "Bedeutung": "Ahnungslos",
+      "Fertigkeitsstufe": "Nicht vorhanden",
+      "Würfel": "W4-1",
+    },
+    Object {
+      "Bedeutung": "Anfänger",
+      "Fertigkeitsstufe": "1",
+      "Würfel": "W4",
+    },
+    Object {
+      "Bedeutung": "Ausgebildet",
+      "Fertigkeitsstufe": "2",
+      "Würfel": "W6",
+    },
+    Object {
+      "Bedeutung": "Kompetent",
+      "Fertigkeitsstufe": "3",
+      "Würfel": "W8",
+    },
+    Object {
+      "Bedeutung": "Herausragend",
+      "Fertigkeitsstufe": "4",
+      "Würfel": "W10",
+    },
+    Object {
+      "Bedeutung": "Profi",
+      "Fertigkeitsstufe": "5",
+      "Würfel": "W12",
+    },
+    Object {
+      "Bedeutung": "Legendär",
+      "Fertigkeitsstufe": "6",
+      "Würfel": "WildDie W8",
+    },
+    Object {
+      "Bedeutung": "",
+      "Fertigkeitsstufe": "7",
+      "Würfel": "WildDie W10",
+    },
+    Object {
+      "Bedeutung": "",
+      "Fertigkeitsstufe": "8",
+      "Würfel": "WildDie W12",
+    },
+  ],
+}
+`;

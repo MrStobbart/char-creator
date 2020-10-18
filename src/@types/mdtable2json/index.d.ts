@@ -3,5 +3,5 @@ declare module 'mdtable2json' {
     headers: string[];
     json: { [header: string]: string }[];
   }
-  export const getTables: (markdown: string) => ParsedTable;
+  export const getTables: (markdown: string) => ParsedTable[];
 }

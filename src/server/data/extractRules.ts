@@ -2,7 +2,7 @@ import { ruleLocations } from './ruleLocations';
 import { config } from '../helpers/config';
 import logger from '../helpers/winston';
 import axios from 'axios';
-import mdtable2json from 'mdtable2json';
+import mdtable2json, { ParsedTable } from 'mdtable2json';
 
 interface GitHubResponse {
   type: string;
@@ -43,7 +43,7 @@ const getRulesFromGithub = async (fileUrl: string) => {
 };
 
 export const getTableEndIndex = (ruleFile: string, startIndex: number): number => {
-  const nextHashIndex = ruleFile.substring(startIndex).indexOf('#', 15);
+  const nextHashIndex = ruleFile.substring(startIndex).indexOf('\n#', 15);
 
   const fixedNextHashIndex = nextHashIndex === -1 ? ruleFile.length : nextHashIndex;
 
@@ -54,7 +54,7 @@ export const getTableEndIndex = (ruleFile: string, startIndex: number): number =
   return fixedNextHashIndex + startIndex;
 };
 
-export const parseTableForGivenHeader = (ruleFile: string, tableHeader: string) => {
+export const parseTableForGivenHeader = (ruleFile: string, tableHeader: string): ParsedTable => {
   const tableHeaderIndex = ruleFile.indexOf(tableHeader);
 
   if (tableHeaderIndex === -1) throw new Error(`Table header '${tableHeader}' does not exist in rule file.`);
@@ -64,10 +64,10 @@ export const parseTableForGivenHeader = (ruleFile: string, tableHeader: string) 
   const tableExcerpt = ruleFile.substring(tableHeaderIndex, tableEndIndex);
   const fixedTableExcerpt = tableExcerpt.replace(/[*]/g, '');
 
-  return mdtable2json.getTables(fixedTableExcerpt);
+  return mdtable2json.getTables(fixedTableExcerpt)[0];
 };
 
-export const parseMarkdownTable = (tableExcerpt: string) => {};
+type TableData = { [subTitle: string]: ParsedTable };
 
 const getRules = async (ruleSetName: string) => {
   const ruleLocation = ruleLocations[ruleSetName];
@@ -75,7 +75,20 @@ const getRules = async (ruleSetName: string) => {
 
   const rules = await getRulesFromGithub(ruleLocation.fileUrl);
 
-  const tableExtract = parseTableForGivenHeader(rules, '#### Hintergrundtalente');
+  const parsedData: { [title: string]: TableData } = {};
+  ruleLocation.data.forEach(dataType => {
+    const tableData: TableData = {};
+
+    dataType.tableHeaders.forEach(tableHeader => {
+      tableData[tableHeader] = parseTableForGivenHeader(rules, tableHeader);
+    });
+
+    parsedData[dataType.title] = tableData;
+  });
+
+  console.log(JSON.stringify(parsedData, null, 2));
+
+  return parsedData;
 };
 
 getRules('savageRun');
