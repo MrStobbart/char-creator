@@ -92,12 +92,12 @@ export default class SavageWorldsCharacter {
    * @param modifiersChanged Lets the function know if the modifiers should be re calculated
    */
 
-  protected skillSideEffects = (effectsSkillPoints: boolean = false) => {
+  protected skillSideEffects = (effectsSkillPoints = false) => {
     this.calcDeliveredData();
     if (effectsSkillPoints) this.calcAvailableSkillPoints();
   };
 
-  protected attributeSideEffects = (effectsAttributePoints: boolean = false) => {
+  protected attributeSideEffects = (effectsAttributePoints = false) => {
     this.calcDeliveredData();
     if (effectsAttributePoints) this.calcAvailableAttributePoints();
   };
@@ -200,7 +200,7 @@ export default class SavageWorldsCharacter {
   ];
 
   public id: string = shortid.generate();
-  public label: string = 'A';
+  public label = 'A';
   public availableLevels: string[] = ['A', 'F', 'V', 'H'];
 
   public qualities: FieldGroup = qualitiesFieldset;

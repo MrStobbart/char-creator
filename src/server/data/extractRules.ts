@@ -69,7 +69,7 @@ export const parseTableForGivenHeader = (ruleFile: string, tableHeader: string):
 
 type TableData = { [subTitle: string]: ParsedTable };
 
-const getRules = async (ruleSetName: string) => {
+export const getRules = async (ruleSetName: string) => {
   const ruleLocation = ruleLocations[ruleSetName];
   if (!ruleLocation) throw new Error(`No rule set with the name ${ruleSetName} found`);
 
@@ -85,8 +85,6 @@ const getRules = async (ruleSetName: string) => {
 
     parsedData[dataType.title] = tableData;
   });
-
-  console.log(JSON.stringify(parsedData, null, 2));
 
   return parsedData;
 };

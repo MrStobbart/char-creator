@@ -5,7 +5,7 @@ import { ApiError } from '../models/ApiError';
 export const charactersRouter = express.Router();
 
 charactersRouter
-  .route('/api/savage-worlds-fantasy/characters')
+  .route('/savage-worlds-fantasy/characters')
   .all((req, res, next) => {
     req.collection = req.db.collection('swFantasyCharacters');
     next();
@@ -22,7 +22,7 @@ charactersRouter
 
 // TODO add this kind of error handling to all endpoints
 charactersRouter
-  .route('/api/savage-worlds-fantasy/characters/:id')
+  .route('/savage-worlds-fantasy/characters/:id')
   .all((req, res, next) => {
     req.collection = req.db.collection('swFantasyCharacters');
     next();

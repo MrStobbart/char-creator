@@ -1,3 +1,4 @@
+import { router } from './routes/index';
 import { ApiError } from './models/ApiError';
 import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
@@ -38,7 +39,7 @@ app.use(morgan('dev', { stream: new MorganLoggerStream() }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.route('/api/users');
+app.use('/api', router);
 
 app.get('/api/savage-worlds-fantasy/qualities', (req, res) => {
   throw new Error('TODO Not implemented yet');
