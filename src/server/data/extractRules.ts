@@ -67,6 +67,23 @@ export const parseTableForGivenHeader = (ruleFile: string, tableHeader: string):
   return mdtable2json.getTables(fixedTableExcerpt)[0];
 };
 
+export const trimEntries = (parsedTable: ParsedTable) => {
+  parsedTable.headers = parsedTable.headers.map(header => header.trim());
+  parsedTable.json = parsedTable.json.map(entry => {
+    for (const key in entry) {
+      if (Object.prototype.hasOwnProperty.call(entry, key)) {
+        const trimmedKey = key.trim();
+        entry[trimmedKey] = entry[key].trim();
+        if (trimmedKey !== key) {
+          delete entry[key];
+        }
+      }
+    }
+    return entry;
+  });
+  return parsedTable;
+};
+
 type TableData = { [subTitle: string]: ParsedTable };
 
 export const getRules = async (ruleSetName: string) => {
@@ -80,7 +97,7 @@ export const getRules = async (ruleSetName: string) => {
     const tableData: TableData = {};
 
     dataType.tableHeaders.forEach(tableHeader => {
-      tableData[tableHeader] = parseTableForGivenHeader(rules, tableHeader);
+      tableData[tableHeader.replace(/[#]/g, '').trim()] = trimEntries(parseTableForGivenHeader(rules, tableHeader));
     });
 
     parsedData[dataType.title] = tableData;
@@ -88,10 +105,3 @@ export const getRules = async (ruleSetName: string) => {
 
   return parsedData;
 };
-
-getRules('savageRun');
-
-/**
- * 1. Start string until next #
- * 2. Only if #does not have a ( in front of it
- */

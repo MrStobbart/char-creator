@@ -1,3 +1,5 @@
+import { ParsedTable } from 'mdtable2json';
+import { trimEntries } from './../extractRules';
 import { exampleRulesFile, exampleTableExcerpt2, exampleTableWithLink } from './testMarkdownData';
 import { getTableEndIndex, parseTableForGivenHeader } from '../extractRules';
 
@@ -25,5 +27,15 @@ describe('parseTableForGivenHeader', () => {
     expect(parsedTable.json.length).toBe(11);
 
     expect(parsedTable).toMatchSnapshot();
+  });
+});
+
+describe('trimEntries', () => {
+  it('trims all entries correctly', () => {
+    const parsedTable: ParsedTable = {
+      headers: [' toast', 'sack ', 'normal'],
+      json: [{ ' toast': ' 1', 'sack ': '2 ', normal: '3 ' }],
+    };
+    expect(trimEntries(parsedTable)).toMatchSnapshot();
   });
 });
