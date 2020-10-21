@@ -154,3 +154,13 @@ Object {
   ],
 }
 `;
+
+exports[`trimEntries trims all entries correctly 1`] = `
+Array [
+  Object {
+    "information": "2",
+    "label": "1",
+    "requirements": "3",
+  },
+]
+`;

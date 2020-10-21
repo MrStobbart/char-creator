@@ -1,4 +1,4 @@
-import { ruleLocations } from './ruleLocations';
+import { ruleLocations, RuleLocationData } from './ruleLocations';
 import { config } from '../helpers/config';
 import logger from '../helpers/winston';
 import axios from 'axios';
@@ -67,24 +67,26 @@ export const parseTableForGivenHeader = (ruleFile: string, tableHeader: string):
   return mdtable2json.getTables(fixedTableExcerpt)[0];
 };
 
-export const trimEntries = (parsedTable: ParsedTable) => {
+export const trimEntries = (parsedTable: ParsedTable, dataType: RuleLocationData) => {
   parsedTable.headers = parsedTable.headers.map(header => header.trim());
   parsedTable.json = parsedTable.json.map(entry => {
+    const entryWithCorrectLabels: { [key: string]: string } = {};
     for (const key in entry) {
       if (Object.prototype.hasOwnProperty.call(entry, key)) {
         const trimmedKey = key.trim();
-        entry[trimmedKey] = entry[key].trim();
-        if (trimmedKey !== key) {
-          delete entry[key];
+        const propertyName = dataType.propertyNames[trimmedKey];
+        if (!propertyName) {
+          console.error('property name not found for ', trimmedKey);
         }
+        entryWithCorrectLabels[propertyName] = entry[key].trim();
       }
     }
-    return entry;
+    return entryWithCorrectLabels;
   });
-  return parsedTable;
+  return parsedTable.json;
 };
 
-type TableData = { [subTitle: string]: ParsedTable };
+type TableData = { [subTitle: string]: { [key: string]: string }[] };
 
 export const getRules = async (ruleSetName: string) => {
   const ruleLocation = ruleLocations[ruleSetName];
@@ -97,7 +99,8 @@ export const getRules = async (ruleSetName: string) => {
     const tableData: TableData = {};
 
     dataType.tableHeaders.forEach(tableHeader => {
-      tableData[tableHeader.replace(/[#]/g, '').trim()] = trimEntries(parseTableForGivenHeader(rules, tableHeader));
+      const parsedTable = parseTableForGivenHeader(rules, tableHeader);
+      tableData[tableHeader.replace(/[#]/g, '').trim()] = trimEntries(parsedTable, dataType);
     });
 
     parsedData[dataType.title] = tableData;

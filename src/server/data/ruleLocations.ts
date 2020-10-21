@@ -1,6 +1,12 @@
+export interface RuleLocationData {
+  title: string;
+  tableHeaders: string[];
+  propertyNames: { [tableHeaderLabel: string]: string };
+}
+
 export interface RuleLocation {
   fileUrl: string;
-  data: { title: string; tableHeaders: string[] }[];
+  data: RuleLocationData[];
 }
 
 export const ruleLocations: { [key: string]: RuleLocation } = {
@@ -23,10 +29,21 @@ export const ruleLocations: { [key: string]: RuleLocation } = {
           '#### Riggertalente',
           '#### Legendäre Talente',
         ],
+        propertyNames: {
+          Talent: 'label',
+          Anforderungen: 'requirements',
+          Beschreibung: 'information',
+          Wirkung: 'modifiers',
+        },
       },
       {
         title: 'hindrances',
         tableHeaders: ['#### Handicaps'],
+        propertyNames: {
+          Name: 'label',
+          Auswirkungen: 'information',
+          Wirkung: 'modifiers',
+        },
       },
     ],
   },

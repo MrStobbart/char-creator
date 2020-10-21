@@ -1,3 +1,4 @@
+import { RuleLocationData } from './../ruleLocations';
 import { ParsedTable } from 'mdtable2json';
 import { trimEntries } from './../extractRules';
 import { exampleRulesFile, exampleTableExcerpt2, exampleTableWithLink } from './testMarkdownData';
@@ -36,6 +37,12 @@ describe('trimEntries', () => {
       headers: [' toast', 'sack ', 'normal'],
       json: [{ ' toast': ' 1', 'sack ': '2 ', normal: '3 ' }],
     };
-    expect(trimEntries(parsedTable)).toMatchSnapshot();
+
+    const ruleLocationData: RuleLocationData = {
+      title: '',
+      tableHeaders: [],
+      propertyNames: { toast: 'label', sack: 'information', normal: 'requirements' },
+    };
+    expect(trimEntries(parsedTable, ruleLocationData)).toMatchSnapshot();
   });
 });
