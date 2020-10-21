@@ -3,6 +3,7 @@ import { MouseEvent } from 'react';
 import { Quality } from '../../../../models/interfaces';
 import { AddQuality, RemoveQuality } from '../../../../App/interfaces';
 import { Qualities } from '../../../../models/Qualities';
+import { AutocompleteField } from './AutocompleteField';
 
 export interface AddableFieldProps {
   qualityId: string;
@@ -12,6 +13,7 @@ export interface AddableFieldProps {
 }
 
 export const AddableField = (props: AddableFieldProps) => {
+  const options: string[] = []; // TODO all qualities from backend - the ones I already use
   const [warning, updateWarning] = useState<string>();
 
   const createRemoveQuality = (qualityId: string) => (event: MouseEvent) => {
@@ -25,15 +27,7 @@ export const AddableField = (props: AddableFieldProps) => {
     <div>
       <div>
         <div style={{ float: 'left', marginLeft: 10 }}>
-          Toast
-          {/* <AutocompleteField
-              placeholder={`Search ${this.props.field.label}`}
-              selectableGroups={this.props.field.selectableGroups}
-              selectedField={field.id ? field : undefined}
-              updateValue={this.createAddQuality(field.fieldId)}
-            >
-              Label
-            </AutocompleteField> */}
+          <AutocompleteField addValue={props.addQuality} />
         </div>
       </div>
       <div className="uk-margin">{warning}</div>

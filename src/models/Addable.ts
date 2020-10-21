@@ -6,7 +6,7 @@ import { ObjWithId } from './interfaces';
 export class Addable<T extends ObjWithId> {
   protected items: T[] = [];
   public length: number = this.items.length;
-  public sideEffects: Function = () => {};
+  public sideEffects: Function;
 
   public constructor(sideEffects: Function, ...items: T[]) {
     this.items.push(...items);

@@ -1,16 +1,6 @@
 import { NumberProperty, TextProperty, CharProperty, CharData, Property } from './interfaces';
 import * as shortid from 'shortid';
-import {
-  CharCreationInformation,
-  Modifier,
-  ObjWithId,
-  FieldGroup,
-  Edge,
-  Hinderance,
-  Requirement,
-  DeliveredData,
-  FieldTypes,
-} from './interfaces';
+import { Modifier, FieldGroup, Edge, Hinderance, Requirement, DeliveredData } from './interfaces';
 import { Skill } from './Skill';
 import { Attribute } from './Attribute';
 import { Qualities } from './Qualities';
@@ -198,6 +188,8 @@ export default class SavageWorldsCharacter {
     qualitiesFieldset,
     skillsFieldset,
   ];
+
+  // this is a test if this boy actually knows English
 
   public id: string = shortid.generate();
   public label = 'A';

@@ -11,8 +11,8 @@ export class Attribute implements NumberProperty {
   public id: string;
   public defaultValue = 1;
   public label: string;
-  private _value: number = 1;
-  public sideEffects: Function = () => {};
+  private _value = 1;
+  public sideEffects: Function;
 
   public get value(): number {
     return this._value;

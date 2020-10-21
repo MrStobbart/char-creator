@@ -1,113 +1,83 @@
-import * as React from 'react';
+import React from 'react';
+import { Input, AutoComplete } from 'antd';
 import './AutocompleteField.css';
-import { Quality } from '../../../../models/interfaces';
 
-export interface AutocompleteFieldProps {
-  selectedQualities: Quality[];
+type Data = { label: string; requirements: string; information: string; shortInformation: string };
+const example: Data = {
+  label: 'Aristokratin',
+  requirements: 'Anfänger',
+  information:
+    'Der Charakter ist sehr privilegiert aufgewachsen oder kam im späteren Leben dazu. Auch wenn sie nicht unbedingt reich ist (Talent Reich oder sehr Reich), aber sie versteht sich sehr gut auf den Umgang mit elitären Kreisen. Sie bekommt einen Bonus von +2 auf Überreden beim Netzwerken innerhalb der lokalen Elite, Unternehmensbossen oder anderen Aristokraten. Außerdem bekommt sie einen Bonus von +2 auf Allgemeinwissen Proben wenn es um Etikette der Oberschicht oder ähnliches geht.',
+  shortInformation: '+2 Überreden und Allgemeinwissen wenn es um die Oberschicht geht.',
+};
+const example2: Data = {
+  label: 'Doktors',
+  requirements: 'Anfänger',
+  information:
+    'Der Charakter ist sehr privilegiert aufgewachsen oder kam im späteren Leben dazu. Auch wenn sie nicht unbedingt reich ist (Talent Reich oder sehr Reich), aber sie versteht sich sehr gut auf den Umgang mit elitären Kreisen. Sie bekommt einen Bonus von +2 auf Überreden beim Netzwerken innerhalb der lokalen Elite, Unternehmensbossen oder anderen Aristokraten. Außerdem bekommt sie einen Bonus von +2 auf Allgemeinwissen Proben wenn es um Etikette der Oberschicht oder ähnliches geht.',
+  shortInformation: '+2 Überreden und Allgemeinwissen wenn es um die Oberschicht geht.',
+};
+
+const renderTitle = (title: string) => {
+  return (
+    <span>
+      {title}
+      <a
+        style={{ float: 'right' }}
+        href="https://www.google.com/search?q=antd"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        more
+      </a>
+    </span>
+  );
+};
+
+const renderItem = (quality: Data) => {
+  return {
+    value: quality.label,
+    label: (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexDirection: 'column',
+        }}
+      >
+        <div>
+          <span style={{ fontWeight: 'bold' }}>{quality.label}</span> ({quality.requirements})
+        </div>
+        <div style={{ whiteSpace: 'normal', fontStyle: 'italic' }}>{quality.shortInformation}</div>
+        <div className="show-on-focus" style={{ whiteSpace: 'normal' }}>
+          {quality.information}
+        </div>
+      </div>
+    ),
+  };
+};
+
+const options = [
+  {
+    label: renderTitle('Soziale Talente'),
+    options: [renderItem(example), renderItem(example2)],
+  },
+];
+
+interface AutocompleteFieldProps {
+  addValue: Function;
 }
 
-interface State {
-  suggestions: Quality[];
-}
-
-export class AutocompleteField extends React.Component<AutocompleteFieldProps, State> {
-  // constructor(props: AutocompleteFieldProps) {
-  //   super(props);
-  //   this.state = {
-  //     quality: null,
-  //     suggestions: [],
-  //   };
-  // }
-  // componentDidMount() {
-  //   // // Set field value if already in char data
-  //   // if (this.props.selectedField) {
-  //   //   this.setState(prevState => {
-  //   //     return {
-  //   //       ...prevState,
-  //   //       value: this.props.selectedField.label
-  //   //     }
-  //   //   })
-  //   // }
-  // }
-  // onChange = (event, { newValue, method }) => {
-  //   console.log('newValue', newValue, this.props, this.state)
-  //   this.setState({
-  //     value: newValue
-  //   });
-  // };
-  // onSuggestionsFetchRequested = ({ value }) => {
-  //   this.setState({
-  //     suggestions: this.getSuggestions(value)
-  //   });
-  // };
-  // onSuggestionsClearRequested = () => {
-  //   this.setState({
-  //     suggestions: []
-  //   });
-  // };
-  // getSuggestions = (value) => {
-  //   const selectableGroups = this.props.selectableGroups
-  //   if (value === '') {
-  //     return selectableGroups;
-  //   }
-  //   return selectableGroups
-  //     .map(selectableGroup => {
-  //       return {
-  //         ...selectableGroup,
-  //         selectables: selectableGroup.selectables.filter(selectable => selectable.label.toLowerCase().indexOf(value.toLowerCase()) > -1)
-  //       };
-  //     })
-  //     .filter(selectableGroup => selectableGroup.selectables.length > 0);
-  // }
-  // getSuggestionValue = (suggestion) => {
-  //   return suggestion.label;
-  // }
-  // onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
-  //   this.props.updateValue(suggestion);
-  // }
-  // renderSuggestion = (suggestion) => {
-  //   return (
-  //     <span>{suggestion.label}</span>
-  //   );
-  // }
-  // renderSectionTitle = (selectableGroup) => {
-  //   return (
-  //     <strong>{selectableGroup.label}</strong>
-  //   );
-  // }
-  // getSectionSuggestions = (selectableGroup) => {
-  //   return selectableGroup.selectables;
-  // }
-  // shouldRenderSuggestions = (value) => {
-  //   return true;
-  // }
-  // renderInputComponent = inputProps => (
-  //   <div>
-  //     <input {...inputProps} className="uk-input"/>
-  //   </div>
-  // );
-  // render() {
-  //   const inputProps = {
-  //     placeholder: this.props.placeholder,
-  //     value: this.state.value,
-  //     onChange: this.onChange
-  //   };
-  //   return (
-  //     <Autosuggest
-  //       multiSection={true}
-  //       highlightFirstSuggestion={true}
-  //       suggestions={this.state.suggestions}
-  //       onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-  //       onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-  //       getSuggestionValue={this.getSuggestionValue}
-  //       renderSuggestion={this.renderSuggestion}
-  //       renderSectionTitle={this.renderSectionTitle}
-  //       getSectionSuggestions={this.getSectionSuggestions}
-  //       inputProps={inputProps}
-  //       shouldRenderSuggestions={this.shouldRenderSuggestions}
-  //       renderInputComponent={this.renderInputComponent}
-  //       onSuggestionSelected={this.onSuggestionSelected}
-  //     />
-  //   );
-  // }
-}
+export const AutocompleteField = (props: AutocompleteFieldProps) => {
+  return (
+    <AutoComplete
+      dropdownClassName="certain-category-search-dropdown"
+      dropdownMatchSelectWidth={1000}
+      style={{ width: 250 }}
+      options={options}
+      filterOption={true}
+    >
+      <Input.Search size="large" placeholder="input here" />
+    </AutoComplete>
+  );
+};

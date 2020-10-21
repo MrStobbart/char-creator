@@ -18,7 +18,7 @@ export interface FieldGroupContainerProps {
 }
 
 export function FieldGroupComponent(props: FieldGroupContainerProps) {
-  var fields: any;
+  let fields: any;
   switch (props.fieldset.type) {
     case 'number':
       fields = props.fieldset.order.map(propertyId => {

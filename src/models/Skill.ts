@@ -16,9 +16,9 @@ export class Skill implements NumberProperty {
   }
 
   // TODO Check if this is badly inperformant
-  public sideEffects: Function = () => {};
+  public sideEffects: Function;
 
-  private _value: number = 0;
+  private _value = 0;
   public get value(): number {
     return this._value;
   }
