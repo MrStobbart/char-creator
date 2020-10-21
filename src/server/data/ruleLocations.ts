@@ -9,6 +9,12 @@ export interface RuleLocation {
   data: RuleLocationData[];
 }
 
+export const getRuleLocation = (name: string) => {
+  const ruleLocation = ruleLocations[name];
+  if (!ruleLocation) throw new Error(`No rule set with the name ${name} found`);
+  return ruleLocation;
+};
+
 export const ruleLocations: { [key: string]: RuleLocation } = {
   savageRun: {
     fileUrl: 'https://api.github.com/repos/MrStobbart/savage-worlds/contents/Savage%20Run/Savage-Run-Stobbart.md',

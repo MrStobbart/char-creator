@@ -1,46 +1,6 @@
-import { ruleLocations, RuleLocationData } from './ruleLocations';
-import { config } from '../helpers/config';
-import logger from '../helpers/winston';
-import axios from 'axios';
+import { getRulesFromGithub } from './gitHubConnector';
+import { RuleLocationData, getRuleLocation } from './ruleLocations';
 import mdtable2json, { ParsedTable } from 'mdtable2json';
-
-interface GitHubResponse {
-  type: string;
-  encoding: string;
-  size: number;
-  name: string;
-  path: string;
-  content: string;
-  sha: string;
-  url: string;
-  git_url: string;
-  html_url: string;
-  download_url: string;
-  _links: {
-    git: string;
-    self: string;
-    html: string;
-  };
-}
-
-interface GitHubErrorResponse {
-  message: string;
-}
-
-const getRulesFromGithub = async (fileUrl: string) => {
-  try {
-    const response = await axios.get<GitHubResponse & GitHubErrorResponse>(fileUrl, {
-      headers: {
-        Authorization: `token ${config.githubToken}`,
-      },
-    });
-
-    return Buffer.from(response.data.content, 'base64').toString();
-  } catch (error) {
-    logger.error(`Could not fetch and parse rule file from GitHub: ${error.message}`);
-    throw error;
-  }
-};
 
 export const getTableEndIndex = (ruleFile: string, startIndex: number): number => {
   const nextHashIndex = ruleFile.substring(startIndex).indexOf('\n#', 15);
@@ -89,8 +49,7 @@ export const trimEntries = (parsedTable: ParsedTable, dataType: RuleLocationData
 type TableData = { [subTitle: string]: { [key: string]: string }[] };
 
 export const getRules = async (ruleSetName: string) => {
-  const ruleLocation = ruleLocations[ruleSetName];
-  if (!ruleLocation) throw new Error(`No rule set with the name ${ruleSetName} found`);
+  const ruleLocation = getRuleLocation(ruleSetName);
 
   const rules = await getRulesFromGithub(ruleLocation.fileUrl);
 
